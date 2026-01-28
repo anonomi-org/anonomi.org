@@ -40,30 +40,15 @@ const links = [
       <a
         id="code-repo-link"
         href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/"
+        data-clearnet-href="https://github.com/anonomi-org/anonomi-android"
+        data-clearnet-text="GitHub"
         target="_blank"
         rel="noreferrer noopener"
-        class="hidden rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition sm:inline-flex">
+        class="hidden rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition sm:inline-flex"
+      >
         Code Repo
       </a>
     </div>
   </div>
-
-  <script is:inline>
-  (function () {
-    try {
-      const link = document.getElementById("code-repo-link");
-      if (!link) return;
-
-      // If we're NOT on an onion address, switch to GitHub
-      if (!location.hostname.endsWith(".onion")) {
-        link.textContent = "GitHub";
-        link.href = "https://github.com/anonomi-org/anonomi-android";
-      }
-    } catch (e) {
-      // fail silently
-    }
-  })();
-</script>
-
 
 </header>

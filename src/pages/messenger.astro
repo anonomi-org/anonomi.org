@@ -512,13 +512,13 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
           <div class="mt-6">
             <a
-              id="latest-release-link"
               href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi-org/anonomi-android/releases/latest"
+              data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases/latest"
               target="_blank"
               rel="noreferrer"
               class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
             >
-              <span id="latest-release-text">Check the latest release</span>
+              <span data-clearnet-text="Download latest release">Check the latest release</span>
               <span aria-hidden="true">→</span>
             </a>
           </div>

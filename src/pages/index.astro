@@ -541,7 +541,7 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         </div>
       </div>
 
-      <!-- Minimal inline JS for GitHub Pages -->
+      <!-- Minimal inline JS -->
       <script is:inline>
         function toggleQr(kind) {
           const el = document.getElementById(`qr-${kind}`);
@@ -585,50 +585,16 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         }
       </script>
 
-      <!-- Dynamic link text based on clearnet vs onion -->
-      <script is:inline>
-      document.addEventListener("DOMContentLoaded", function () {
-        try {
-          const isOnion = location.hostname.endsWith(".onion");
-
-          // Latest release link
-          const releaseLink = document.getElementById("latest-release-link");
-          const releaseText = document.getElementById("latest-release-text");
-          if (releaseLink && releaseText && !isOnion) {
-            releaseLink.href = "https://github.com/anonomi-org/anonomi-android/releases/latest";
-            releaseText.textContent = "Go to GitHub latest release";
-          }
-
-          // Explore code link
-          const exploreLink = document.getElementById("explore-code-link");
-          const exploreText = document.getElementById("explore-code-text");
-          if (exploreLink && exploreText && !isOnion) {
-            exploreLink.href = "https://github.com/anonomi-org";
-            exploreText.textContent = "Explore the code on GitHub";
-          }
-
-          // Contribute link
-          const contributeLink = document.getElementById("contribute-link");
-          const contributeText = document.getElementById("contribute-text");
-          if (contributeLink && contributeText && !isOnion) {
-            contributeLink.href = "https://github.com/anonomi-org";
-            contributeText.textContent = "Contribute on GitHub";
-          }
-        } catch (e) {
-          // fail silently
-        }
-      });
-      </script>
-
       <div class="mt-8 flex flex-wrap items-center gap-6">
         <a
-          id="contribute-link"
           href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi-org"
+          data-clearnet-href="https://github.com/anonomi-org"
           target="_blank"
           rel="noreferrer"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
         >
-          <span id="contribute-text">Contribute in our repo (onion)</span><span aria-hidden="true">→</span>
+          <span data-clearnet-text="Contribute on GitHub">Contribute in our repo (onion)</span>
+          <span aria-hidden="true">→</span>
         </a>
 
         <a
