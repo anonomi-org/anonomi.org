@@ -3,9 +3,19 @@ title: What is Anonomi?
 description: What Anonomi is, how it works, and what assumptions it makes.
 ---
 
-Anonomi is a messaging application designed to **resist surveillance, centralization, and infrastructure capture through its technical architecture**.
+Anonomi is a **privacy-focused communication suite** designed to resist surveillance, centralization, and infrastructure capture through its technical architecture.
 
-Rather than relying on institutional trust or policy guarantees, Anonomi embeds its assumptions directly into how communication, identity, and networking are implemented.
+### 1) Anonomi Messenger (Android app)
+The main app: decentralized messaging that can work **over Tor** or **fully offline**. Provides secure messaging (including voice messages), with built-in features for
+offline location sharing and in-chat Monero payment requests.
+
+### 2) Maps Exporter (web tool)
+A tool that generates **offline map tile packs locally** (in your browser), so you can later import them into Anonomi Messenger for offline use.
+
+### 3) Paylinks (tool/site)
+Tool for creating **privacy-preserving donation/payment links** (intended for publishing). *(In development)*
+
+Together, these tools are designed to avoid the common failure mode where “secure” features depend on unsafe external platforms.
 
 For the political and ethical motivations behind these choices, see the [Manifesto](/docs/manifesto).
 
@@ -27,47 +37,37 @@ These conditions are treated as **normal operating environments**, not exception
 ## Architecture over policy
 
 Anonomi does not depend on:
+
 - Centralized servers
 - Global directories
 - Account-based identity systems
-- Recovery mechanisms tied to external providers
+- External mapping or payment platforms
+- Recovery mechanisms tied to third-party providers
 
-Instead, communication happens directly between peers, using whatever transport is safest under current conditions.
+Instead, communication and coordination happen directly between peers, using whatever transport is safest under current conditions.
 
-This reduces single points of failure and limits the amount of metadata that can be collected or correlated.
-
----
-
-## General-purpose communication
-
-Anonomi can be used as a **general-purpose messenger**, including:
-- One-to-one conversations
-- Group chats
-- Long-term contacts
-- Everyday communication
-
-Privacy-preserving design does not require exceptional usage patterns or specialized knowledge.
-
-The system is intended to remain usable even when users are not operating in high-risk scenarios.
+This reduces single points of failure and limits the amount of metadata that can be collected, correlated, or coerced from intermediaries.
 
 ---
 
 ## Network resilience
 
 Anonomi is designed to function across:
-- Unreliable networks
-- Filtered or degraded connections
+
+- Unreliable or degraded networks
+- Filtered or censored connections
 - Environments where direct internet access is unsafe or unavailable
 
-Support for Tor and alternative routing mechanisms is foundational to this approach.
+Support for Tor and offline-first operation is foundational, not optional.
 
-When conditions change, the system prioritizes **continuity of communication** over reliance on any single network path.
+When conditions change, the system prioritizes **continuity of use** over reliance on any single network path.
 
 ---
 
 ## Open source and forkability
 
 Anonomi is open source so that:
+
 - Security claims can be independently verified
 - Control does not rest with a single organization
 - The project remains forkable if governance or direction diverges
@@ -81,6 +81,7 @@ Users are not required to trust maintainers indefinitely.
 Anonomi improves privacy and resilience, but it does not eliminate risk.
 
 It cannot protect against:
+
 - Compromised devices or operating systems
 - Malware or malicious input methods
 - Users voluntarily revealing identifying information
@@ -92,9 +93,10 @@ Using Anonomi responsibly requires understanding both its strengths and its limi
 ## Who Anonomi is suitable for
 
 Anonomi is suitable for users who:
-- Prefer communication tools that do not rely on centralized identity
-- Want systems that remain usable under changing network conditions
-- Value transparency and user control over convenience-driven platforms
+
+- Want communication tools that do not rely on centralized identity
+- Need systems that remain usable under changing or hostile network conditions
+- Prefer transparency and user control over convenience-driven platforms
 
 No specialized technical expertise is required.
 
@@ -104,4 +106,5 @@ No specialized technical expertise is required.
 
 - [Downloads](/docs/downloads)
 - [Security & verification](/docs/security)
+- [Using Anonomi](/docs/usage)
 - [Contributing](/docs/contributing)
