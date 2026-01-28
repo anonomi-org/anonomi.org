@@ -1,0 +1,108 @@
+---
+title: Offline Maps
+description: Download, import, and use maps without relying on live internet access.
+---
+
+Offline Maps let you view geographic data **without an active internet connection**.
+
+This is useful when:
+- Internet access is blocked or unreliable
+- Using the network increases risk
+- You want predictable, offline-only behavior
+
+Anonomi does not fetch map tiles automatically. All map data must be **downloaded or transferred intentionally**.
+
+---
+
+## How offline maps work
+
+Offline maps are stored locally on your device as map tile bundles.
+
+Once imported:
+- Maps are available without internet access
+- No network requests are made while viewing maps
+- Map usage does not reveal your location to external services
+
+If no data is imported, the map view will remain empty.
+
+---
+
+## Onion URL for offline map data
+
+Anonomi provides an **Onion service URL** where offline map data can be downloaded.
+
+This URL:
+- Is accessed over Tor
+- Helps reduce metadata exposure while downloading map data
+- Can be opened in Tor Browser or shared with another device
+
+Tapping **“Copy Onion URL of Offline Maps Data Repository”** copies this address so you can:
+- Open it later
+- Share it securely
+- Use it on a different device
+
+You are not required to use this source — it is provided as a privacy-preserving option.
+
+---
+
+## Importing offline map data
+
+Offline maps are imported from **ZIP files**.
+
+To import map data:
+1. Obtain a compatible offline map ZIP file
+2. Open **Import Offline Map Data**
+3. Select the ZIP file from your device storage
+4. Wait for the import to complete
+
+After import:
+- The map appears in the Offline Maps list
+- Multiple map regions can be imported
+- Maps remain available until manually removed
+
+---
+
+## Managing imported maps
+
+When map data is present:
+- Imported regions are listed in this screen
+- Each entry represents a locally stored map dataset
+
+If no maps are present, the app will display:
+> “No offline maps imported yet.”
+
+Removing a map deletes it from local storage only.
+
+---
+
+## Security and privacy considerations
+
+- Offline maps prevent live location lookups
+- No background downloads occur
+- No map usage telemetry is sent
+- Imported data remains entirely local
+
+However:
+- Downloading large map files can still be observable at the network level
+- Use Tor or trusted offline transfers when acquiring map data in high-risk environments
+
+---
+
+## When to use offline maps
+
+Offline maps are recommended when:
+- Navigating during internet shutdowns
+- Coordinating movement without live connectivity
+- You want predictable, zero-network behavior
+
+Avoid relying on offline maps if:
+- Map freshness is critical
+- You cannot safely store large files on the device
+
+---
+
+## Related documentation
+
+- **[Offline maps (feature overview)](/docs/features/maps)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Real-world scenarios and tradeoffs](/docs/usage/scenarios)**

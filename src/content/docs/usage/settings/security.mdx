@@ -1,0 +1,137 @@
+---
+title: Security
+description: Protect access to Anonomi, reduce exposure under coercion, and control how the app behaves in risky situations.
+---
+
+The **Security** settings control how Anonomi protects local access, reacts under pressure, and reduces harm if your device is inspected, seized, or coerced.
+
+These options are not cosmetic. They are part of your operational security.
+
+---
+
+## App lock
+
+App lock prevents Anonomi from being opened without unlocking your device.
+
+When enabled:
+- Anonomi requires your device’s screen lock (PIN, pattern, or password)
+- The app cannot be used while locked
+
+> App lock depends on your device security. If your device has no screen lock configured, this option will be unavailable.
+
+### When to use it
+- When others may have physical access to your device
+- When you want a fast way to lock the app without signing out
+- When your device may be inspected casually
+
+---
+
+## App lock inactivity timeout
+
+You can configure Anonomi to **lock itself automatically** after a period of inactivity.
+
+Example:
+- Lock after 5 minutes of inactivity
+
+This reduces risk when:
+- You forget to lock the app manually
+- You are interrupted or forced to hand over your device
+- The app is left open unintentionally
+
+---
+
+## Change password
+
+Anonomi uses a local password to protect your account state.
+
+Changing your password:
+- Updates the credentials required to access your account
+- Does **not** notify contacts
+- Does **not** recover lost accounts
+
+> If you forget your password and lose access, recovery may not be possible. Plan accordingly.
+
+---
+
+## Panic button
+
+Anonomi supports panic workflows via a companion panic-trigger app.
+
+### Panic button setup
+
+This setting defines how Anonomi reacts when a panic trigger is activated.
+
+Possible behaviors may include:
+- Deleting local account state
+- Sending panic notifications to trusted contacts (when possible)
+- Disabling future access
+
+Exact behavior depends on:
+- Your configuration
+- Current connectivity (online vs offline)
+- What actions are technically possible at the moment of triggering
+
+> Panic actions are **best-effort**, not guaranteed. Design your workflow assuming limited time and degraded conditions.
+
+See also:
+- **[Panic button + panic contacts](/docs/features/panic)**
+
+---
+
+## Stealth mode
+
+Stealth mode disguises Anonomi to reduce suspicion during casual inspection.
+
+When enabled:
+- Anonomi appears as a calculator app in the app drawer
+- The real app is hidden behind a secret unlock gesture or passcode
+
+### Calculator passcode
+
+You can set a passcode that unlocks the real app from the decoy calculator screen.
+
+- The calculator remains functional
+- Entering the correct passcode reveals Anonomi
+
+This is designed to:
+- Reduce attention during quick checks
+- Avoid revealing the app’s true purpose
+
+> Stealth mode is **misdirection**, not encryption. It helps against casual inspection, not determined forensic analysis.
+
+See also:
+- **[Stealth mode](/docs/features/stealth)**
+
+---
+
+## What these settings do *not* protect against
+
+Security settings help reduce risk, but they are not magic.
+
+They do **not** guarantee protection against:
+- Advanced forensic extraction
+- Malware on the device
+- Coercion over time
+- Legal compulsion
+
+Use them as part of a broader operational strategy.
+
+---
+
+## Practical guidance
+
+- Enable **app lock** if anyone else may touch your device
+- Use **inactivity timeout** aggressively in high-risk environments
+- Configure **panic behavior** before you need it
+- Treat **stealth mode** as a delay tactic, not a shield
+- Assume physical compromise is possible
+
+Security is about *reducing harm*, not eliminating risk.
+
+---
+
+## Related documentation
+
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Panic button + panic contacts](/docs/features/panic)**
+- **[Stealth mode](/docs/features/stealth)**

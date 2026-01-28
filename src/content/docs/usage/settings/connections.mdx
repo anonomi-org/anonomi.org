@@ -1,0 +1,159 @@
+---
+title: Connections
+description: Control how Anonomi connects — locally, over Tor, or not at all.
+---
+
+The **Connections** settings control *how* Anonomi is allowed to communicate.
+
+These options don’t change who you talk to or what you say — they define **which network paths are permitted**, and when. Choosing the right combination is part of your threat model.
+
+Anonomi is designed to keep working when networks are **blocked, monitored, unreliable, or intentionally avoided**.
+
+---
+
+## Connection strategy
+
+Before touching any toggles, decide one thing:
+
+- **If the internet is usable but risky → use Tor**
+- **If the internet is the threat → go offline**
+
+Anonomi does not assume that being online is always safe.
+
+---
+
+## Local connections (offline)
+
+Local connections allow communication **without any internet access**. No traffic leaves the area.
+
+### Connect via Bluetooth
+
+When enabled, Anonomi can communicate directly with nearby devices using Bluetooth.
+
+**Use Bluetooth when**
+- Contacts are physically nearby
+- Wi-Fi infrastructure is unavailable or unsafe
+- Short range is a feature (not a limitation)
+
+**Tradeoffs**
+- Very limited range
+- Lower throughput than Wi-Fi
+
+Turning this off prevents any Bluetooth-based communication.
+
+---
+
+### Connect on the same Wi-Fi network
+
+When enabled, Anonomi can communicate with contacts on the same local Wi-Fi network.
+
+**Use Wi-Fi when**
+- Devices share a trusted local network
+- Internet shutdowns are in effect
+- You need higher throughput than Bluetooth
+
+**Tradeoffs**
+- Limited to the local network
+- Requires shared Wi-Fi access
+
+Turning this off ensures no local Wi-Fi traffic is used.
+
+---
+
+## Internet connections (Tor)
+
+When Anonomi connects to the internet, it does so **only through the Tor network**.
+
+Tor routes traffic through multiple volunteer-run relays, helping reduce traceability, censorship, and network-level metadata exposure.
+
+### Connect via the Internet
+
+This toggle controls whether *any* internet connectivity is allowed.
+
+- **Enabled**: Anonomi may connect over Tor
+- **Disabled**: All internet connections are blocked
+
+When disabled, Anonomi operates strictly in offline modes.
+
+---
+
+### Connection method for Tor network
+
+You can control *how* Tor is reached:
+
+- **Automatic (recommended)**  
+  Anonomi selects the safest configuration for your environment.
+
+- **Use Tor without bridges**  
+  Connects directly to the Tor network.  
+  Best when Tor is reachable and not blocked.
+
+- **Use Tor with bridges**  
+  Uses Tor bridges to bypass censorship.  
+  Recommended in restricted or high-control networks.
+
+- **Don’t connect**  
+  Completely disables Tor connectivity.
+
+Choosing the wrong mode can prevent connections — choosing the right one can be the difference between working and being blocked.
+
+---
+
+## Mobile data control
+
+You can decide whether Anonomi is allowed to use **mobile data**.
+
+- **Enabled**: Tor may use mobile data or Wi-Fi
+- **Disabled**: Internet connections only occur over Wi-Fi
+
+This is useful when:
+- Mobile networks are monitored
+- Data usage itself creates risk
+- You want predictable connectivity behavior
+
+---
+
+## Connect only when charging
+
+When enabled, Anonomi will only use the internet while the device is **plugged in**.
+
+This helps:
+- Reduce battery drain
+- Avoid unexpected Tor traffic while moving
+- Make network usage more deliberate
+
+Offline connections (Bluetooth / Wi-Fi) are not affected.
+
+---
+
+## External storage (store-and-forward)
+
+Anonomi also supports carrying messages across boundaries using removable storage or file transfer.
+
+**Best for**
+- Checkpoints or border crossings
+- Air-gapped workflows
+- Situations where live connectivity is too dangerous
+
+**Tradeoffs**
+- Manual process
+- Requires strong operational discipline
+
+---
+
+## Switching modes safely
+
+- **Decide early** — don’t improvise under pressure
+- **Minimize exposure** — disable internet when you don’t need it
+- **Assume compromise** — if a device is seized, treat it as compromised
+
+Turning off a connection method does **not** delete messages or contacts.  
+It only controls **which network paths Anonomi is allowed to use**.
+
+---
+
+## Related documentation
+
+- **[Real-world scenarios and tradeoffs](/docs/usage/scenarios)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Offline app distribution](/docs/features/distribution)**

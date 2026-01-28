@@ -1,0 +1,211 @@
+---
+title: Frequently asked questions (FAQ)
+description: Common questions about Anonomi, its limits, and how to use it safely.
+---
+
+This FAQ answers common questions about Anonomi’s design, capabilities, and limitations.
+
+If you’re new, also read:
+- **[Threat model](/docs/security/threat-model)**
+- **[Operational security basics](/docs/usage/opsec)**
+
+---
+
+## Is Anonomi anonymous?
+
+Anonomi is designed to **reduce metadata exposure**, not to provide magical or absolute anonymity.
+
+What it does:
+- Avoids centralized servers
+- Routes internet traffic over Tor
+- Supports fully offline communication
+- Minimizes unnecessary identifiers
+
+What it cannot do:
+- Protect you from a compromised device
+- Fix unsafe behavior
+- Make you anonymous if you reveal your identity through actions or content
+
+Anonomi is a tool — how safely it’s used matters.
+
+---
+
+## Does Anonomi use servers?
+
+No central servers.
+
+Communication happens:
+- Directly between devices (offline modes)
+- Over Tor for internet-based communication
+- Via optional helper components (e.g., Mailbox) that **do not act as message-reading servers**
+
+There is no central infrastructure to subpoena, seize, or log conversations.
+
+---
+
+## Why is Anonomi Android-only?
+
+Anonomi relies on:
+- Low-level networking control
+- Offline transports
+- Background operation without platform mediation
+- Distribution outside centralized app stores
+
+Current iOS platform constraints make these guarantees impossible without compromise.
+
+See:
+- **[Why Anonomi does not support iOS](/docs/ios)** (if/when you publish it)
+
+---
+
+## Can I use Anonomi without the internet?
+
+Yes.
+
+Anonomi supports:
+- **Wi-Fi (local network)**
+- **Bluetooth (proximity)**
+- **External storage / store-and-forward**
+- **Offline app distribution**
+
+In some environments, staying offline is safer than trying to connect.
+
+See:
+- **[Online + Offline connectivity](/docs/features/connectivity)**
+- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+
+---
+
+## What happens if my device is seized?
+
+Assume the device is compromised.
+
+Anonomi helps reduce exposure, but:
+- It cannot protect messages already stored on the device
+- It cannot protect against coercion or forced unlocks
+- It cannot remotely “save” a seized device
+
+Use:
+- **App lock**
+- **Stealth mode**
+- **Panic workflows**
+- **Good OPSEC habits**
+
+See:
+- **[Security settings](/docs/usage/settings/security)**
+- **[Operational security basics](/docs/usage/opsec)**
+
+---
+
+## What is the Panic Button, really?
+
+The panic workflow is a **risk-reduction tool**, not a guarantee.
+
+Depending on configuration and situation, triggering panic may:
+- Delete local app state
+- Lock or hide the app
+- Send a panic message to designated contacts (when possible)
+
+It does **not**:
+- Guarantee data destruction on seized hardware
+- Override OS-level or hardware-level forensics
+- Protect against ongoing coercion
+
+See:
+- **[Panic button + panic contacts](/docs/features/panic)**
+
+---
+
+## Can group chats leak more information?
+
+Groups increase exposure by nature:
+- More participants
+- More devices
+- More opportunities for compromise
+
+Private groups are safer than public groups, but:
+- Any member can leak content
+- Metadata risk grows with group size
+
+Keep groups:
+- Small
+- Purpose-driven
+- Short-lived when possible
+
+---
+
+## Are voice messages safe?
+
+Voice messages carry **biometric risk**.
+
+Anonomi offers optional **voice distortion** to reduce voice identification risk, but:
+- Distortion is not a guarantee
+- Voice content itself may reveal identity
+- Background sounds can be identifying
+
+Use voice messages only when appropriate.
+
+See:
+- **[Voice messages + distortion](/docs/features/voice)**
+
+---
+
+## How private are Monero payment requests?
+
+Anonomi:
+- Uses Monero primitives designed for privacy
+- Generates unique subaddresses per request
+- Avoids centralized payment servers
+
+However:
+- Payment privacy depends on wallet hygiene
+- Amounts and timing may still leak information
+- Fiat conversions require user-supplied rates
+
+See:
+- **[Monero settings](/docs/usage/settings/monero)**
+
+---
+
+## Can I recover my account if I lose my device?
+
+No.
+
+Anonomi does not rely on central accounts or recovery servers.
+
+If you lose your device or delete the app:
+- Your account and keys may be permanently lost
+- Your contacts may not be recoverable
+
+This is a tradeoff for decentralization.
+
+---
+
+## Is Anonomi legal?
+
+That depends on your jurisdiction.
+
+Anonomi is a communication tool. However:
+- Use of Tor may be restricted in some regions
+- Encryption laws vary
+- Offline distribution may raise suspicion in some environments
+
+Know your local risks before use.
+
+---
+
+## Where should I start if I’m unsure?
+
+Start here:
+1. **[Threat model](/docs/security/threat-model)**
+2. **[Operational security basics](/docs/usage/opsec)**
+3. **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+
+Anonomi works best when you understand *why* you’re using a feature — not just *how*.
+
+---
+
+If your question isn’t answered here:
+- Check the relevant section in the docs
+- Review the threat model
+- Ask in the project channels (when appropriate)

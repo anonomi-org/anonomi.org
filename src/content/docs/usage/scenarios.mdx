@@ -1,0 +1,151 @@
+---
+title: Scenarios and transport tradeoffs
+description: Practical ways to choose Tor, local offline modes, or store-and-forward depending on the risk.
+---
+
+This page assumes you’ve read the [Threat model](/docs/security/threat-model).
+
+Anonomi supports multiple ways to communicate because **real risk isn’t one-size-fits-all**.
+
+Use this page to pick a mode based on your constraints: **surveillance**, **blocking**, **no internet**, **time pressure**, and **device risk**.
+
+## Quick chooser
+
+**Use Tor (online) when**
+- You need distance communication (not in the same area)
+- The internet is available (even if monitored)
+- You can reach Tor directly or through bridges
+
+**Use Wi-Fi (offline) when**
+- You’re coordinating inside a local area
+- The internet is unreliable or dangerous
+- You want **zero external network traffic**
+
+**Use Bluetooth (offline) when**
+- You’re nearby (small range is OK)
+- You can’t rely on Wi-Fi infrastructure
+- You want a low-profile local link
+
+**Use External storage (store-and-forward) when**
+- Live communication is too risky
+- You must cross a boundary (checkpoint, border, device inspections)
+- You need a workflow that works without any live network connection
+
+---
+
+## Scenario 1: Internet is monitored, but not blocked
+
+**Goal:** communicate long-distance while reducing exposure.
+
+**Recommended**
+- **Tor (online)**
+
+**Why**
+- Shifts traffic away from direct, linkable connections.
+
+**Do**
+- Use Tor with bridges if needed.
+- Keep conversations minimal and purposeful.
+- Avoid unnecessary online activity on the same device.
+
+---
+
+## Scenario 2: Internet shutdown, local coordination needed
+
+**Goal:** keep messaging inside a building / camp / neighborhood.
+
+**Recommended**
+- **Wi-Fi (offline)** first
+- **Bluetooth (offline)** if Wi-Fi isn’t possible
+
+**Why**
+- No dependency on external infrastructure.
+
+**Do**
+- Decide a meeting point / range expectation.
+- Keep devices charged; offline networking is still power-consuming.
+
+---
+
+## Scenario 3: Tor is blocked, surveillance is high
+
+**Goal:** communicate online despite blocking.
+
+**Recommended**
+- **Tor (online) with bridges**
+- If bridges fail: fall back to **offline modes** until safe
+
+**Why**
+- Bridges are designed for censorship resistance.
+- If the network is actively hostile, offline can be safer than “trying harder” online.
+
+**Do**
+- Prepare bridge options ahead of time (when safe).
+- Don’t improvise under pressure if it increases exposure.
+
+---
+
+## Scenario 4: Checkpoints, searches, or device inspection risk
+
+**Goal:** move messages across a boundary without live connectivity.
+
+**Recommended**
+- **External storage (store-and-forward)**
+
+**Why**
+- Avoids live network activity when it could be used as evidence or a trigger.
+- Keeps the “communication act” separated from hostile infrastructure.
+
+**Do**
+- Treat handoff media as sensitive.
+- Minimize what you carry and when.
+- Assume devices can be inspected.
+
+---
+
+## Scenario 5: Protest / street conditions (fast movement, unstable links)
+
+**Goal:** keep comms working while moving.
+
+**Recommended**
+- **Bluetooth (offline)** for proximity groups
+- **Wi-Fi (offline)** if you can maintain a shared local network
+
+**Why**
+- Fast, local coordination matters more than perfect connectivity.
+
+**Do**
+- Keep group sizes small.
+- Decide fallbacks (rally point + time window).
+
+---
+
+## Scenario 6: Distribution without app stores
+
+**Goal:** install or share the app without relying on centralized stores.
+
+**Recommended**
+- **Offline distribution** (local sharing)
+
+**Why**
+- Avoids forcing people to download from risky networks or store accounts.
+
+**Do**
+- Prefer verified releases.
+- Use the distribution workflow described in the docs.
+
+---
+
+## Principles that hold in every scenario
+
+- **Pre-plan**: decide modes before the situation escalates.
+- **Minimize exposure**: fewer actions, fewer traces.
+- **Assume compromise**: devices can be seized; contacts can be pressured.
+- **Don’t chase perfect**: pick the safest workable option.
+
+## Related
+
+- [Connectivity modes](/docs/usage/modes)
+- [Operational security basics](/docs/usage/opsec)
+- [Threat model](/docs/security/threat-model)
+- [Offline distribution](/docs/features/distribution)

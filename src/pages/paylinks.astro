@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+---
+
+<Layout
+  title="Anonomi Paylinks (soon)"
+  description="Private donation buttons without exposing long-lived wallet addresses.">
+  <NavBar />
+
+  <main class="mx-auto max-w-6xl px-6 py-16">
+    <section class="rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12">
+      <p class="text-xs font-semibold tracking-widest text-zinc-400">COMING SOON</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+        Anonomi Paylinks
+      </h1>
+
+      <p class="mt-4 max-w-3xl text-zinc-300">
+        Paylinks will let publishers embed a “Donate” button without exposing a long-lived wallet address.
+        Each donation request will generate a fresh subaddress and provide a QR handoff to a wallet app.
+      </p>
+
+      <div class="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
+        <div class="text-sm font-semibold text-zinc-200">Important distinction</div>
+        <p class="mt-2 text-sm text-zinc-400">
+          <span class="text-zinc-200">Payment Requests</span> already exist inside <span class="text-zinc-200">Anonomi Messenger</span>.
+          Paylinks is a separate web tool for publishers and donation buttons.
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/messenger#tab-payments"
+          class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+        >
+          See in-app Payment Requests →
+        </a>
+        <a
+          href="/"
+          class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+        >
+          Back to Products
+        </a>
+      </div>
+    </section>
+    
+  </main>
+</Layout>

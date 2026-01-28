@@ -1,0 +1,138 @@
+---
+title: Offline maps
+description: Share locations and navigate without contacting external map servers.
+---
+
+Offline Maps allow Anonomi to work with **location data without leaking metadata to third-party map providers**.
+
+Instead of querying online map services, Anonomi can use **locally stored map tiles**, keeping map usage fully offline and under your control.
+
+---
+
+## Why offline maps matter
+
+Online maps leak more than just coordinates.
+
+Every map request can reveal:
+- Where you are
+- When you are there
+- What locations you search for
+- Which device is making the request
+
+Offline Maps remove that entire class of exposure by **not contacting external map servers** during map viewing.
+
+---
+
+## Threat model: GPS and phone location services
+
+Anonomi does **not** need GPS to share locations that you *receive* from other people.
+
+In higher-risk workflows, Anonomi is designed so it can operate **without requesting Android Location permissions**. This matters because once Location Services are enabled and granted to apps, you expand the number of places where location metadata can be created (OS logs, app caches, history, and more).
+
+### Offline navigation workflow
+
+(recommended for high-risk use)
+
+If you want “navigate from a received location” while minimizing exposure:
+
+1. Keep Android Location Services **disabled** when possible.
+2. Use Offline Maps for viewing the area **without online tile requests**.
+3. When you need navigation, pass the received coordinates to an **offline / standalone navigation tool** (or a dedicated device) that can operate without network access.
+
+This workflow helps ensure:
+- Anonomi does not trigger online map calls
+- Anonomi does not request GPS permissions
+- Navigation can be performed without relying on online services
+
+> Important: disabling GPS/Location in Anonomi reduces what **Anonomi** can access, but it cannot guarantee the OS or other apps won’t create location-related metadata. For best results, keep Android Location off and use offline-only navigation tools.
+
+---
+
+## What Offline Maps enable
+
+With Offline Maps, you can:
+
+- Share locations without internet access
+- View and reference maps during internet shutdowns
+- Navigate in high-risk environments with reduced network traffic
+- Reduce metadata exposure during normal use
+
+Offline Maps work in:
+- One-to-one conversations
+- Location sharing workflows
+- Fully offline coordination scenarios
+
+---
+
+## Map tiles and data packs
+
+Offline Maps are based on **pre-downloaded map tiles**, typically distributed as packaged archives.
+
+These map packs are:
+- Stored locally on your device
+- Loaded directly by Anonomi
+- Never fetched dynamically at runtime (once imported)
+
+This design ensures predictable behavior and avoids surprise network access.
+
+---
+
+## Creating map packs (Maps Exporter)
+
+Anonomi provides a companion tool: **Maps Exporter (beta)**.
+
+It runs entirely in your browser and lets you:
+- Choose a tile source
+- Select an area and zoom range
+- Export a ZIP pack in the format Anonomi expects
+
+Open it here:
+- **[Maps Exporter](/maps/export/)**
+
+---
+
+## Importing offline map data
+
+Users can import map data manually, for example:
+- From a ZIP archive
+- From removable storage
+- From a trusted offline transfer
+
+Once imported:
+- Maps appear in the Offline Maps list
+- No further downloads are required
+- Anonomi will use them automatically when sharing or viewing locations
+
+---
+
+## Safety and trust considerations
+
+Offline maps shift trust from *servers* to *sources*.
+
+Before importing map data:
+- Use only sources you trust
+- Prefer map packs with published checksums or signatures
+- Avoid running unknown map archives on desktop systems with elevated privileges
+
+Treat map data like any other sensitive dependency.
+
+---
+
+## Limitations and expectations
+
+Offline Maps:
+- Do not provide live traffic or routing updates
+- Require manual updates when map data becomes outdated
+- Are only as accurate as the data you import
+
+They trade convenience for **predictability and safety**.
+
+---
+
+## Related documentation
+
+- **[Maps Exporter](/docs/features/maps-exporter)**
+- **[Offline Maps settings](/docs/usage/settings/offline-maps)**
+- **[Sharing locations](/docs/usage/messaging)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Offline distribution](/docs/features/distribution)**

@@ -1,0 +1,105 @@
+---
+title: Voice messages + distortion
+description: Send voice messages with optional distortion to reduce voice identification risk.
+---
+
+Anonomi supports **voice messages** in addition to text and images.  
+Voice can be faster and more expressive — but it also carries **unique risks**.
+
+This page explains how voice messaging works and how **voice distortion** can reduce (but not eliminate) identification risk.
+
+---
+
+## Voice messages
+
+Voice messages let you communicate when typing is slow, impractical, or unsafe.
+
+They are:
+- End-to-end encrypted like other messages
+- Delivered using the same transport modes (Tor or offline)
+- Stored only on participating devices
+
+However, voice carries **biometric information** by nature.
+
+---
+
+## Why voice is risky
+
+Unlike text, your voice can reveal:
+- Identity through vocal characteristics
+- Emotional state
+- Stress, fear, or coercion
+- Accent or regional markers
+
+Even short samples can sometimes be used for identification.
+
+For this reason, Anonomi treats voice as **higher-risk than text by default**.
+
+---
+
+## Optional voice distortion
+
+Anonomi includes an **optional voice distortion mode** designed to reduce the risk of voice recognition.
+
+When enabled:
+- Audio is dynamically transformed before sending
+- Distortion is applied automatically to outgoing voice messages
+- The goal is to make voice matching and reconstruction harder than simple pitch shifting
+
+This is a **risk-reduction tool**, not a guarantee.
+
+> Voice distortion does not make you anonymous.  
+> It reduces recognizability under realistic threat models.
+
+---
+
+## How to enable voice distortion
+
+Voice distortion is controlled **per contact**, not globally.
+
+To enable it:
+1. Open a conversation with the contact
+2. Tap the **three dots** in the top-right corner
+3. Open **Contact Settings**
+4. Enable **Distorted Audio Messages**
+
+Once enabled, all voice messages you send to that contact will be distorted automatically.
+
+See: **[Contact Settings](/docs/usage/contact-settings)**
+
+---
+
+## When to use distortion
+
+Consider enabling distortion when:
+- The contact does not need to recognize your voice
+- You are operating under increased surveillance risk
+- Voice identification would create personal danger
+- You want different behavior for different contacts
+
+You can safely mix:
+- Distorted voice for some contacts
+- Clear voice or text-only communication for others
+
+---
+
+## Limitations and expectations
+
+- Distortion applies **only to voice messages**
+- Incoming audio is not altered
+- Distortion does not protect against all forms of analysis
+- Strong operational security still matters
+
+For higher-risk situations, consider:
+- Text-only communication
+- Offline transports
+- Panic workflows and stealth features
+
+---
+
+## Related documentation
+
+- **[Contact Settings](/docs/usage/contact-settings)**
+- **[Messaging](/docs/usage/messaging)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Panic button + panic contacts](/docs/features/panic)**

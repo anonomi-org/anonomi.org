@@ -1,0 +1,100 @@
+---
+title: Creating an account
+description: Create your Anonomi account and understand what it means to be device-bound.
+---
+
+Creating an Anonomi account is intentionally different from creating an account on a typical messaging app.
+
+There are no usernames, no phone numbers, no email addresses, and no central server holding your identity.
+
+Your account **exists only on your device**.
+
+---
+
+## What an “account” means in Anonomi
+
+An Anonomi account is:
+- A cryptographic identity generated locally on your device
+- Not registered with any server
+- Not recoverable by the project or anyone else
+
+This design removes centralized control and account takeovers — but it also means **you are responsible for your account**.
+
+---
+
+## Creating your account
+
+When you first open Anonomi, you’ll be prompted to create an account.
+
+### Step 1 — Choose a display name
+This is the name shown to your contacts.
+
+- It does **not** have to be unique
+- It can be changed later
+- It is not used as an identifier on the network
+
+Choose something that makes sense for the context you’re operating in.
+
+### Step 2 — Confirm account creation
+Once confirmed:
+- Your cryptographic identity is generated
+- Your account is stored locally on the device
+- You’re ready to add contacts
+
+No network connection is required to create an account.
+
+---
+
+## Important limitations (read this carefully)
+
+### No password recovery
+Anonomi cannot reset or recover your account.
+
+If you:
+- Lose your device
+- Delete app data
+- Uninstall the app without a backup
+
+…your account and contacts are permanently lost.
+
+This is not a bug — it’s a consequence of avoiding centralized control.
+
+### One account per device
+Each installation creates its own identity.
+
+Installing Anonomi on a second device creates a **new, separate account**, even if you use the same display name.
+
+---
+
+## Backups (if supported on your device)
+
+If backup features are available on your platform version:
+
+- Backups should be stored securely
+- Treat them like keys, not like chat history
+- Anyone with access to a backup may be able to impersonate you
+
+If you’re operating in a high-risk environment, **not backing up may be safer** than backing up insecurely.
+
+---
+
+## Before adding contacts
+
+Before you start connecting with others:
+- Understand how contact verification works
+- Decide how cautious you need to be
+- Read the operational guidance if your situation involves real risk
+
+Next steps:
+- **[Adding contacts](/docs/usage/adding-contacts)**
+- **[Operational security basics](/docs/usage/opsec)**
+
+---
+
+## Summary
+
+- Anonomi accounts are device-bound and decentralized
+- There is no central authority that can recover or reset your account
+- Security comes from eliminating dependencies — not from convenience features
+
+Next: **[Adding contacts](/docs/usage/adding-contacts)**

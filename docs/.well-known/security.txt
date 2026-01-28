@@ -1,0 +1,4 @@
+Contact: mailto:anonchatsec@protonmail.com
+Preferred-Languages: en
+Policy: https://anonchatx.org/security
+Expires: 2027-01-01

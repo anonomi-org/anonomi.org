@@ -1,0 +1,69 @@
+---
+import logo from "../assets/logo.png";
+
+const links = [
+  { label: "Messenger", href: "/messenger" },
+  { label: "Maps", href: "/maps" },
+  { label: "Paylinks", href: "/paylinks" },
+  { label: "Docs", href: "/docs/" },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <!-- Brand -->
+    <a href="/" class="flex items-center">
+      <img src={logo.src} alt="Anonomi" class="h-8 w-auto" />
+    </a>
+
+    <!-- Primary nav -->
+    <nav class="hidden items-center gap-6 md:flex">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3">
+      <a
+        href="/messenger#download"
+        class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/10 hover:bg-white/15 transition"
+      >
+        Download
+      </a>
+
+      <a
+        id="code-repo-link"
+        href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/"
+        target="_blank"
+        rel="noreferrer noopener"
+        class="hidden rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition sm:inline-flex">
+        Code Repo
+      </a>
+    </div>
+  </div>
+
+  <script is:inline>
+  (function () {
+    try {
+      const link = document.getElementById("code-repo-link");
+      if (!link) return;
+
+      // If we're NOT on an onion address, switch to GitHub
+      if (!location.hostname.endsWith(".onion")) {
+        link.textContent = "GitHub";
+        link.href = "https://github.com/anonomi-org/anonomi-android";
+      }
+    } catch (e) {
+      // fail silently
+    }
+  })();
+</script>
+
+
+</header>

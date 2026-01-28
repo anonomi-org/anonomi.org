@@ -1,0 +1,8 @@
+---
+export { getStaticPaths } from "@astrojs/starlight/routes/static/index.astro";
+import StarlightStatic from "@astrojs/starlight/routes/static/index.astro";
+
+export const prerender = true;
+---
+
+<StarlightStatic {...Astro.props} />

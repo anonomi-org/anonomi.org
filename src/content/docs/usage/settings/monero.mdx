@@ -1,0 +1,128 @@
+---
+title: Monero (XMR)
+description: Configure Monero payment settings for payment requests and messaging.
+---
+
+Anonomi supports **Monero (XMR)** for private payment requests inside conversations.
+
+Anonomi is **not a wallet**. These settings exist to generate payment requests, subaddresses, and QR codes — not to hold or spend funds.
+
+---
+
+## What Monero integration is (and is not)
+
+Anonomi:
+- Generates **Monero payment requests**
+- Creates **unique subaddresses** per request
+- Embeds payment details in messages and QR codes
+
+Anonomi does **not**:
+- Store funds
+- Sign transactions
+- Spend Monero on your behalf
+
+All payments are handled by your wallet of choice.
+
+---
+
+## Primary Monero address
+
+This is your **main Monero address**, used internally to derive subaddresses.
+
+Important properties:
+- The primary address is **not shared directly**
+- Payment requests use **derived subaddresses**
+- Contacts never see your primary address
+
+This preserves privacy while allowing you to track incoming payments using your wallet.
+
+---
+
+## Private view key
+
+The **private view key** allows Anonomi to:
+
+- Derive subaddresses
+- Detect incoming payments
+- Associate payments with requests
+
+It **cannot**:
+- Spend funds
+- Move funds
+- Authorize transactions
+
+This key is **read-only** by design. Even if exposed, it does not allow theft — only blockchain observation.
+
+You should still treat it as sensitive metadata.
+
+---
+
+## Monero rate (manual)
+
+Anonomi does not rely on external servers.
+
+Because of this:
+- Exchange rates are **not fetched automatically**
+- You must **set the Monero ↔ fiat rate manually**
+
+This rate is used when:
+- Creating payment requests
+- Generating QR codes
+- Sending payment messages to contacts
+
+The selected fiat currency and rate are **embedded in the request**, ensuring both sides see the same value.
+
+---
+
+## Subaddress index
+
+Each payment request uses a **new subaddress**.
+
+The subaddress index controls:
+- Which subaddress is generated next
+- How requests are separated and tracked
+
+You can:
+- Reset the index
+- Manually set a specific index
+
+This is useful if:
+- Restoring from backup
+- Reconciling addresses with an external wallet
+- Re-aligning after importing keys elsewhere
+
+---
+
+## Privacy considerations
+
+Monero integration in Anonomi is designed to minimize leakage:
+
+- No address reuse
+- No server-side rate tracking
+- No wallet custody
+- No transaction signing
+
+Your wallet remains the only place funds exist.
+
+---
+
+## When to use Monero features
+
+Use Monero integration if:
+- You want private payment requests
+- You already use a Monero wallet
+- You want payment metadata kept inside encrypted messages
+
+Avoid it if:
+- Cryptocurrency usage increases risk in your environment
+- You cannot safely manage wallet keys
+
+Monero features are optional.
+
+---
+
+## Related documentation
+
+- **[Sending payment requests](/docs/usage/messaging)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **Monero payments (feature overview)** *(coming soon)*

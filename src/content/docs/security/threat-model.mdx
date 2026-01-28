@@ -1,0 +1,128 @@
+---
+title: Threat model
+description: What Anonomi is designed to protect against — and what it explicitly cannot.
+---
+
+Anonomi is built for **high-risk and hostile environments**, not for abstract or idealized security models.
+
+This page explains the assumptions Anonomi makes, the risks it aims to reduce, and the limits you must understand before relying on it.
+
+Security is a *system property* — not a feature toggle.
+
+---
+
+## Core assumptions
+
+Anonomi assumes that, at some point, one or more of the following may be true:
+
+- Network traffic is monitored or logged
+- Internet access is filtered, blocked, or manipulated
+- Metadata is more valuable to adversaries than message content
+- Devices may be inspected, seized, or accessed under coercion
+- Some contacts may become compromised over time
+- You may be forced to unlock or interact with your device
+
+The design assumes **pressure**, not goodwill.
+
+---
+
+## What Anonomi is designed to reduce
+
+Anonomi focuses on reducing *structural* risks rather than promising total anonymity.
+
+Specifically, it aims to reduce:
+
+### Metadata exposure
+- No centralized servers to log who talks to whom
+- No third-party services embedded into core workflows
+- Offline modes that generate no network traffic at all
+
+### Central points of failure
+- No accounts tied to phone numbers or email addresses
+- No reliance on always-available infrastructure
+- No dependence on app stores for installation or updates
+
+### Risk from forced connectivity
+- Ability to operate fully offline
+- Explicit control over when and how the internet is used
+- Predictable network behavior (no silent background connections)
+
+---
+
+## What Anonomi does **not** protect against
+
+Anonomi is not a magic shield.
+
+It **cannot** protect you from:
+
+### A compromised device
+- Malware, spyware, or hostile firmware
+- Modified or backdoored operating systems
+- Devices managed by employers, schools, or authorities (MDM)
+
+If the device itself is compromised, software defenses are limited.
+
+---
+
+### User behavior and identity disclosure
+- Revealing personal information in messages
+- Reusing identities across unsafe contexts
+- Communicating patterns that identify you socially or physically
+
+Privacy tools cannot override unsafe behavior.
+
+---
+
+### Compromised endpoints
+- If the person you are talking to is compromised
+- If messages are read under coercion on either side
+- If screenshots, recordings, or manual copying occur
+
+End-to-end encryption does not protect against *the person at the keyboard*.
+
+---
+
+## Threat model in practice
+
+Anonomi is built around **risk reduction**, not absolutes.
+
+It works best when combined with:
+- Careful operational security
+- Context-appropriate connection choices
+- Realistic expectations about adversaries and pressure
+
+Use it as part of a strategy — not as the strategy.
+
+---
+
+## From threat model to action
+
+A threat model is only useful if it informs real decisions.
+
+Anonomi is designed to give you multiple ways to communicate because
+different situations require different tradeoffs. Choosing the wrong
+mode at the wrong time can increase risk rather than reduce it.
+
+The scenarios section translates this threat model into concrete,
+real-world choices.
+
+---
+
+## Related documentation
+
+- **[Scenarios and transport tradeoffs](/docs/usage/scenarios)**  
+  How this threat model plays out in real situations.
+
+- **[Connections](/docs/usage/settings/connections)**  
+  The actual controls that implement these tradeoffs.
+
+- **[Operational security basics](/docs/usage/opsec)**  
+  How behavior and discipline affect your safety.
+
+- **[Panic button and panic contacts](/docs/features/panic)**  
+  Tools for coercive or emergency scenarios.
+
+- **[Stealth mode](/docs/features/stealth)**  
+  Reducing risk during inspection or casual scrutiny.
+
+Next: **[Scenarios and transport tradeoffs](/docs/usage/scenarios)**

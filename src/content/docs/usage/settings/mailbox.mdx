@@ -1,0 +1,104 @@
+---
+title: Anonomi Postbox
+description: Receive and send messages while offline using a linked Mailbox device.
+---
+
+Anonomi Postbox is a companion app that allows you to **receive and send messages even when your main Anonomi device is offline**.
+
+From the Settings screen, you can configure and manage how Mailbox is used with your account.
+
+---
+
+## What is a Mailbox?
+
+A Mailbox is a **separate Anonomi Postbox app** installed on another Android device.
+
+Its role is simple:
+
+- Receive encrypted messages from your contacts while you are offline
+- Store those messages securely
+- Deliver them automatically when your main device comes online again
+
+Likewise, messages you send while your contacts are offline can be delivered through their Mailboxes when they reconnect.
+
+The Mailbox **cannot read messages** and does not act as a traditional server.
+
+---
+
+## Why use a Mailbox?
+
+Mailbox is useful when:
+
+- Your phone is often offline
+- You intentionally keep your main device disconnected
+- You want asynchronous communication without constant connectivity
+
+Typical setups include:
+- A spare Android phone
+- A device left at home
+- A device kept powered and connected to Wi-Fi
+
+---
+
+## How Mailbox works (high level)
+
+1. You install the **Anonomi Postbox app** on a separate device
+2. You link it to your Anonomi account by scanning a QR code
+3. The Mailbox stays online and receives encrypted messages on your behalf
+4. When your main device comes online, it fetches messages automatically
+
+All communication remains end-to-end encrypted.
+
+---
+
+## Mailbox in Settings
+
+From **Settings → Anonomi Postbox**, you can:
+
+- Set up a new Mailbox
+- Link or unlink a Mailbox device
+- View Mailbox status
+- Disable Mailbox usage entirely
+
+Mailbox behavior depends on your **Connections** settings — internet access uses Tor when enabled.
+
+---
+
+## Security considerations
+
+Using a Mailbox changes your threat model slightly:
+
+- The Mailbox device is a **separate point of exposure**
+- If seized, it may reveal:
+  - That you use Anonomi
+  - That a Mailbox is linked to your account
+- It does **not** reveal message contents
+
+Best practices:
+- Use a dedicated device
+- Keep it physically secure
+- Keep it updated
+- Do not log into your main Anonomi app on the Mailbox device
+
+If Mailbox increases risk in your environment, do not use it — Anonomi works without it.
+
+---
+
+## When *not* to use Mailbox
+
+Avoid using Mailbox if:
+
+- You expect device seizures
+- You cannot physically secure the Mailbox device
+- Being continuously reachable increases risk
+- Offline-only workflows are safer for you
+
+Mailbox is optional by design.
+
+---
+
+## Related documentation
+
+- **[Connections](/docs/usage/settings/connections)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **Dedicated Mailbox guide** *(coming soon)*

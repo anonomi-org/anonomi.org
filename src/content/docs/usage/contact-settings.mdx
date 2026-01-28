@@ -1,0 +1,82 @@
+---
+title: Contact Settings
+description: Customize how Anonomi behaves for an individual contact.
+---
+
+Each contact in Anonomi has its own **Contact Settings**.  
+These settings let you tailor behavior **per person**, rather than applying global rules.
+
+To access Contact Settings:
+1. Open a conversation with a contact
+2. Tap the **three dots** in the top-right corner
+3. Select **Contact Settings**
+
+---
+
+## Contact name
+
+You can assign a **custom name** to a contact.
+
+- This name is only visible to you
+- It does not affect the contact’s identity or cryptographic keys
+- Changing the name does not notify the contact
+
+Use this to:
+- Replace temporary or unclear names
+- Use aliases instead of real names
+- Organize contacts safely if your device is inspected
+
+---
+
+## Panic contact
+
+When **Panic Contact** is enabled, this contact becomes part of your panic workflow.
+
+If panic mode is triggered:
+- This contact may receive a **panic message** (when delivery is possible)
+- The message is intended to signal distress or coercion
+- Delivery depends on connectivity at the time (online or offline)
+
+**Important notes**
+- Panic messages are best-effort, not guaranteed
+- Enabling this does not expose the contact unless panic mode is triggered
+- Choose panic contacts carefully
+
+Related: **[Panic button](/docs/features/panic)**
+
+---
+
+## Distorted audio messages
+
+When enabled, **audio messages sent to this contact are distorted**.
+
+This provides:
+- Reduced voice recognizability
+- Additional protection against voice identification
+- A different risk profile than clear voice messages
+
+Things to keep in mind:
+- Distortion applies only to **audio messages**
+- Text messages are unaffected
+- Distortion is applied automatically when sending
+
+Use this for contacts where voice identification would increase risk.
+
+---
+
+## Per-contact control
+
+Contact Settings allow you to:
+- Treat different contacts with different risk assumptions
+- Combine safety features selectively
+- Avoid one-size-fits-all behavior
+
+This is intentional: **trust and threat models differ per relationship**.
+
+---
+
+## Related documentation
+
+- **[Messaging](/docs/usage/messaging)**
+- **[Panic button + panic contacts](/docs/features/panic)**
+- **[Operational security basics](/docs/usage/opsec)**

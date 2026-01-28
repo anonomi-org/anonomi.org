@@ -1,0 +1,93 @@
+---
+title: Installation
+description: Install Anonomi safely — via verified downloads or fully offline sharing.
+---
+
+Anonomi is designed to be installable even when app stores are blocked, unsafe, or unavailable.
+
+This page explains the supported installation paths and the checks you should perform before running any APK — especially in higher-risk environments.
+
+---
+
+## Choose your install path
+
+### Option 1: Official releases (recommended)
+Download the signed APK from the official project release channel and **verify it before installing**.
+
+**Typical workflow**
+1. Download the APK from the official releases page.
+2. Verify the file (checksum/signature).
+3. Install.
+4. Revoke any temporary “unknown apps” permission you enabled.
+
+- See: **[Downloads](/docs/downloads)**
+- See: **[Verify downloads](/docs/verify)**
+
+### Option 2: Fully offline distribution (when the internet is the threat)
+If the network is monitored, blocked, or dangerous, Anonomi can be shared **device-to-device** using local connections — with no external traffic.
+
+This allows installation without app stores, mirrors, or public downloads.
+
+- See: **[Offline app distribution](/docs/features/distribution)**
+
+### App stores (not available yet)
+Anonomi is not currently published in any app stores.
+
+When this changes, the documentation will be updated with the official listing(s). Until then, **verified direct installs and offline sharing are the supported methods**.
+
+---
+
+## Install from an APK (Android)
+
+### Step 1 — Download the APK
+- Prefer downloading over a connection you trust.
+- Avoid third-party APK sites unless you can independently verify integrity.
+
+### Step 2 — Verify before installing
+In higher-risk environments, verification should be treated as mandatory.
+
+- Follow: **[Verify downloads](/docs/verify)**
+
+### Step 3 — Allow “unknown apps” (temporarily)
+Android may block installs that don’t come from an app store.
+
+Enable the permission **only for the app doing the install** (browser or file manager), install Anonomi, then disable it again.
+
+### Step 4 — Install and open
+Once installation completes, open Anonomi and continue with setup:
+
+- **[Creating an account](/docs/usage/creating-an-account)**
+
+---
+
+## Updates
+
+Anonomi does not rely on silent or automatic updates.
+
+Updates are installed by downloading the new APK and installing it over the existing one.  
+Android will treat this as an update **only if the signing key matches**.
+
+If you installed Anonomi via offline distribution, update using the same method with a newer APK.
+
+---
+
+## Troubleshooting
+
+### I can’t install the APK
+- Try a different browser or file manager.
+- Ensure the “unknown apps” permission is enabled for the installer app.
+- Confirm the file downloaded completely.
+
+### The app installs but won’t open
+- Verify you installed the correct build for your device.
+- Re-check file integrity.
+- Device management policies (work profiles / MDM) may block sideloaded apps.
+
+---
+
+## Safety notes
+
+- **Your account lives on your device.** If you uninstall the app or lose access to the device, recovery may not be possible.
+- In high-risk situations, installing from a **trusted offline share** may be safer than downloading over a watched network.
+
+Next: **[Creating an account](/docs/usage/creating-an-account)**

@@ -1,0 +1,637 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+
+const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
+const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
+const REPO_URL = "https://github.com/anonomi-org/anonomi.github.io";
+const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
+---
+
+<Layout
+  title="Anonomi"
+  description="Decentralized messaging for high-threat environments. Online over Tor or fully offline.">
+
+  <NavBar />
+  
+  <main class="mx-auto max-w-6xl px-6 py-16">
+    <!-- HERO -->
+    <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"></div>
+
+      <div class="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-xs font-semibold tracking-widest text-zinc-400">
+            NO SERVERS • TOR • OFFLINE
+          </p>
+
+          <h1 class="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+            Messaging built for hostile conditions.
+          </h1>
+
+          <p class="mt-4 text-zinc-300">
+            Anonomi is an open source decentralized communication tool designed for high-threat environments.
+            It works online over Tor, or completely offline over Wi-Fi, Bluetooth, and external storage.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#download"
+              class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              Download
+            </a>
+            <a
+              href="#features"
+              class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+            >
+              Explore features
+            </a>
+            <a
+              href="/#manifesto"
+              class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5"
+            >
+              Read manifesto
+            </a>
+          </div>
+
+          <p class="mt-6 text-xs text-zinc-500">
+            Android-only. Built to reduce metadata exposure — not to promise magic anonymity.
+          </p>
+        </div>
+
+       <!-- HERO SCREENSHOT -->
+      <div class="w-full max-w-lg flex justify-center">
+        <img
+          src="/screenshots/chat-intro-accepted.png"
+          alt="Anonomi encrypted messaging interface"
+          loading="lazy"
+          class="max-h-[520px] w-auto rounded-2xl border border-white/10 shadow-2xl"
+        />
+      </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        The ultimate privacy tool
+      </h2>
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Anonomi is built around three pillars: secure messaging, private payments, and offline maps.
+      </p>
+
+      <!-- Subsection selectors (pillars, not tabs) -->
+      <div class="mt-16 grid gap-10 sm:grid-cols-3">
+        <!-- Messaging -->
+        <a href="#tab-messaging" class="group block">
+          <div class="flex items-center gap-3">
+            <!-- Icon -->
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Messaging
+            </h3>
+          </div>
+
+          <p class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300">
+            Decentralized communication designed for hostile networks.
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+
+        <!-- Payments -->
+        <a href="#tab-payments" class="group block">
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M11.28774193548387 12.046451612903226h3.426838709677419
+                  C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
+                  S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
+                  H4.71225806451613V8.006322580645161L8 11.319354838709677
+                  11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
+                  V3.9535483870967743l5.039096774193548 5.039096774193548
+                  L13.058064516129033 3.9535483870967743V10.529032258064515
+                  h2.3646451612903228c0.2687096774193548 -0.7934838709677419
+                  0.41729032258064513 -1.6438709677419354
+                  0.41729032258064513 -2.5290322580645164
+                  C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
+                  S0.16 3.669032258064516 0.16 8
+                  c0 0.8851612903225806 0.14541935483870969 1.735548387096774
+                  0.41729032258064513 2.5290322580645164H2.9419354838709677Z" />
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Payments
+            </h3>
+          </div>
+
+          <p class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300">
+            Private Monero payment requests without metadata leakage.
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+
+        <!-- Offline Maps -->
+        <a href="#tab-maps" class="group block">
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z" />
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Offline Maps
+            </h3>
+          </div>
+
+          <p class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300">
+            Location sharing without external servers.
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+      </div>
+
+      <!-- Panel: Messaging (visible) -->
+      <div id="tab-messaging" class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div class="max-w-2xl">
+            <h3 class="text-2xl font-semibold tracking-tight">Messaging</h3>
+            <p class="mt-2 text-zinc-400">
+              Decentralized chat designed for hostile networks — online over Tor or fully offline over local transports.
+            </p>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">No servers</div>
+                <p class="mt-1 text-sm text-zinc-400">No central infrastructure to seize, log, or subpoena.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Tor (online)</div>
+                <p class="mt-1 text-sm text-zinc-400">Route communication through Tor, with bridges when blocked.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Offline modes</div>
+                <p class="mt-1 text-sm text-zinc-400">Wi-Fi, Bluetooth, and external storage support when the network is the threat.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Voice + distortion</div>
+                <p class="mt-1 text-sm text-zinc-400">Voice messages with optional dynamic distortion to reduce identification risk.</p>
+              </div>
+            </div>
+        <div class="mt-8">
+              <a
+                href="/docs/features/connectivity"
+                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+              >
+                Learn how Anonomi communicates in hostile environments
+                <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
+          </div>
+          <div class="w-full max-w-md flex justify-center">
+            <div class="w-[320px] h-[420px] flex items-center justify-center">
+              <img
+                src="/screenshots/messaging.png"
+                alt="Anonomi messaging interface"
+                loading="lazy"
+                class="h-full w-full rounded-xl border border-white/10 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Payments (visible) -->
+      <div id="tab-payments" class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div class="max-w-2xl">
+            <h3 class="text-2xl font-semibold tracking-tight">Payments</h3>
+            <p class="mt-2 text-zinc-400">
+              Private Monero payment requests designed to avoid leaking wallet metadata through unsafe channels.
+            </p>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">In-chat requests</div>
+                <p class="mt-1 text-sm text-zinc-400">Request a payment inside the conversation.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Unique subaddress</div>
+                <p class="mt-1 text-sm text-zinc-400">Generate a dedicated subaddress per request to avoid persistent identifiers.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">QR handoff</div>
+                <p class="mt-1 text-sm text-zinc-400">Send a QR with subaddress + amount + description for scanning in a wallet app.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Metadata discipline</div>
+                <p class="mt-1 text-sm text-zinc-400">Avoid sharing payment details through insecure channels.</p>
+              </div>
+            </div>
+            <div class="mt-8">
+              <a
+                href="/docs/features/monero"
+                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+              >
+                See how private Monero payment requests work
+                <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
+          </div>
+          <div class="w-full max-w-md flex justify-center">
+            <div class="w-[320px] h-[420px] flex items-center justify-center">
+              <img
+                src="/screenshots/xmrrequest.png"
+                alt="Anonomi Monero payment request"
+                loading="lazy"
+                class="h-full w-full rounded-xl border border-white/10 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Offline Maps (visible) -->
+      <div id="tab-maps" class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div class="max-w-2xl">
+            <h3 class="text-2xl font-semibold tracking-tight">Offline Maps</h3>
+            <p class="mt-2 text-zinc-400">
+              Share locations without contacting external map servers. Import tile packs for offline navigation.
+            </p>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">No external map calls</div>
+                <p class="mt-1 text-sm text-zinc-400">Designed to avoid third-party map providers.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Offline tile imports</div>
+                <p class="mt-1 text-sm text-zinc-400">Import trusted tile packs for fully offline usage.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Secure location sharing</div>
+                <p class="mt-1 text-sm text-zinc-400">Send coordinates to contacts without server round-trips.</p>
+              </div>
+              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+                <div class="font-medium">Community distribution</div>
+                <p class="mt-1 text-sm text-zinc-400">Tile packs can be shared via trusted sources (onion/community mirrors).</p>
+              </div>
+            </div>
+
+            <!-- Maps Exporter callout -->
+            <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="max-w-xl">
+                  <div class="text-sm font-semibold text-zinc-200">Maps Exporter</div>
+                  <p class="mt-1 text-sm text-zinc-400">
+                    Generate offline tile packs locally in your browser.
+                    Tile sources are only contacted after explicit user selection.
+                  </p>
+                </div>
+
+                <a
+                  href="/maps"
+                  class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
+                >
+                  Open Maps Exporter →
+                </a>
+              </div>
+
+              <!-- Docs link (same style as other section) -->
+              <div class="mt-4">
+                <a
+                  href="/docs/maps-exporter"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn how offline tile exports work
+                  <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <a
+                href="/docs/features/maps"
+                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+              >
+                Explore offline maps and secure location sharing
+                <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="w-full max-w-md flex justify-center">
+            <div class="w-[320px] h-[420px] flex items-center justify-center">
+              <img
+                src="/screenshots/offlinemaps.png"
+                alt="Anonomi Offline Maps"
+                loading="lazy"
+                class="h-full w-full rounded-xl border border-white/10 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODES -->
+    <section id="modes" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Works online or offline</h2>
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Different environments require different paths. Anonomi supports multiple transports — and a fully offline way to share the app.
+      </p>
+
+      <div class="mt-10 space-y-14">
+        <!-- Transports -->
+        <div>
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <svg class="h-5 w-5 text-zinc-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold tracking-tight">Transports</h3>
+          </div>
+
+          <p class="mt-3 max-w-3xl text-base text-zinc-400">
+            Choose the best path for the situation: Tor when the internet is usable, local links when the internet is the threat.
+          </p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {[
+              ["Tor (online)", "Secure and anonymized routing over the internet. Bridges when Tor is blocked."],
+              ["Wi-Fi (offline)", "Communicate inside a local network with no traffic leaving the area."],
+              ["Bluetooth (offline)", "Proximity comms for situations without internet or Wi-Fi infrastructure."],
+              ["External storage", "Store-and-forward via SD card or file transfer for checkpoints and border crossings."],
+            ].map(([t, d]) => (
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <div class="text-base font-semibold">{t}</div>
+                <p class="mt-2 text-sm text-zinc-400">{d}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-6">
+            <a
+              href="/docs/usage/scenarios"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Explore real-world scenarios and transport tradeoffs
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Offline distribution -->
+        <div>
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 3v12m0 0l-3-3m3 3l3-3M5.25 21h13.5a1.5 1.5 0 001.5-1.5v-3.75a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5V19.5a1.5 1.5 0 001.5 1.5z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold tracking-tight">Offline distribution</h3>
+          </div>
+
+          <p class="mt-3 max-w-3xl text-base text-zinc-400">
+            <strong class="font-medium text-zinc-300">Install without app stores.</strong>
+            Anonomi can be shared directly between Android devices using local connections,
+            even when the internet is unavailable, monitored, or unsafe.
+          </p>
+
+          <div class="mt-6">
+            <a
+              href="/docs/features/distribution"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Read how offline distribution works
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- THREAT MODEL -->
+    <section id="threat-model" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Threat model (pragmatic)</h2>
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Anonomi assumes that in serious cases: network traffic is monitored and contacts may eventually be compromised.
+      </p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Assumptions</div>
+          <ul class="mt-3 space-y-2 text-sm text-zinc-400">
+            <li>• Traffic from/to the device may be monitored.</li>
+            <li>• Blocking and manipulation may occur.</li>
+            <li>• Contacts may be compromised over time.</li>
+            <li>• Physical inspection is a realistic risk.</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Design goals</div>
+          <ul class="mt-3 space-y-2 text-sm text-zinc-400">
+            <li>• Avoid centralized servers that can be seized or subpoenaed.</li>
+            <li>• Provide offline options when networks are unsafe.</li>
+            <li>• Reduce metadata leakage in everyday workflows.</li>
+            <li>• Offer safety tools for coercive scenarios.</li>
+          </ul>
+        </div>
+      </div>
+            <div class="mt-8">
+        <a
+          href="/docs/security/threat-model"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          Read the full threat model and design assumptions
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Download Anonomi
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Anonomi is currently available for Android. Distribution is intentionally conservative:
+        releases are signed, verifiable, and designed to be shared even without access to app stores.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <!-- Primary download -->
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Official releases</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Download signed APKs from the official repository. Releases are published with
+            checksums and verification instructions.
+          </p>
+
+          <div class="mt-6">
+            <a
+              id="latest-release-link"
+              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi-org/anonomi-android/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              <span id="latest-release-text">Check the latest release</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Verification -->
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Verify before installing</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            In high-risk environments, installation integrity matters. We strongly recommend
+            verifying signatures and checksums before running the app.
+          </p>
+
+          <div class="mt-6 flex flex-col gap-2">
+            <a
+              href="/docs/verify"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Learn how to verify Anonomi
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              href="/docs/features/distribution#app-catalog-offline-kit"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Why is the APK so large?
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+
+      <p class="mt-8 max-w-3xl text-sm text-zinc-500">
+        No Google Play, no trackers, no silent updates. Anonomi is distributed outside centralized
+        app stores by design.
+      </p>
+        <div class="mt-10 max-w-3xl">
+          <div class="text-base font-semibold">About iOS support</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Anonomi is Android-only. iOS imposes architectural and policy constraints that
+            prevent providing the level of privacy, network control, and offline operation
+            required by Anonomi’s threat model. Supporting iOS would mean compromising on
+            guarantees this project is not willing to weaken.
+          </p>
+
+          <div class="mt-3">
+            <a
+              href="/docs/ios"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Read why Anonomi will never support iOS
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+    </section>
+
+    <footer class="mt-16 border-t border-white/10 pt-10 text-sm text-zinc-500">
+      <div class="mx-auto max-w-6xl px-6">
+        <!-- Row 1: URLs -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi-org (mirror)
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi.org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi.github.io
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://github.com/anonomi-org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://codeberg.org/Anonomi (mirror)
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-white/10 pt-4 text-zinc-500 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div>© {new Date().getFullYear()} Anonomi • No trackers • No analytics • No cookies</div>
+        <div class="font-mono text-[11px] text-zinc-500">
+            Build: <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">{BUILD_SHORT}</a>
+        </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Layout>

@@ -1,0 +1,178 @@
+---
+title: Onion services
+description: Why Anonomi operates independent Tor onion services for its website and code repositories.
+---
+
+Anonomi operates **multiple Tor onion services**.
+
+They are not mirrors, proxies, or gateways.
+They are **first-class access points**.
+
+---
+
+## Official Anonomi access points
+
+Anonomi is intentionally available on both the clearnet and Tor.
+
+### Clearnet
+
+- **Website**
+  - https://anonomi.org
+  - Hosted via GitHub Pages (`anonomi.github.io`)
+  - Accessible from any browser
+
+- **Code repository**
+  - https://github.com/anonomi-org/anonomi-android
+  - Canonical source repository
+
+---
+
+### Tor (onion services)
+
+- **Website (onion)**
+  - `http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/`
+  - Accessible **only** via Tor Browser
+  - Hosted independently as a Tor onion service
+
+- **Code repository (onion Gitea)**
+  - `http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi-org/anonomi-android`
+  - Gitea instance
+  - Tor-accessible mirror of the canonical GitHub repository
+  - Accessible **only** via Tor Browser
+
+All endpoints listed above are official.
+
+---
+
+## These are **not** Tor gateways
+
+None of the Anonomi onion services proxy or forward traffic to clearnet services.
+
+That means:
+- The onion website does **not** proxy, fetch, or mirror the clearnet site at runtime
+- Both sites are built from the same source repository but deployed independently
+- No onion service depends on DNS, TLS certificate authorities, or clearnet platforms
+- Requests are **not** forwarded to clearnet origins
+
+Each onion service is served **directly** from infrastructure controlled by the Anonomi project.
+
+---
+
+## Why we operate independent onion services
+
+### Independence from platforms
+Clearnet platforms can be blocked, rate-limited, censored, or pressured.
+
+When that happens:
+- the onion website remains reachable
+- the onion code repository remains accessible
+- project infrastructure continues to exist
+
+No DNS.  
+No certificate authorities.  
+No platform dependency.
+
+---
+
+### Reduced trust surface
+Using clearnet platforms requires users to trust:
+- hosting providers
+- certificate authorities
+- DNS infrastructure
+- third-party intermediaries
+
+With native onion services:
+- there is no proxy
+- there is no intermediary
+- Tor connects users directly to Anonomi infrastructure
+
+---
+
+### Stronger project identity
+Tor v3 onion addresses are **self-authenticating**.
+
+The address itself is derived from the service’s cryptographic key.
+If you trust the onion address, you are talking to **the real service**.
+
+This applies equally to:
+- the website
+- the code repository
+- future onion services operated by the project
+
+---
+
+### Censorship resistance
+Blocking clearnet domains is trivial.
+Blocking Tor onion services is not.
+
+Anonomi onion services exist for:
+- users under censorship
+- users under surveillance
+- contributors who cannot safely access clearnet platforms
+- environments where GitHub or DNS-based services are unavailable
+
+---
+
+## Which access point should I use?
+
+- Use **clearnet endpoints** if:
+  - you are browsing casually
+  - you are not operating under risk
+  - you prefer convenience
+
+- Use **onion services** if:
+  - you are in a censored or hostile environment
+  - you want stronger anonymity guarantees
+  - you want to minimize trust in third parties
+  - you want direct access to project infrastructure
+
+If in doubt: **use the onion services**.
+
+---
+
+## Security and privacy expectations
+
+All Anonomi endpoints follow the same principles:
+
+- No trackers
+- No analytics
+- No third-party scripts
+- No embedded external resources
+
+Onion services are especially strict by design.
+
+If you encounter:
+- unexpected redirects
+- requests to install extensions
+- requests to access onion services without Tor
+
+You are **not** interacting with an official Anonomi service.
+
+---
+
+## Verifying official onion services
+
+- Only access onion services using **Tor Browser**
+- Bookmark the exact onion addresses
+- Be cautious of screenshots or shortened links shared elsewhere
+
+Official onion addresses are published:
+- in this documentation
+- in Anonomi repositories
+- in official release materials
+
+If an address differs, assume it is untrusted.
+
+---
+
+## Operational note
+
+Clearnet and onion services are built from the same source material,
+but are deployed and operated independently.
+
+This separation is deliberate.
+Anonomi prioritizes resilience over operational convenience.
+
+Anonomi does not rely on permission,
+central platforms,
+or a single point of failure.

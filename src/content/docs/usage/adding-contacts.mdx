@@ -1,0 +1,144 @@
+---
+title: Adding contacts
+description: How to add contacts in Anonomi — nearby or at a distance, without central servers.
+---
+
+Adding contacts in Anonomi is a deliberate, manual process.
+
+There is no global directory, no username search, and no automatic discovery.  
+Contacts are added **person-to-person**, using cryptographic links that you exchange intentionally.
+
+This section explains the two supported ways to add contacts and what to expect in each case.
+
+---
+
+## The two ways to add a contact
+
+Anonomi supports **two distinct contact flows**, depending on whether you can meet the person or not:
+
+1. **Add contact nearby** (in person — strongest verification)
+2. **Add contact at a distance** (remote exchange — requires care)
+
+Both methods require **mutual consent**. You cannot message someone unless both sides complete the process.
+
+---
+
+## Add contact nearby (recommended)
+
+This is the safest way to add a contact.
+
+You and the other person meet in person and scan each other’s QR codes.  
+This ensures you are connecting to the **exact device in front of you**, preventing impersonation.
+
+### Step-by-step
+
+1. Open **Contacts**
+2. Tap **Add contact nearby**
+3. When prompted, tap **Continue**
+4. Scan the QR code shown on your contact’s screen
+5. Ask your contact to scan **your** QR code
+
+After both scans:
+- The devices exchange cryptographic information
+- The contact is added to both contact lists
+- You are ready to communicate securely
+
+No internet connection is required.
+
+---
+
+## Add contact at a distance
+
+Use this method when you cannot meet in person.
+
+This involves exchanging a **contact link** through a channel you choose.
+
+### Step-by-step
+
+1. Open **Contacts**
+2. Tap **Add contact at a distance**
+3. Copy your contact link (or use the Share option)
+4. Send the link to the person you want to add
+5. Receive their contact link
+6. Paste their link into the field and continue
+7. Choose a nickname for the contact
+
+Once completed, the contact will appear as **pending**.
+
+---
+
+## Pending contact requests
+
+When adding a contact at a distance, Anonomi must establish a secure connection before the contact becomes active.
+
+While this is happening:
+- The contact appears in **Pending contacts**
+- Anonomi will periodically try to connect
+- No messages can be exchanged yet
+
+Once a connection succeeds:
+- Both of you are added to each other’s contact lists
+- Secure communication becomes available
+
+---
+
+## If adding a contact fails
+
+If Anonomi cannot establish a connection after an extended period (for example, due to network issues or incorrect links), the pending contact may fail.
+
+If this happens:
+1. Both parties should delete the pending contact
+2. Exchange new contact links
+3. Try again
+
+Failed requests do not compromise existing contacts.
+
+---
+
+## Verification still matters
+
+Adding a contact — especially at a distance — does **not automatically verify identity**.
+
+In higher-risk situations:
+- Verify contact details using a second channel
+- Confirm identities verbally or in writing
+- Prefer in-person QR exchange whenever possible
+
+If something feels wrong, do not proceed.
+
+---
+
+## Removing a contact
+
+You can remove a contact at any time.
+
+Removing a contact:
+- Deletes the local association
+- Prevents further communication
+- Does **not** notify the other person
+
+If you suspect compromise, remove the contact immediately.
+
+---
+
+## Common mistakes to avoid
+
+- Adding contacts from public posts or unknown sources
+- Sharing contact links in public channels
+- Skipping verification in high-risk environments
+- Assuming a nickname equals a known identity
+
+Anonomi removes central points of failure — it does not remove the need for caution.
+
+---
+
+## Summary
+
+- Contacts are added manually, by design
+- Nearby contact exchange provides the strongest verification
+- Distance contact exchange requires careful link handling
+- Mutual consent is required to communicate
+
+Next:
+- **[Introducing contacts](/docs/usage/introducing-contacts)**
+- **[Messaging](/docs/usage/messaging)**

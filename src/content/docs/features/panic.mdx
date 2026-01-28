@@ -1,0 +1,114 @@
+---
+title: Panic button + panic contacts
+description: A last-resort safety workflow to erase local state and optionally alert trusted contacts under coercion.
+---
+
+Anonomi includes a **panic workflow** designed for situations where you are under coercion, detention, or immediate risk.
+
+Panic features are **deliberately simple** and designed to be triggered quickly — even when you cannot safely interact with the app.
+
+---
+
+## What the panic button is (and isn’t)
+
+The panic button is a **last-resort safety mechanism**.
+
+It is designed to:
+- Reduce harm if you are forced to unlock or hand over your device
+- Remove sensitive local data as fast as possible
+- Optionally notify trusted contacts that something is wrong
+
+It is **not** a magic escape button and **cannot guarantee safety**.
+
+---
+
+## Panic button behavior
+
+When a panic trigger is activated:
+
+- Local Anonomi account state may be **deleted or locked**  
+  (exact behavior depends on configuration and platform)
+- Ongoing conversations become inaccessible on that device
+- The app may appear wiped, locked, or reset
+
+> Panic actions happen locally and immediately.  
+> Network delivery is **best effort**, not guaranteed.
+
+---
+
+## Panic contacts
+
+Anonomi allows you to mark specific contacts as **panic contacts**.
+
+When panic mode is triggered:
+- An alert message may be sent to those contacts
+- Delivery depends on current connectivity (online or offline)
+- Messages are sent only when technically possible
+
+Panic contacts are **opt-in** and must be explicitly configured.
+
+---
+
+## How to configure panic contacts
+
+Panic contacts are configured **per contact**, not globally.
+
+To mark a contact as a panic contact:
+1. Open a conversation with the contact
+2. Tap the **three dots** in the top-right corner
+3. Open **Contact Settings**
+4. Enable **Panic Contact**
+
+Only contacts with this setting enabled will receive panic alerts.
+
+See: **[Contact Settings](/docs/usage/contact-settings)**
+
+---
+
+## Panic triggers
+
+Panic mode can be triggered by:
+- A dedicated panic sidecar app (such as **Ripple**)
+- Other configured emergency triggers (implementation-specific)
+
+The goal is to allow triggering **without navigating Anonomi itself**.
+
+---
+
+## What is (and isn’t) guaranteed
+
+**Possible**
+- Local data removal or lock
+- Panic message attempts to trusted contacts
+- Fast execution without complex UI steps
+
+**Not guaranteed**
+- Network delivery of panic messages
+- Protection against advanced forensic recovery
+- Safety after device seizure
+
+Panic workflows **reduce risk** — they do not eliminate it.
+
+---
+
+## When to use panic features
+
+Consider configuring panic features if:
+- You operate in environments with risk of detention
+- You may be forced to unlock your device
+- You need trusted contacts alerted quickly
+- You want a fast, low-interaction escape mechanism
+
+For day-to-day privacy, rely on:
+- Screen locks
+- Stealth mode
+- Conservative connection settings
+
+---
+
+## Related documentation
+
+- **[Contact Settings](/docs/usage/contact-settings)**
+- **[Stealth mode](/docs/features/stealth)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Voice messages + distortion](/docs/features/voice)**

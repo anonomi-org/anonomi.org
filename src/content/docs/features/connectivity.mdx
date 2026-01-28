@@ -1,0 +1,61 @@
+---
+title: Online + Offline connectivity
+description: Communicate over Tor when the internet is usable — or go fully offline when the internet is the threat.
+---
+
+Anonomi is built to keep working under pressure — when networks are **monitored, blocked, unreliable, or unsafe**.
+
+This page is a high-level overview of how Anonomi communicates. For exact switches and step-by-step choices, use the linked docs below.
+
+---
+
+## Two operating modes
+
+### Online (Internet via Tor)
+Use this when you need **long-distance communication** and the internet is available.
+
+- All internet connections are routed through **Tor**
+- No direct connections to contacts or servers
+- If Tor is blocked, **bridges** can be used when supported and configured
+
+**Read more**
+- **[Connections settings](/docs/usage/settings/connections)**
+- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+
+---
+
+### Offline (no internet)
+Use this when the internet is **dangerous**, **blocked**, or **not available**.
+
+Anonomi supports multiple offline communication methods that do not rely on external infrastructure:
+
+- **Bluetooth (proximity)**  
+  Short-range, device-to-device communication for nearby contacts.
+
+- **Wi-Fi (same network)**  
+  Local communication when devices share the same Wi-Fi network, with no traffic leaving the area.
+
+- **External storage (store-and-forward)**  
+  Messages can be written to **external storage** (such as an SD card or removable media), physically transferred, and later imported on another device.  
+  This enables fully **air-gapped communication** with no live connectivity at all.
+
+**Read more**
+- **[Connections settings](/docs/usage/settings/connections)**
+- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+
+---
+
+## The rule of thumb
+
+- If the internet is usable but risky → **Tor**
+- If the internet is the threat → **Offline**
+
+Connectivity choices are part of your **threat model**, not just a convenience setting.
+
+---
+
+## Related
+
+- **[Threat model](/docs/security/threat-model)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Offline app distribution](/docs/features/distribution)**

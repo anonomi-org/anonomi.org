@@ -1,0 +1,153 @@
+---
+title: Why Anonomi will not support iOS
+description: Platform constraints that make iOS incompatible with Anonomi’s threat model.
+---
+
+Anonomi is **intentionally Android-only**.
+
+This is not a matter of preference, resources, or popularity.  
+It is a **design decision driven by the threat model** Anonomi is built for.
+
+This page explains why an iOS version would require compromises the project is not willing to make.
+
+---
+
+## Anonomi’s threat model comes first
+
+Anonomi is designed for environments where:
+
+- Networks may be monitored or blocked
+- Internet access may be dangerous
+- Devices may be inspected or seized
+- Users may need to operate fully offline
+- Centralized infrastructure is a liability
+
+Every platform decision is evaluated against these assumptions.
+
+---
+
+## iOS imposes architectural constraints
+
+iOS enforces platform-level restrictions that conflict with Anonomi’s core guarantees.
+
+### 1. Restricted networking control
+
+Anonomi requires:
+- Fine-grained control over network routing
+- Offline transports (Wi-Fi, Bluetooth, store-and-forward)
+- Predictable background behavior
+
+On iOS:
+- Network traffic is heavily mediated by the OS
+- Background execution is tightly limited
+- Long-lived or unconventional networking patterns are discouraged or blocked
+
+These restrictions make reliable offline and Tor-based workflows fragile or impossible.
+
+---
+
+### 2. App Store control and distribution limits
+
+Anonomi is designed to:
+- Be installable outside app stores
+- Support offline, device-to-device distribution
+- Avoid account-linked distribution pipelines
+
+On iOS:
+- App Store distribution is effectively mandatory
+- Sideloading is restricted, fragile, or region-dependent
+- Offline app sharing workflows are not realistically possible
+
+This creates dependency on centralized infrastructure that Anonomi explicitly avoids.
+
+---
+
+### 3. Background operation and persistence
+
+Anonomi relies on:
+- Predictable background behavior
+- Local message handling without constant foreground use
+- Optional helper components (e.g., Mailbox-style workflows)
+
+On iOS:
+- Background execution is aggressively limited
+- Apps are suspended or terminated without notice
+- Persistent communication workflows cannot be relied upon
+
+These constraints undermine reliability in high-risk scenarios.
+
+---
+
+### 4. Stealth and coercion-resistance limitations
+
+Anonomi includes features intended to reduce harm under coercion:
+- Stealth modes
+- Panic workflows
+- Minimal OS visibility
+
+iOS severely limits:
+- App disguise capabilities
+- Control over system-level visibility
+- Meaningful stealth under inspection
+
+Supporting iOS would mean advertising protections that cannot actually be delivered.
+
+---
+
+## Why not “a limited iOS version”?
+
+A reduced iOS version would:
+- Remove offline guarantees
+- Depend on centralized distribution
+- Restrict background behavior
+- Offer weaker safety properties
+
+This would create **false confidence**, which is worse than no support at all.
+
+Anonomi prefers honesty over reach.
+
+---
+
+## This is not an anti-iOS stance
+
+This decision is not about:
+- Market share
+- Developer convenience
+- Platform popularity
+
+It is about **not shipping a tool that fails when people rely on it most**.
+
+---
+
+## What if iOS changes?
+
+If iOS were to:
+- Allow real offline distribution
+- Offer meaningful background networking control
+- Reduce mandatory platform mediation
+
+Then the decision could be revisited.
+
+Until then, supporting iOS would mean compromising guarantees Anonomi is not willing to weaken.
+
+---
+
+## Summary
+
+Anonomi is Android-only because:
+
+- Offline-first communication is non-negotiable
+- Centralized app store dependency is a risk
+- Background networking control matters
+- Stealth and coercion resistance require platform freedom
+
+Supporting iOS would require trading safety for availability.
+
+That trade is not acceptable.
+
+---
+
+Related:
+- **[Threat model](/docs/security/threat-model)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Online + Offline connectivity](/docs/features/connectivity)**

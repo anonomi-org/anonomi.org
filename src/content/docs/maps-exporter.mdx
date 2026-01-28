@@ -1,0 +1,126 @@
+---
+title: Maps Exporter (beta)
+description: Export offline map tiles locally in your browser.
+---
+
+## Overview
+
+Maps Exporter generates offline map tile packs **locally in your browser**.
+
+Everything happens on your device:
+selection, downloading, packaging, and saving.
+
+- No accounts  
+- No uploads  
+- No analytics  
+- No server-side processing  
+
+Open it here:
+- **[Maps Exporter](/maps)**
+
+---
+
+## How it works
+
+1. Select a map tile source  
+2. Move and zoom the map to define the export area  
+3. Select a zoom detail level or set a custom range  
+4. Export tiles as a ZIP file  
+
+The **visible map area** is the export boundary.
+
+---
+
+## Map sources
+
+No map tiles are loaded until you explicitly select a source.
+
+Available presets include:
+- OpenStreetMap (test / standard)
+- OpenTopoMap
+- CARTO Positron
+- CARTO Dark Matter (dark)
+
+You may also provide a **Custom** tile source by entering a tile URL template.
+
+---
+
+## Privacy notice
+
+Tile sources are contacted **directly by your browser**.
+
+When using Tor, this may involve **Tor exit traffic** unless you use an **onion-based tile source**.
+
+Maps Exporter itself:
+- Does not proxy requests
+- Does not log usage
+- Does not store data remotely
+
+---
+
+## Zoom levels
+
+### Presets
+
+- **Low**: zoom levels 0 to 8  
+- **Medium**: zoom levels 0 to 12  
+- **High**: zoom levels 0 to 16  
+
+### Advanced
+
+Enable *Advanced* to set an exact zoom range manually.
+
+Higher zoom levels significantly increase:
+- Download time
+- Disk usage
+- Memory consumption during export
+- File size (exponentially, as each level quadruples the tile count)
+
+For a detailed explanation of zoom levels, including their impact on file sizes and performance, see [Zoom Levels Explained](/docs/reference/zoom-levels-explained).
+
+---
+
+## Export controls
+
+During export you can:
+- Pause and resume downloading
+- Stop and pack already downloaded tiles
+- Cancel the export entirely
+
+Progress indicators include:
+- Percentage completed
+- Number of tiles downloaded
+- Total downloaded size
+- Elapsed runtime
+
+---
+
+## Output format
+
+The exported ZIP contains:
+
+- A directory hierarchy of tiles organized by zoom, X, and Y
+- A metadata file describing:
+  - Bounding box
+  - Zoom levels
+  - Tile source
+  - Creation timestamp
+
+This format is compatible with Anonomi Offline Maps.
+
+---
+
+## Notes on tile usage
+
+Public tile servers are intended for **light usage only**.
+
+For large areas or high zoom levels, consider:
+- Running your own tile server
+- Using a provider that allows bulk downloads
+- Respecting provider rate limits and usage policies
+
+---
+
+## License
+
+Maps Exporter is released under **GNU GPL v3 or later**.

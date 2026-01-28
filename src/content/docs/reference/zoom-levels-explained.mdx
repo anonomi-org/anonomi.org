@@ -1,0 +1,97 @@
+---
+title: Understanding Zoom Levels in Maps Exporter
+description: Detailed explanation of zoom levels, their impact on map detail, file sizes, and export considerations.
+---
+
+## Overview
+
+Zoom levels in Maps Exporter determine the level of detail in your offline map tiles. Higher zoom levels provide more detailed maps but result in exponentially larger file sizes, longer download times, and increased resource usage.
+
+## What Are Zoom Levels?
+
+Zoom levels represent how zoomed in or out the map is. They are numbered starting from 0 (the entire world) up to higher numbers (street-level detail).
+
+- **Zoom 0**: Shows the entire world as a single tile.
+- **Zoom 1-5**: Continental or country-level views.
+- **Zoom 6-10**: City or regional views.
+- **Zoom 11-15**: Neighborhood or street-level views.
+- **Zoom 16+**: Very detailed, building-level views.
+
+Each zoom level quadruples the number of tiles needed compared to the previous level, as the map is divided into 4 quadrants.
+
+## Presets
+
+Maps Exporter provides preset zoom ranges for common use cases:
+
+- **Low**: Zoom levels 0 to 8  
+  - Suitable for broad regional navigation.
+  - Covers large areas with basic road and landmark information.
+  - File size: Small to moderate.
+
+- **Medium**: Zoom levels 0 to 12  
+  - Good for city-level navigation.
+  - Includes detailed streets, points of interest, and terrain features.
+  - File size: Moderate to large.
+
+- **High**: Zoom levels 0 to 16  
+  - Provides street-level detail.
+  - Includes building outlines, small roads, and fine-grained features.
+  - File size: Large to very large.
+
+## Advanced Zoom Range
+
+For more control, enable the *Advanced* option to set a custom zoom range. This allows you to:
+
+- Start from a higher zoom level (e.g., skip global views if not needed).
+- Limit the maximum zoom to reduce file size.
+- Optimize for specific use cases, like hiking trails or urban exploration.
+
+## Impact on File Size and Performance
+
+Higher zoom levels dramatically increase resource requirements:
+
+### Tile Count
+- Each additional zoom level multiplies tile count by approximately 4.
+- For a small city area:
+  - Zoom 0-8: ~1,000-10,000 tiles
+  - Zoom 0-12: ~100,000-1,000,000 tiles
+  - Zoom 0-16: ~10,000,000+ tiles
+
+### File Size
+- Average tile size: 10-50 KB per tile.
+- Low preset: 10-500 MB
+- Medium preset: 100 MB - 5 GB
+- High preset: 1-50 GB or more, depending on area size.
+
+### Download Time
+- Depends on internet speed and tile server response times.
+- Low: Minutes to hours
+- Medium: Hours to days
+- High: Days to weeks for large areas
+
+### Memory Usage
+- Browser may consume significant RAM during export.
+- High zoom levels can cause browser crashes on low-memory devices.
+- Consider using a dedicated device for large exports.
+
+### Disk Usage
+- Exported ZIP files can be very large.
+- Ensure sufficient storage space before starting.
+- Compression reduces size by 20-50%, but still substantial.
+
+## Recommendations
+
+- **Start small**: Test with a small area and low zoom to understand the process.
+- **Plan ahead**: Calculate approximate file size using online tile calculators.
+- **Respect limits**: Public tile servers have rate limits; avoid overloading them.
+- **Use Tor carefully**: High-volume downloads may reveal patterns through Tor exit nodes.
+- **Optimize**: If possible, run your own tile server for bulk exports.
+
+## Troubleshooting
+
+- **Slow downloads**: Reduce zoom range or select a faster tile source.
+- **Browser crashes**: Lower zoom levels or use a more powerful device.
+- **Large files**: Split exports into smaller areas or reduce zoom range.
+- **Incomplete exports**: Check network connectivity and tile server availability.
+
+For more information on using Maps Exporter, see the [main documentation](/docs/maps-exporter).

@@ -1,0 +1,26 @@
+{
+  "name": "anonomi.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^5.16.7",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/starlight": "^0.37.2",
+    "@tailwindcss/vite": "^4.1.18",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "leaflet": "^1.9.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-leaflet": "^5.0.0",
+    "tailwindcss": "^4.1.18"
+  }
+}

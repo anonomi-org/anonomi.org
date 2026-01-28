@@ -1,0 +1,4 @@
+Contact: mailto:hello@anonomi.org
+Preferred-Languages: en
+Policy: https://anonomi.org/security
+Expires: 2027-01-01

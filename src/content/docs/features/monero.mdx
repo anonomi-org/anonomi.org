@@ -1,0 +1,92 @@
+---
+title: Crypto payments (Monero)
+description: Private payment requests inside Anonomi, designed to reduce metadata leakage.
+---
+
+Anonomi includes **Monero payment requests** so you can ask for or confirm a payment **inside the conversation** without relying on third-party chat apps, screenshots, or public links.
+
+This feature is designed for **high-risk environments**, where *how* you send payment details can be as sensitive as the details themselves.
+
+---
+
+## What it is (and what it isn’t)
+
+**It is:**
+- A way to create a **payment request** and share it with a contact in-chat
+- A safer handoff for **address + amount + optional note**, without switching to less trustworthy channels
+- A workflow designed to reduce accidental **metadata exposure**
+
+**It is not:**
+- A wallet
+- A guarantee of anonymity in all circumstances
+- A substitute for operational security (see: [Operational security basics](/docs/usage/opsec))
+
+---
+
+## How payment requests work
+
+When you create a request, Anonomi generates:
+- A **fresh Monero receiving address** (ideally unique per request)
+- Optional **amount** and **description**
+- A **QR code** representation for fast scanning
+
+You send that request to your contact like any other message.
+
+---
+
+## Recommended workflow
+
+### 1) Request inside the chat
+Use the in-chat request so you don’t have to paste addresses into other apps, notes, screenshots, or cloud services.
+
+### 2) Receiver scans with a trusted wallet
+The receiver uses a Monero wallet to scan the QR code and send the payment.
+
+### 3) Confirm in chat (if needed)
+If you need a human confirmation (“sent”, “received”), do it in the same conversation so you don’t create extra trails across platforms.
+
+---
+
+## Why this reduces risk
+
+In real situations, people leak metadata by accident:
+- Copy/pasting addresses through keyboards with cloud sync
+- Sending screenshots through apps that sync photos
+- Using link shorteners, web previews, or third-party messengers
+- Switching between apps while under observation
+
+Keeping the request **inside the existing secure conversation** reduces those side-channels.
+
+---
+
+## Security notes
+
+### Unique address per request
+Using a unique receiving address per request reduces the chance that unrelated payments can be correlated.
+
+### Don’t attach identity
+Avoid writing identifying details in the payment description (names, phone numbers, locations).
+
+### Beware “out-of-band” confirmations
+If you confirm payment status via SMS, email, or social media, you reintroduce metadata risk. Prefer in-chat confirmation.
+
+---
+
+## Troubleshooting
+
+### The QR code won’t scan
+- Increase screen brightness
+- Zoom in slightly (but don’t crop)
+- Try scanning from the **receiver’s** phone camera and opening in the wallet
+
+### My wallet doesn’t accept the QR format
+Some wallets expect different QR encodings. If scanning fails, use the request’s **copyable address** (if provided) and enter the amount manually.
+
+---
+
+## Related
+
+- [Connectivity modes](/docs/usage/modes)
+- [Scenarios and transport tradeoffs](/docs/usage/scenarios)
+- [Operational security basics](/docs/usage/opsec)
+- [Threat model](/docs/security/threat-model)

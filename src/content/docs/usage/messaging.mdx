@@ -1,0 +1,144 @@
+---
+title: Messaging
+description: Communicate securely using text, images, voice messages, payment requests, and offline location sharing.
+---
+
+Messaging in Anonomi is designed to work under **hostile network conditions** — online, offline, or somewhere in between.
+
+Conversations are **end-to-end encrypted**, decentralized, and do not rely on central servers. Messages sync directly between devices whenever a viable connection exists.
+
+---
+
+## Conversations
+
+Once you’ve added a contact, you can start a conversation immediately.
+
+Each conversation supports multiple message types:
+- Text messages
+- Images
+- Voice messages
+- Payment requests
+- Offline location sharing
+
+All message types follow the same security guarantees.
+
+---
+
+## Sending text messages
+
+Text messages are the simplest and fastest way to communicate.
+
+- Messages are encrypted before leaving your device
+- There are no servers storing message content
+- Messages are delivered when a connection becomes available
+
+If a contact is offline, messages are queued and sent automatically once a connection is possible.
+
+---
+
+## Sending images
+
+You can attach and send images directly in a conversation.
+
+- Images are sent **end-to-end encrypted**
+- No third-party image hosting is used
+- Images are delivered peer-to-peer
+
+**Safety note:**  
+Images may contain metadata (such as camera or location data). Consider stripping metadata before sending in high-risk situations.
+
+> A dedicated page will cover image handling and metadata risks in detail.
+
+---
+
+## Sending voice messages
+
+Anonomi supports voice messages as an alternative to text.
+
+- Voice messages are encrypted like all other content
+- They can be useful when typing is unsafe or impractical
+- Playback happens locally on the recipient’s device
+
+Some configurations may offer **voice distortion** to reduce identification risk.
+
+> Voice messaging and distortion options will be documented in detail separately.
+
+---
+
+## Sending payment requests
+
+Anonomi allows you to send **private payment requests** inside a conversation.
+
+- Requests are sent as messages, not external links
+- Payment details are shared without exposing chat metadata
+- Designed for privacy-focused payment workflows
+
+Payment requests do **not** process payments inside Anonomi — they facilitate secure handoff to a wallet app.
+
+> A dedicated page explains payment requests, wallets, and best practices.
+
+---
+
+## Sending offline locations
+
+You can share your location **without contacting external map servers**.
+
+- Locations are sent directly to your contact
+- No background location tracking
+- No third-party map APIs required
+
+This is especially useful when:
+- The internet is unavailable
+- Map providers are unsafe or blocked
+- You want to avoid leaking location metadata externally
+
+> Offline maps and location sharing are documented in depth elsewhere.
+
+---
+
+## Delivery behavior
+
+Message delivery depends on available transports:
+- Online (via Tor)
+- Local Wi-Fi
+- Bluetooth
+- Store-and-forward methods
+
+You don’t need to choose manually — Anonomi uses what’s available.
+
+If delivery is delayed, messages remain encrypted and queued until sent.
+
+---
+
+## What messaging does *not* do
+
+Anonomi messaging:
+- Does **not** rely on central servers
+- Does **not** store message history in the cloud
+- Does **not** silently sync across devices
+- Does **not** guarantee real-time delivery
+
+This is a tradeoff made deliberately for safety.
+
+---
+
+## Security reminders
+
+- Anyone with access to your unlocked device can read messages
+- Consider using screen lock and inactivity timeout
+- Verify contacts before sharing sensitive information
+- Messaging security depends on **both** participants’ behavior
+
+Anonomi reduces risk — it cannot eliminate it.
+
+---
+
+## Summary
+
+- Messaging supports text, images, voice, payments, and locations
+- All messages are end-to-end encrypted
+- Works online and offline
+- Designed for hostile environments, not convenience platforms
+
+Next:
+- **[Private groups](/docs/usage/private-groups)**
