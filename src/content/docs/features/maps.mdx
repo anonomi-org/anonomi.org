@@ -3,9 +3,9 @@ title: Offline maps
 description: Share locations and navigate without contacting external map servers.
 ---
 
-Offline Maps allow Anonomi to work with **location data without leaking metadata to third-party map providers**.
+Offline Maps allow Anonomi Messenger to work with **location data without leaking metadata to third-party map providers**.
 
-Instead of querying online map services, Anonomi can use **locally stored map tiles**, keeping map usage fully offline and under your control.
+Instead of querying online map services, Anonomi Messenger can use **locally stored map tiles**, keeping map usage fully offline and under your control.
 
 ---
 
@@ -25,9 +25,9 @@ Offline Maps remove that entire class of exposure by **not contacting external m
 
 ## Threat model: GPS and phone location services
 
-Anonomi does **not** need GPS to share locations that you *receive* from other people.
+Anonomi Messenger does **not** need GPS to share locations that you *receive* from other people.
 
-In higher-risk workflows, Anonomi is designed so it can operate **without requesting Android Location permissions**. This matters because once Location Services are enabled and granted to apps, you expand the number of places where location metadata can be created (OS logs, app caches, history, and more).
+In higher-risk workflows, Anonomi Messenger is designed so it can operate **without requesting Android Location permissions**. This matters because once Location Services are enabled and granted to apps, you expand the number of places where location metadata can be created (OS logs, app caches, history, and more).
 
 ### Offline navigation workflow
 
@@ -40,11 +40,11 @@ If you want “navigate from a received location” while minimizing exposure:
 3. When you need navigation, pass the received coordinates to an **offline / standalone navigation tool** (or a dedicated device) that can operate without network access.
 
 This workflow helps ensure:
-- Anonomi does not trigger online map calls
-- Anonomi does not request GPS permissions
+- Anonomi Messenger does not trigger online map calls
+- Anonomi Messenger does not request GPS permissions
 - Navigation can be performed without relying on online services
 
-> Important: disabling GPS/Location in Anonomi reduces what **Anonomi** can access, but it cannot guarantee the OS or other apps won’t create location-related metadata. For best results, keep Android Location off and use offline-only navigation tools.
+> Important: disabling GPS/Location in Anonomi Messenger reduces what **Anonomi Messenger** can access, but it cannot guarantee the OS or other apps won’t create location-related metadata. For best results, keep Android Location off and use offline-only navigation tools.
 
 ---
 
@@ -70,7 +70,7 @@ Offline Maps are based on **pre-downloaded map tiles**, typically distributed as
 
 These map packs are:
 - Stored locally on your device
-- Loaded directly by Anonomi
+- Loaded directly by Anonomi Messenger
 - Never fetched dynamically at runtime (once imported)
 
 This design ensures predictable behavior and avoids surprise network access.
@@ -79,12 +79,12 @@ This design ensures predictable behavior and avoids surprise network access.
 
 ## Creating map packs (Maps Exporter)
 
-Anonomi provides a companion tool: **Maps Exporter (beta)**.
+Anonomi Messenger provides a companion tool: **Maps Exporter (beta)**.
 
 It runs entirely in your browser and lets you:
 - Choose a tile source
 - Select an area and zoom range
-- Export a ZIP pack in the format Anonomi expects
+- Export a ZIP pack in the format Anonomi Messenger expects
 
 Open it here:
 - **[Maps Exporter](/maps/export/)**
@@ -101,7 +101,7 @@ Users can import map data manually, for example:
 Once imported:
 - Maps appear in the Offline Maps list
 - No further downloads are required
-- Anonomi will use them automatically when sharing or viewing locations
+- Anonomi Messenger will use them automatically when sharing or viewing locations
 
 ---
 

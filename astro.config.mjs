@@ -56,7 +56,7 @@ export default defineConfig({
           ],
         },
         {
-          label: "Using Anonomi",
+          label: "Using Anonomi Messenger",
           items: [
             { label: "Installation", link: "/docs/usage/installation" },
             { label: "Creating an account", link: "/docs/usage/creating-an-account" },
