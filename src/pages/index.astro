@@ -14,41 +14,50 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
   <NavBar />
 
-    <!-- ANTI-FASCIST STATEMENT -->
-    <section id="statement" class="relative flex min-h-screen items-center justify-center px-6">
-      <!-- Background -->
-      <div class="pointer-events-none absolute inset-0 -z-10">
-        <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16),transparent_65%)]"></div>
-      </div>
+  <!-- HERO SECTION -->
+  <section id="statement" class="relative flex min-h-screen items-center justify-center px-6">
+    <!-- Background -->
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <!-- Base wash matches body -->
+      <div class="absolute inset-0 bg-zinc-950"></div>
 
-      <div class="mx-auto max-w-5xl text-center">
-        <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
-          <span class="block">
-            BUILT TO PROTECT <span class="text-fuchsia-500/90">FREEDOM</span>
-          </span>
-<span class="mt-4 block text-zinc-100 text-4xl sm:text-5xl lg:text-6xl">
-            Resistant to censorship, control and coercion
-          </span>
-        </h1>
+      <!-- Subtle vertical depth (no black at the end) -->
+      <div class="absolute inset-0 bg-gradient-to-b from-zinc-900/60 via-zinc-950 to-zinc-950"></div>
 
-        <p class="mx-auto mt-8 max-w-3xl text-base text-zinc-300 sm:text-lg">
-          <span class="text-red-500">Authoritarian</span> regimes survive through surveillance,
-          centralization, and fear. Anonomi removes those levers — no servers to seize,
-          no metadata to harvest, and no infrastructure that can be flipped into a tool
-          of repression.
-        </p>
+      <!-- Much dimmer radial highlight -->
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_60%)]"></div>
 
-        <div class="mt-16"></div>
+      <!-- Bottom “settle” overlay so it matches the next section -->
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-950"></div>
+    </div>
 
-        <p class="mt-6 text-xs font-semibold tracking-widest text-zinc-100">
-          OPEN SOURCE • PUBLICLY AUDITABLE • COMMUNITY-VERIFIABLE
-        </p>
-      </div>
-    </section>
+    <div class="mx-auto max-w-5xl text-center">
+      <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
+        <span class="block">
+          BUILT TO PROTECT <span class="text-fuchsia-500/90">FREEDOM</span>
+        </span>
+        <span class="mt-4 block text-zinc-100 text-4xl sm:text-5xl lg:text-6xl">
+          Resistant to censorship, control and coercion
+        </span>
+      </h1>
 
-    <!-- MANIFESTO (INTRO) -->
-  <section id="manifesto" class="mt-24 scroll-mt-24">
+      <p class="mx-auto mt-8 max-w-3xl text-base text-zinc-300 sm:text-lg">
+        <span class="text-red-500">Authoritarian</span> regimes survive through surveillance,
+        centralization, and fear. Anonomi removes those levers — no servers to seize,
+        no metadata to harvest, and no infrastructure that can be flipped into a tool
+        of repression.
+      </p>
+
+      <div class="mt-16"></div>
+
+      <p class="mt-6 text-xs font-semibold tracking-widest text-zinc-100">
+        OPEN SOURCE • PUBLICLY AUDITABLE • COMMUNITY-VERIFIABLE
+      </p>
+    </div>
+  </section>
+
+  <!-- MANIFESTO (INTRO) -->
+  <section id="manifesto" class="mt-4 scroll-mt-24">
     <div class="mx-auto max-w-6xl px-6">
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Manifesto</h2>
 
