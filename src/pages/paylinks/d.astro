@@ -185,13 +185,9 @@ const API_BASE =
 
         if (!metaRes.ok) {
           const msg =
-            meta?.error === "paylink_not_found"
-              ? "Paylink not found."
-              : meta?.error === "paylink_inactive"
-                ? "This Paylink is inactive."
-                : meta?.error === "paylink_deleted"
-                  ? "This Paylink is deleted."
-                  : "Failed to load Paylink.";
+            meta?.error === "paylink_unavailable"
+              ? "This donation link is no longer available."
+              : "Failed to load Paylink.";
           throw new Error(msg);
         }
 
@@ -241,13 +237,9 @@ const API_BASE =
 
           if (!res.ok) {
             const msg =
-              data?.error === "paylink_not_found"
-                ? "Paylink not found."
-                : data?.error === "paylink_inactive"
-                  ? "This Paylink is inactive."
-                  : data?.error === "paylink_deleted"
-                    ? "This Paylink is deleted."
-                    : "Failed to create payment request.";
+              data?.error === "paylink_unavailable"
+                ? "This donation link is no longer available."
+                : data?.error || "Failed to create payment request.";
             throw new Error(msg);
           }
 
