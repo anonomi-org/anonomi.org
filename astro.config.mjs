@@ -56,13 +56,6 @@ export default defineConfig({
           ],
         },
         {
-          label: "Anonomi Paylinks",
-          items: [
-            { label: "What is Paylinks?", link: "/docs/paylinks/what-is" },
-            { label: "Privacy", link: "/docs/paylinks/privacy" },
-          ],
-        },
-        {
           label: "Using Anonomi Messenger",
           items: [
             { label: "Installation", link: "/docs/usage/installation" },
@@ -98,6 +91,13 @@ export default defineConfig({
           items: [
             { label: "Downloads", link: "/docs/downloads" },
             { label: "Verify downloads", link: "/docs/verify" },
+          ],
+        },
+        {
+          label: "Anonomi Paylinks",
+          items: [
+            { label: "What is Paylinks?", link: "/docs/paylinks/what-is" },
+            { label: "Privacy", link: "/docs/paylinks/privacy" },
           ],
         },
         {
