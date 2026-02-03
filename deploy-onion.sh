@@ -52,6 +52,9 @@ npm ci
 echo "[3/5] Building site..."
 # Bake the exact git commit into the static build (used by import.meta.env.PUBLIC_BUILD_SHA)
 export PUBLIC_BUILD_SHA="$(git rev-parse HEAD)"
+# Onion-specific URLs for Paylinks
+export PUBLIC_SITE_BASE_URL="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion"
+export PUBLIC_PAYLINKS_API_BASE="http://thi6cjzqeabackmeimi7veyh4r6rp5bfiy65po7vfaged2yzfvdrtead.onion"
 npm run build
 
 echo "[4/5] Deploying to nginx root..."

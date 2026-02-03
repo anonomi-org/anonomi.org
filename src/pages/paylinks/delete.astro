@@ -1,0 +1,327 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+
+const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
+const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
+const REPO_URL = "https://github.com/anonomi-org/anonomi.github.io";
+const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
+
+const API_BASE =
+  import.meta.env.PUBLIC_PAYLINKS_API_BASE ?? "http://localhost:8787";
+---
+
+<Layout
+  title="Delete Paylink"
+  description="Permanently delete a paylink from the database."
+>
+  <NavBar />
+
+  <main class="mx-auto max-w-2xl px-6 py-16">
+    <div class="relative">
+      <section
+        class="rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12"
+      >
+        <p class="text-xs font-semibold tracking-widest text-zinc-400">DONEE</p>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+          Delete a Paylink
+        </h1>
+
+        <p class="mt-3 text-zinc-300">
+          Permanently delete a paylink. You can delete a specific paylink (by
+          ID), or delete <span class="font-medium text-zinc-200">all</span> paylinks
+          created with the same Monero address + view key.
+        </p>
+
+        <p class="mt-3 flex items-start gap-2 text-xs text-zinc-500">
+          <span
+            aria-hidden="true"
+            class="mt-[1px] font-medium"
+            style="color:#ce27e6"
+          >
+            ⓘ
+          </span>
+          <span>
+            Your address + view key are used <span
+              class="font-medium text-zinc-400">only locally</span
+            >
+            to derive an owner key. The server receives only the owner key for deletion.
+            We never ask for your spend key.
+          </span>
+        </p>
+
+        <form id="form" class="mt-8 space-y-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-zinc-200">
+                Monero primary address
+              </label>
+              <input
+                name="publicAddress"
+                required
+                placeholder="4..."
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-zinc-200">
+                Private view key
+              </label>
+              <input
+                name="privateViewKey"
+                required
+                placeholder="64-hex chars"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-zinc-200">
+                Paylink ID (optional)
+              </label>
+              <input
+                id="paylinkId"
+                name="paylinkId"
+                placeholder="e.g., 2f4c1a0e-..."
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+              <p class="mt-2 text-xs text-zinc-500">
+                If provided, only that paylink is deleted. If empty, we delete
+                all paylinks created with this address + view key.
+              </p>
+            </div>
+          </div>
+
+          <!-- Danger confirmation only required for bulk -->
+          <div
+            id="bulkConfirmWrap"
+            class="hidden rounded-2xl border border-white/10 bg-black/20 p-4"
+          >
+            <div class="text-sm font-semibold text-zinc-200">
+              Bulk delete confirmation
+            </div>
+            <p class="mt-2 text-xs text-zinc-500">
+              You are about to permanently delete
+              <span class="font-medium text-zinc-300">all</span>
+              paylinks for this address + view key. This cannot be undone.
+            </p>
+
+            <label class="mt-3 flex items-start gap-3 text-xs text-zinc-300">
+              <input
+                id="bulkConfirm"
+                type="checkbox"
+                class="mt-0.5 h-4 w-4 rounded border-white/20 bg-black/40"
+              />
+              <span>
+                I understand this will permanently delete all matching paylinks.
+              </span>
+            </label>
+          </div>
+
+          <div class="pt-2 flex items-center gap-3">
+            <button
+              id="submitBtn"
+              type="submit"
+              class="w-full sm:w-auto rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/15"
+            >
+              Delete paylink →
+            </button>
+
+            <button
+              id="resetBtn"
+              type="button"
+              class="hidden rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/15"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <div id="status" class="mt-6 text-sm text-red-400"></div>
+
+        <div id="result" class="mt-6 hidden">
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div class="text-sm font-semibold text-zinc-200">Deleted</div>
+            <div id="resultText" class="mt-2 text-xs text-zinc-400"></div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-2 flex items-center gap-3">
+          <a
+            href="/paylinks"
+            class="inline-flex rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+          >
+            Back
+          </a>
+
+          <a
+            href="/paylinks/create"
+            class="inline-flex rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+          >
+            Create paylink
+          </a>
+        </div>
+      </section>
+
+      <div
+        class="mt-4 flex items-center justify-end font-mono text-[11px] text-zinc-500"
+      >
+        <div>
+          Build:
+          <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+            {BUILD_SHORT}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script define:vars={{ API_BASE }}>
+    const form = document.getElementById("form");
+    const statusEl = document.getElementById("status");
+    const resultEl = document.getElementById("result");
+    const resultTextEl = document.getElementById("resultText");
+    const submitBtn = document.getElementById("submitBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const paylinkIdEl = document.getElementById("paylinkId");
+    const bulkConfirmWrap = document.getElementById("bulkConfirmWrap");
+    const bulkConfirm = document.getElementById("bulkConfirm");
+
+    function setStatus(msg) {
+      statusEl.textContent = msg || "";
+    }
+
+    function showBulkConfirmIfNeeded() {
+      const id = String(paylinkIdEl?.value || "").trim();
+      const isBulk = !id;
+
+      if (isBulk) {
+        bulkConfirmWrap?.classList.remove("hidden");
+      } else {
+        bulkConfirmWrap?.classList.add("hidden");
+        if (bulkConfirm) bulkConfirm.checked = false;
+      }
+    }
+
+    paylinkIdEl?.addEventListener("input", showBulkConfirmIfNeeded);
+
+    function resetUI() {
+      form.reset();
+      setStatus("");
+      resultEl.classList.add("hidden");
+      if (resultTextEl) resultTextEl.textContent = "";
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Delete paylink →";
+      submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+
+      resetBtn?.classList.add("hidden");
+
+      if (bulkConfirm) bulkConfirm.checked = false;
+      showBulkConfirmIfNeeded();
+    }
+
+    resetBtn?.addEventListener("click", resetUI);
+
+    function toHex(buffer) {
+      return Array.from(new Uint8Array(buffer))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function sha256Hex(str) {
+      // Requires secure context (https or localhost)
+      const data = new TextEncoder().encode(str);
+      const digest = await crypto.subtle.digest("SHA-256", data);
+      return toHex(digest);
+    }
+
+    async function computeOwnerKey(publicAddress, privateViewKey) {
+      return sha256Hex(
+        `paylinks:ownerkey:v1:${publicAddress}:${privateViewKey}`,
+      );
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setStatus("");
+      resultEl.classList.add("hidden");
+
+      const fd = new FormData(form);
+      const publicAddress = String(fd.get("publicAddress") || "").trim();
+      const privateViewKey = String(fd.get("privateViewKey") || "").trim();
+      const paylinkId = String(fd.get("paylinkId") || "").trim();
+
+      const isBulk = !paylinkId;
+
+      if (isBulk && !bulkConfirm?.checked) {
+        setStatus("Error: Please confirm bulk delete.");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Working…";
+
+      try {
+        if (!/^[0-9a-fA-F]{64}$/.test(privateViewKey)) {
+          setStatus("Error: Private view key must be 64 hex characters.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Delete paylink →";
+          return;
+        }
+
+        // Compute ownerKey locally; send ONLY ownerKey to server
+        const ownerKey = await computeOwnerKey(publicAddress, privateViewKey);
+
+        let url = "";
+        const body = { ownerKey };
+
+        if (paylinkId) {
+          url = `${API_BASE}/api/paylinks/${encodeURIComponent(paylinkId)}/delete`;
+        } else {
+          url = `${API_BASE}/api/paylinks/delete`;
+        }
+
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          const err = data?.error
+            ? `Error: ${data.error}`
+            : `Error: ${res.status}`;
+          setStatus(err);
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Delete paylink →";
+          return;
+        }
+
+        const msg = String(data?.message || "Done.");
+
+        if (resultTextEl) resultTextEl.textContent = msg;
+        resultEl.classList.remove("hidden");
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Done";
+        submitBtn.classList.add("opacity-60", "cursor-not-allowed");
+
+        resetBtn?.classList.remove("hidden");
+      } catch (err) {
+        console.error(err);
+        setStatus(
+          "Network error (or browser blocked crypto.subtle). Are you on https/localhost and is the API running?",
+        );
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Delete paylink →";
+      }
+    });
+
+    showBulkConfirmIfNeeded();
+  </script>
+</Layout>

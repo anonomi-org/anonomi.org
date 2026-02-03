@@ -34,6 +34,8 @@ jobs:
         run: npm run build
         env:
           PUBLIC_BUILD_SHA: ${{ github.sha }}
+          PUBLIC_SITE_BASE_URL: https://anonomi.org
+          PUBLIC_PAYLINKS_API_BASE: https://paylinksd.anonomi.org
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

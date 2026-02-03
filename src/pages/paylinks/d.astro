@@ -1,0 +1,331 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+
+const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
+const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
+const REPO_URL = "https://github.com/anonomi-org/anonomi.github.io";
+const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
+
+const API_BASE =
+  import.meta.env.PUBLIC_PAYLINKS_API_BASE ?? "http://localhost:8787";
+---
+
+<Layout
+  title="Donate with Anonomi Paylinks"
+  description="Private Monero donation request."
+>
+  <NavBar />
+
+  <main class="mx-auto max-w-xl px-6 py-16">
+    <div class="relative">
+      <section
+        id="paylink"
+        class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center">
+        <h1 class="text-2xl font-semibold">Preparing donation…</h1>
+        <p class="mt-3 text-sm text-zinc-400" id="status">Reading paylink…</p>
+      </section>
+
+      <!-- Footer stays OUTSIDE #paylink so it doesn't get wiped by innerHTML -->
+      <div
+        class="mt-4 flex items-center justify-between font-mono text-[11px] text-zinc-500"
+      >
+        <div id="footerFingerprint" class="hidden">
+          Paylink Fingerprint:
+          <span id="footerFingerprintValue" class="text-zinc-300"></span>
+        </div>
+
+        <div>
+          Build:
+          <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+            {BUILD_SHORT}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script is:inline define:vars={{ API_BASE }}>
+    window.__PAYLINKS_API_BASE__ = API_BASE;
+  </script>
+
+  <script>
+    import QRCode from "qrcode";
+
+    const API_BASE = window.__PAYLINKS_API_BASE__ || "http://localhost:8787";
+
+    const container = document.getElementById("paylink");
+
+    // Read UUID from URL fragment (#...)
+    const id = window.location.hash.slice(1);
+
+    const UUID_RE =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+    function esc(s) {
+      return String(s)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    if (!id || !UUID_RE.test(id)) {
+      container.innerHTML = `
+        <h1 class="text-2xl font-semibold">Invalid donation link</h1>
+        <p class="mt-3 text-sm text-zinc-400">
+          This Paylink is missing or malformed.
+        </p>
+      `;
+      throw new Error("Invalid paylink id");
+    }
+
+    async function run() {
+      container.innerHTML = `
+        <h1 class="text-2xl font-semibold">Donate Monero (XMR)</h1>
+
+        <p id="labelLine" class="mt-2 hidden text-xs uppercase tracking-wide text-zinc-400"></p>
+
+        <form id="donateForm" class="mt-6 text-left">
+          <div class="flex items-center justify-between">
+          <label class="block text-sm text-zinc-300">
+            Amount (XMR) (optional)
+          </label>
+
+          <a
+            href="/docs/paylinks/what-is"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300"
+          >
+            <span
+              aria-hidden="true"
+              class="text-[11px] font-medium"
+              style="color:#ce27e6"
+            >
+              ⓘ
+            </span>
+            <span>
+              What is Anonomi Paylinks?
+            </span>
+          </a>
+        </div>
+          <input
+            id="amount"
+            class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-zinc-100 outline-none"
+            placeholder="e.g. 0.15"
+            inputmode="decimal"
+            autocomplete="off"
+          />
+
+          <label class="mt-4 block text-sm text-zinc-300">Description (optional)</label>
+          <input
+            id="desc"
+            class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-zinc-100 outline-none"
+            placeholder="e.g. Donation for content"
+            maxlength="140"
+            autocomplete="off"
+          />
+
+          <button
+            id="btn"
+            type="submit"
+            class="mt-6 w-full rounded-xl bg-white/10 px-4 py-3 text-sm font-medium ring-1 ring-white/15 hover:bg-white/15"
+          >
+            Generate payment request
+          </button>
+          <div class="mt-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3">
+            <p class="flex items-start gap-2 text-xs text-zinc-500">
+              <span
+                aria-hidden="true"
+                class="mt-[1px] font-medium"
+                style="color:#ce27e6"
+              >
+                ⓘ
+              </span>
+              <span>
+                This generates payment information (address, optional amount, QR code) to be used in
+                your Monero wallet app.
+                <span class="font-medium text-zinc-400">
+                  We don’t move funds — the transaction is created and approved by you in your wallet.
+                </span>
+                <span class="block mt-1">
+                  We take privacy seriously:
+                  <span class="font-medium text-zinc-400">
+                    no tracking, no analytics, and no payment metadata is logged or stored.
+                  </span>
+                  <a
+                    href="/docs/paylinks/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ml-1 underline underline-offset-2 hover:text-zinc-300"
+                  >
+                    Learn more
+                  </a>
+                </span>
+              </span>
+            </p>
+          </div>
+        </form>
+
+        <div id="result" class="mt-8"></div>
+      `;
+
+      const labelLine = document.getElementById("labelLine");
+      const footerFpWrap = document.getElementById("footerFingerprint");
+      const footerFpValue = document.getElementById("footerFingerprintValue");
+
+      // Load meta (label + fingerprint)
+      try {
+        const metaRes = await fetch(`${API_BASE}/api/paylinks/${id}/meta`, {
+          method: "GET",
+        });
+        const meta = await metaRes.json().catch(() => ({}));
+
+        if (!metaRes.ok) {
+          const msg =
+            meta?.error === "paylink_not_found"
+              ? "Paylink not found."
+              : meta?.error === "paylink_inactive"
+                ? "This Paylink is inactive."
+                : meta?.error === "paylink_deleted"
+                  ? "This Paylink is deleted."
+                  : "Failed to load Paylink.";
+          throw new Error(msg);
+        }
+
+        const label = typeof meta?.label === "string" ? meta.label.trim() : "";
+        if (labelLine) {
+          labelLine.textContent = label || "";
+          labelLine.classList.toggle("hidden", !label);
+        }
+
+        // ✅ Only set footer fingerprint (no top fingerprint anymore)
+        const fingerprint =
+          typeof meta?.fingerprint === "string" ? meta.fingerprint.trim() : "";
+        if (fingerprint && footerFpWrap && footerFpValue) {
+          footerFpValue.textContent = fingerprint;
+          footerFpWrap.classList.remove("hidden");
+        }
+      } catch (e) {
+        throw e;
+      }
+
+      const form = document.getElementById("donateForm");
+      const result = document.getElementById("result");
+      const btn = document.getElementById("btn");
+
+      let paymentGenerated = false;
+
+      async function requestPayment(amount, description) {
+        if (paymentGenerated) return;
+
+        btn.disabled = true;
+        btn.textContent = "Generating…";
+        result.innerHTML = "";
+
+        try {
+          const payload = {
+            description,
+            ...(amount ? { amount } : {}), // omit amount if empty
+          };
+
+          const res = await fetch(`${API_BASE}/api/paylinks/${id}/request`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            const msg =
+              data?.error === "paylink_not_found"
+                ? "Paylink not found."
+                : data?.error === "paylink_inactive"
+                  ? "This Paylink is inactive."
+                  : data?.error === "paylink_deleted"
+                    ? "This Paylink is deleted."
+                    : "Failed to create payment request.";
+            throw new Error(msg);
+          }
+
+          const address = data.address;
+          const uri = data.uri;
+
+          result.innerHTML = `
+            <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
+              <div class="text-sm font-semibold text-zinc-200">Send Monero</div>
+
+              <div class="mt-5 flex justify-center">
+                <canvas id="qr" class="rounded-2xl bg-white p-3"></canvas>
+              </div>
+
+              <div class="mt-5 text-xs text-zinc-400">Address</div>
+              <div class="mt-1 font-mono text-[12px] break-all text-zinc-200" id="addr">
+                ${esc(address)}
+              </div>
+
+              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                <a
+                  id="open"
+                  href="${esc(uri)}"
+                  class="rounded-xl bg-white/10 px-4 py-3 text-center text-sm font-medium ring-1 ring-white/15 hover:bg-white/15"
+                  rel="nofollow noopener"
+                >
+                  Open in wallet
+                </a>
+                <button
+                  id="copyBtn"
+                  class="rounded-xl px-4 py-3 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+                  type="button"
+                >
+                  Copy address
+                </button>
+              </div>
+            </div>
+          `;
+
+          const qrCanvas = document.getElementById("qr");
+          await QRCode.toCanvas(qrCanvas, uri, { margin: 1, width: 280 });
+
+          document
+            .getElementById("copyBtn")
+            .addEventListener("click", async () => {
+              await navigator.clipboard.writeText(address);
+              const b = document.getElementById("copyBtn");
+              b.textContent = "Copied!";
+              setTimeout(() => (b.textContent = "Copy address"), 1200);
+            });
+
+          paymentGenerated = true;
+          btn.disabled = true;
+          btn.textContent = "Payment request generated";
+          btn.classList.add("opacity-60", "cursor-not-allowed");
+        } catch (e) {
+          btn.disabled = false;
+          btn.textContent = "Generate payment request";
+          throw e;
+        }
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const amount = document.getElementById("amount").value.trim();
+        const description = document.getElementById("desc").value.trim();
+        requestPayment(amount, description);
+      });
+    }
+
+    run().catch((e) => {
+      console.error(e);
+      container.innerHTML = `
+        <h1 class="text-2xl font-semibold">Error</h1>
+        <p class="mt-3 text-sm text-zinc-400">${esc(
+          e?.message || "Something went wrong.",
+        )}</p>
+      `;
+    });
+  </script>
+</Layout>

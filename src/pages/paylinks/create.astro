@@ -1,0 +1,686 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+
+const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
+const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
+const REPO_URL = "https://github.com/anonomi-org/anonomi.github.io";
+const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
+
+const API_BASE =
+  import.meta.env.PUBLIC_PAYLINKS_API_BASE ?? "http://localhost:8787";
+
+const SITE_BASE =
+  import.meta.env.PUBLIC_SITE_BASE_URL ?? "http://localhost:4321";
+---
+
+<Layout
+  title="Create Paylink"
+  description="Generate a donation button without exposing a long-lived wallet address."
+>
+  <NavBar />
+
+  <main class="mx-auto max-w-2xl px-6 py-16">
+    <div class="relative">
+      <section
+        class="rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12"
+      >
+        <p class="text-xs font-semibold tracking-widest text-zinc-400">DONEE</p>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+          Create a Donate button
+        </h1>
+
+        <p class="mt-3 text-zinc-300">
+          Enter your Monero address and private view key. The view key is stored
+          encrypted and used only to generate receive-only subaddresses.
+        </p>
+
+        <p class="mt-3 flex items-start gap-2 text-xs text-zinc-500">
+          <span
+            aria-hidden="true"
+            class="mt-[1px] font-medium"
+            style="color:#ce27e6"
+          >
+            ⓘ
+          </span>
+          <span>
+            We never ask for your
+            <span class="font-medium text-zinc-400"
+              >spend key, we can’t move your funds</span
+            >.
+            <a
+              href="/docs/paylinks/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-1 underline underline-offset-2 hover:text-zinc-300"
+            >
+              Learn more
+            </a>
+          </span>
+        </p>
+
+        <form id="form" class="mt-8 space-y-6">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-zinc-200"
+                >Monero primary address</label
+              >
+              <input
+                name="publicAddress"
+                required
+                placeholder="4..."
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+              <p class="mt-2 text-xs text-zinc-500">
+                This is your standard Monero address (starts with <span
+                  class="font-mono">4</span
+                > on mainnet).
+              </p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-zinc-200"
+                >Private view key</label
+              >
+              <input
+                name="privateViewKey"
+                required
+                placeholder="64-hex chars"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+              <p class="mt-2 text-xs text-zinc-500">
+                Stored encrypted on the server. Used only to derive subaddresses
+                server-side.
+              </p>
+            </div>
+          </div>
+
+          <!-- Options (no frame) -->
+          <div id="optionsPanel" class="mt-6 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-zinc-200"
+                >Label (optional)</label
+              >
+              <input
+                name="label"
+                maxlength="80"
+                placeholder="e.g., John's blog"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+              />
+              <p class="mt-2 text-xs text-zinc-500">
+                This label appears on the payment page as a subtitle, helping
+                donors recognize who they’re donating to. It is optional.
+              </p>
+            </div>
+
+            <!-- Mode + indices row -->
+            <div class="grid gap-4 sm:grid-cols-4">
+              <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-zinc-200"
+                  >Generation mode</label
+                >
+                <select
+                  id="genMode"
+                  name="genMode"
+                  class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/20"
+                >
+                  <option value="random" selected>Random (default)</option>
+                  <option value="sequential" disabled>Sequential (soon)</option>
+                </select>
+                <p id="genModeHelp" class="mt-2 text-xs text-zinc-500"></p>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label class="block text-sm font-medium text-zinc-200"
+                  >Min index</label
+                >
+                <input
+                  id="minIndex"
+                  name="minIndex"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="e.g., 1 (optional)"
+                  class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+                <p id="minHelp" class="mt-2 text-xs text-zinc-500">Optional.</p>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label class="block text-sm font-medium text-zinc-200"
+                  >Max index</label
+                >
+                <input
+                  id="maxIndex"
+                  name="maxIndex"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="e.g., 500 (optional)"
+                  class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+                <p id="maxHelp" class="mt-2 text-xs text-zinc-500">Optional.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="submitBtn"
+              type="submit"
+              class="w-full sm:w-auto rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/15"
+            >
+              Create paylink →
+            </button>
+          </div>
+        </form>
+
+        <div id="status" class="mt-6 text-sm text-red-400"></div>
+
+        <div id="result" class="mt-6 mb-6 hidden">
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div class="text-sm font-semibold text-zinc-200">Your Paylink</div>
+
+            <div id="verifyText" class="mt-3 text-xs text-zinc-400"></div>
+            <div
+              id="subaddressLine"
+              class="mt-2 hidden rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-xs text-zinc-300"
+            >
+            </div>
+            <p class="mt-2 flex items-start gap-2 text-xs text-zinc-500">
+              <span
+                aria-hidden="true"
+                class="mt-[1px] font-medium"
+                style="color:#ce27e6"
+              >
+                ⓘ
+              </span>
+              <span>
+                <span class="font-medium text-zinc-400">Important:</span>
+                Open your wallet and confirm the receiving address starts/ends like
+                this.
+              </span>
+            </p>
+            <div class="mt-3 text-xs text-zinc-400">Donate URL</div>
+            <div
+              class="mt-1 font-mono text-[12px] text-zinc-200 break-all"
+              id="donateUrl"
+            >
+            </div>
+
+            <div class="mt-4 flex items-end justify-between gap-3">
+              <div class="text-xs text-zinc-400">Embed HTML</div>
+
+              <div class="min-w-[180px]">
+                <label for="embedStyle" class="sr-only">Button style</label>
+                <select
+                  id="embedStyle"
+                  class="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-xs text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/20"
+                >
+                  <option value="link">Simple link</option>
+                  <option value="pillSolid">Pill (solid)</option>
+                  <option value="pillOutline">Pill (outline)</option>
+                  <option value="icon" selected>Icon + text</option>
+                  <option value="badge">Minimal badge</option>
+                </select>
+              </div>
+            </div>
+
+            <textarea
+              id="embedHtml"
+              readonly
+              class="mt-2 h-32 w-full resize-none rounded-xl border border-white/10 bg-black/30 p-3 font-mono text-[12px] text-zinc-100 focus:outline-none"
+            ></textarea>
+
+            <div
+              class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <!-- Left: Copy -->
+              <div class="flex items-center gap-3">
+                <button
+                  id="copyBtn"
+                  type="button"
+                  class="rounded-xl bg-white/10 px-3 py-2 text-xs font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/15"
+                >
+                  Copy snippet
+                </button>
+
+                <div id="copyStatus" class="text-xs text-zinc-400"></div>
+              </div>
+
+              <!-- Right: Preview -->
+              <div class="flex items-center justify-end gap-3">
+                <div class="text-xs text-zinc-500">Preview:</div>
+
+                <div
+                  id="embedPreviewWrap"
+                  class="inline-flex items-center justify-end"
+                >
+                  <div id="embedPreview"></div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8"
+            >
+              <!-- Fingerprint -->
+              <div class="min-w-0">
+                <div class="text-xs text-zinc-400">Paylink fingerprint</div>
+                <div
+                  id="paylinkFingerprint"
+                  class="mt-1 font-mono text-[12px] text-zinc-200 whitespace-nowrap"
+                >
+                </div>
+              </div>
+
+              <!-- ID -->
+              <div class="min-w-0">
+                <div class="text-xs text-zinc-400">Paylink ID</div>
+                <div
+                  id="paylinkId"
+                  class="mt-1 font-mono text-[12px] text-zinc-200 whitespace-nowrap overflow-x-auto"
+                >
+                </div>
+              </div>
+            </div>
+            <p class="mt-2 text-xs text-zinc-500">
+              The donate page must show the same fingerprint for this paylink
+              id.
+            </p>
+          </div>
+        </div>
+        <!-- Back button -->
+        <div class="pt-2 flex items-center gap-3">
+          <a
+            href="/paylinks"
+            class="inline-flex rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+          >
+            Back
+          </a>
+
+          <button
+            id="resetBtn"
+            type="button"
+            class="hidden rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/15"
+          >
+            Create new paylink
+          </button>
+        </div>
+      </section>
+
+      <!-- Build footer OUTSIDE the box -->
+      <div
+        class="mt-4 flex items-center justify-end font-mono text-[11px] text-zinc-500"
+      >
+        <div>
+          Build:
+          <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+            {BUILD_SHORT}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script define:vars={{ API_BASE, SITE_BASE }}>
+    const form = document.getElementById("form");
+    const statusEl = document.getElementById("status");
+    const resultEl = document.getElementById("result");
+    const donateUrlEl = document.getElementById("donateUrl");
+    const embedEl = document.getElementById("embedHtml");
+    const fingerprintEl = document.getElementById("paylinkFingerprint");
+    const paylinkIdEl = document.getElementById("paylinkId");
+    const submitBtn = document.getElementById("submitBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const copyStatusEl = document.getElementById("copyStatus");
+    const genModeEl = document.getElementById("genMode");
+    const genModeHelp = document.getElementById("genModeHelp");
+    const minHelp = document.getElementById("minHelp");
+    const maxHelp = document.getElementById("maxHelp");
+    const embedStyleEl = document.getElementById("embedStyle");
+    const embedPreviewEl = document.getElementById("embedPreview");
+
+    const resetBtn = document.getElementById("resetBtn");
+    resetBtn?.classList.add("hidden");
+
+    const verifyTextEl = document.getElementById("verifyText");
+    const subaddressLineEl = document.getElementById("subaddressLine");
+
+    let paylinkCreated = false;
+
+    function setStatus(msg) {
+      statusEl.textContent = msg || "";
+    }
+
+    function toIntOrUndef(v) {
+      const s = String(v ?? "").trim();
+      if (!s) return undefined;
+      const n = Number(s);
+      if (!Number.isFinite(n)) return undefined;
+      const i = Math.trunc(n);
+      return i > 0 ? i : undefined;
+    }
+
+    function resetUI() {
+      // reset state
+      paylinkCreated = false;
+
+      if (embedStyleEl) embedStyleEl.value = "icon";
+
+      if (resetBtn) {
+        resetBtn.classList.add("hidden");
+        resetBtn.classList.remove("inline-flex");
+      }
+
+      // reset form fields
+      form.reset();
+
+      // restore default mode + help text
+      if (genModeEl) genModeEl.value = "random";
+      syncIndexHelp();
+
+      // clear status + result area
+      setStatus("");
+      resultEl.classList.add("hidden");
+
+      // clear generated content
+      donateUrlEl.textContent = "";
+      embedEl.value = "";
+      fingerprintEl.textContent = "";
+      paylinkIdEl.textContent = "";
+      if (embedPreviewEl) embedPreviewEl.innerHTML = "";
+
+      // clear verification texts
+      if (verifyTextEl) verifyTextEl.textContent = "";
+      if (subaddressLineEl) {
+        subaddressLineEl.innerHTML = "";
+        subaddressLineEl.classList.add("hidden");
+      }
+
+      // clear copy status
+      if (copyStatusEl) copyStatusEl.textContent = "";
+
+      // re-enable submit button (and remove disabled styling)
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Create paylink →";
+      submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+    }
+
+    resetBtn?.addEventListener("click", resetUI);
+
+    function syncIndexHelp() {
+      const mode = String(genModeEl?.value || "")
+        .trim()
+        .toLowerCase();
+      if (mode === "random") {
+        minHelp.textContent = "(Default: 1)";
+        maxHelp.textContent = "(Default: 100)";
+        if (genModeHelp)
+          genModeHelp.textContent = "Random picks an index within a range.";
+      } else {
+        minHelp.textContent = "Optional.";
+        maxHelp.textContent = "Optional.";
+      }
+    }
+
+    function validateIndexRange(minIndex, maxIndex) {
+      if (
+        minIndex !== undefined &&
+        maxIndex !== undefined &&
+        minIndex > maxIndex
+      ) {
+        return `Min index must be less than or equal to Max index.`;
+      }
+      return null;
+    }
+
+    genModeEl?.addEventListener("change", syncIndexHelp);
+
+    function buildOptions(fd) {
+      const labelRaw = String(fd.get("label") || "").slice(0, 80);
+      const label = labelRaw.trim();
+      const genMode = String(fd.get("genMode") || "").trim();
+      const minIndex = toIntOrUndef(fd.get("minIndex"));
+      const maxIndex = toIntOrUndef(fd.get("maxIndex"));
+
+      const options = {};
+
+      // only include fields that are actually set
+      if (label) options.label = label;
+      if (genMode) options.genMode = genMode;
+      if (minIndex !== undefined) options.minIndex = minIndex;
+      if (maxIndex !== undefined) options.maxIndex = maxIndex;
+
+      return Object.keys(options).length ? options : undefined;
+    }
+
+    function escAttr(s) {
+      return String(s || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function buildEmbedHtml(donateUrl, style) {
+      const href = escAttr(donateUrl);
+
+      // Keep it self-contained: only <a>, inline styles, no JS.
+      switch (style) {
+        case "pillSolid":
+          return (
+            `<!-- Anonomi Paylinks -->\n` +
+            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
+            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;` +
+            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
+            `text-decoration:none;background:#ce27e6;color:#0b0b0f;` +
+            `box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;">` +
+            `Donate XMR</a>\n`
+          );
+
+        case "pillOutline":
+          return (
+            `<!-- Anonomi Paylinks -->\n` +
+            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
+            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;` +
+            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
+            `text-decoration:none;background:transparent;color:#eaeaf0;` +
+            `border:1px solid rgba(255,255,255,.18);">` +
+            `Donate XMR</a>\n`
+          );
+
+        case "icon":
+          return (
+            `<!-- Anonomi Paylinks -->\n` +
+            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
+            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;` +
+            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
+            `text-decoration:none;background:rgba(255,255,255,.06);color:#eaeaf0;` +
+            `border:1px solid rgba(255,255,255,.12);">\n` +
+            `  <span style="width:10px;height:10px;border-radius:999px;background:#ce27e6;display:inline-block;"></span>\n` +
+            `  Donate XMR\n` +
+            `</a>\n`
+          );
+
+        case "badge":
+          return (
+            `<!-- Anonomi Paylinks -->\n` +
+            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
+            `  style="display:inline-block;padding:6px 10px;border-radius:10px;` +
+            `font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
+            `text-decoration:none;background:rgba(255,255,255,.06);color:#eaeaf0;` +
+            `border:1px solid rgba(255,255,255,.12);letter-spacing:.2px;">` +
+            `Donate • XMR</a>\n`
+          );
+
+        case "link":
+        default:
+          return (
+            `<!-- Anonomi Paylinks -->\n` +
+            `<a href="${href}" rel="nofollow noopener" target="_blank">Donate XMR</a>\n`
+          );
+      }
+    }
+
+    function renderEmbedPreview(donateUrl, style) {
+      if (!embedPreviewEl) return;
+      const html = buildEmbedHtml(donateUrl, style);
+
+      // Extract the actual <a ...>...</a> to display (drop the comment line)
+      const aHtml = html.split("\n").find((l) => l.trim().startsWith("<a"))
+        ? html.replace(/^<!--.*?-->\n?/m, "")
+        : html;
+
+      embedPreviewEl.innerHTML = aHtml;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (paylinkCreated) return;
+      setStatus("");
+      resultEl.classList.add("hidden");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Working…";
+
+      const fd = new FormData(form);
+      const payload = {
+        publicAddress: String(fd.get("publicAddress") || "").trim(),
+        privateViewKey: String(fd.get("privateViewKey") || "").trim(),
+      };
+
+      const submittedOptions = buildOptions(fd);
+
+      if (submittedOptions) {
+        const err = validateIndexRange(
+          submittedOptions.minIndex,
+          submittedOptions.maxIndex,
+        );
+
+        if (err) {
+          setStatus(`Error: ${err}`);
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Create paylink →";
+          return;
+        }
+
+        payload.options = submittedOptions;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/api/paylinks`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (copyStatusEl) copyStatusEl.textContent = "";
+
+        if (!res.ok) {
+          const detailMsg =
+            data?.details?.options?.genMode?.[0] ||
+            data?.details?.options?.minIndex?.[0] ||
+            data?.details?.options?.maxIndex?.[0] ||
+            null;
+
+          setStatus(
+            detailMsg
+              ? `Error: ${detailMsg}`
+              : data?.error
+                ? `Error: ${data.error}`
+                : `Error: ${res.status}`,
+          );
+          console.error("create paylink failed:", data);
+          return;
+        }
+
+        // Build donate URL from SITE_BASE (set at build time for security)
+        const donateUrl = `${SITE_BASE}/paylinks/d#${data.id}`;
+        donateUrlEl.textContent = donateUrl;
+
+        // Generate embed HTML from selected preset (default to pillSolid if missing)
+        const style = String(embedStyleEl?.value || "icon");
+        embedEl.value = buildEmbedHtml(donateUrl, style);
+        renderEmbedPreview(donateUrl, style);
+        fingerprintEl.textContent = data.fingerprint || ""; // server returns `fingerprint`
+        paylinkIdEl.textContent = data.id || "";
+
+        const minIndex = data.minIndex;
+        const addressPreview = data.addressPreview || "";
+
+        if (verifyTextEl && Number.isInteger(minIndex)) {
+          verifyTextEl.textContent = `Verify in your wallet the subaddress #${minIndex}`;
+        }
+
+        function esc(s) {
+          return String(s || "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+        }
+
+        if (subaddressLineEl && Number.isInteger(minIndex) && addressPreview) {
+          subaddressLineEl.innerHTML = `Subaddress #${minIndex}: <span class="font-mono text-zinc-200">${esc(
+            addressPreview,
+          )}</span>`;
+          subaddressLineEl.classList.remove("hidden"); // ✅ show the box
+        }
+
+        resultEl.classList.remove("hidden");
+        paylinkCreated = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Paylink created";
+        submitBtn.classList.add("opacity-60", "cursor-not-allowed");
+        if (resetBtn) {
+          resetBtn.classList.remove("hidden");
+          resetBtn.classList.add("inline-flex");
+        }
+      } catch (err) {
+        console.error(err);
+        setStatus("Network error. Is the API running?");
+      } finally {
+        if (!paylinkCreated) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Create paylink →";
+        }
+      }
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(embedEl.value);
+
+        // show under button
+        if (copyStatusEl) {
+          copyStatusEl.textContent = "Copied.";
+          setTimeout(() => {
+            // only clear if it still says Copied (avoid nuking a newer msg)
+            if (copyStatusEl.textContent === "Copied.")
+              copyStatusEl.textContent = "";
+          }, 1500);
+        }
+      } catch {
+        // copy failures AREN'T form errors, but you can still show it near the button
+        if (copyStatusEl)
+          copyStatusEl.textContent =
+            "Could not copy — copy manually from the box.";
+      }
+    });
+
+    embedStyleEl?.addEventListener("change", () => {
+      const donateUrl = String(donateUrlEl?.textContent || "").trim();
+      if (!donateUrl) return;
+
+      const style = String(embedStyleEl.value || "icon");
+      embedEl.value = buildEmbedHtml(donateUrl, style);
+      renderEmbedPreview(donateUrl, style);
+    });
+
+    // initial help text
+    syncIndexHelp();
+  </script>
+</Layout>
