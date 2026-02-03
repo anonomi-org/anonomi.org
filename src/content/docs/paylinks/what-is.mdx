@@ -1,0 +1,89 @@
+---
+title: What is Anonomi Paylinks?
+description: Private donation buttons for publishers without exposing long-lived wallet addresses.
+---
+
+Anonomi Paylinks lets publishers embed a **Donate button** on their website or blog without exposing a long-lived wallet address.
+
+Each time a donor clicks the button, a **fresh subaddress** is generated — reducing the risk of address correlation and surveillance.
+
+---
+
+## Who is it for?
+
+Paylinks is designed for **publishers under pressure**:
+- Journalists
+- Bloggers
+- Activists
+- Content creators in hostile environments
+
+Anyone who needs to receive donations privately, without exposing a static wallet address that can be tracked, correlated, or used against them.
+
+---
+
+## How it works
+
+### For publishers (donees)
+
+1. Go to [Create Paylink](/paylinks/create)
+2. Enter your **Monero primary address** and **private view key**
+3. Configure optional settings (label, index range)
+4. Get a **Donate button** snippet to embed on your site
+
+The private view key is stored encrypted on the server and used **only** to derive receive-only subaddresses. We never ask for your spend key — we can't move your funds.
+
+### For donors
+
+1. Click the Donate button on the publisher's site
+2. Optionally enter an amount and description
+3. Receive a fresh **subaddress** and **QR code**
+4. Send the payment using your Monero wallet app
+
+---
+
+## What makes it different?
+
+### No persistent address
+
+Traditional donation buttons expose a single wallet address that:
+- Can be tracked on the blockchain
+- Can be correlated with other payments
+- Creates a permanent link between you and your donors
+
+Paylinks generates a fresh subaddress for each donation request, breaking that chain.
+
+### No wallet exposure
+
+You never share your spend key. The server only has your view key (encrypted), which can generate receiving addresses but cannot spend funds.
+
+### No metadata stored
+
+We don't log:
+- Donor IP addresses
+- Payment amounts
+- Timestamps
+- Descriptions
+
+The payment metadata exists only in the donor's browser during the request.
+
+---
+
+## Important distinction
+
+**Paylinks** is a separate tool from **Payment Requests** inside Anonomi Messenger.
+
+| Feature | Paylinks | Messenger Payment Requests |
+|---------|----------|---------------------------|
+| Use case | Public donation buttons | Private peer-to-peer payments |
+| Audience | Publishers with websites | Contacts in secure conversations |
+| Address generation | Server-side (view key) | Client-side (in wallet) |
+
+If you're exchanging payment info with a trusted contact, use Messenger. If you need a public donation button, use Paylinks.
+
+---
+
+## Related
+
+- [Paylinks Privacy](/docs/paylinks/privacy)
+- [Create a Paylink](/paylinks/create)
+- [Crypto payments in Messenger](/docs/features/monero)

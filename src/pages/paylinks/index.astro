@@ -9,92 +9,360 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 ---
 
 <Layout
-  title="Anonomi Paylinks (Beta)"
-  description="Private donation buttons without exposing long-lived wallet addresses."
+  title="Anonomi Paylinks"
+  description="Private donation buttons for publishers. Fresh subaddress per donation, no persistent wallet exposure."
 >
   <NavBar />
 
   <main class="mx-auto max-w-6xl px-6 py-16">
-    <section class="rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12">
-      <p class="text-xs font-semibold tracking-widest text-zinc-400">
-        PUBLISHERS
-      </p>
-      <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
-        Anonomi Paylinks
-      </h1>
+    <!-- HERO -->
+    <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"></div>
 
-      <p class="mt-4 max-w-3xl text-zinc-300">
-        Embed a "Donate" button on your website or blog without exposing a
-        long-lived wallet address. Each donation request generates a fresh
-        subaddress and provides a QR handoff to a wallet app.
-      </p>
-
-      <div class="mt-4 flex flex-wrap gap-2 text-xs">
-        <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Monero</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">No persistent address</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">QR handoff</span>
-      </div>
-
-      <p class="mt-4 flex items-start gap-2 text-sm text-zinc-500">
-        <span
-          aria-hidden="true"
-          class="mt-[1px] font-medium"
-          style="color:#ce27e6"
-        >
-          ⓘ
-        </span>
-        <span>
-          We never ask for your
-          <span class="font-medium text-zinc-400">spend key</span> — we can't
-          move your funds. Only your private view key is used to derive
-          receive-only subaddresses.
-        </span>
-      </p>
-
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a
-          href="/paylinks/create"
-          class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
-        >
-          Create Paylink →
-        </a>
-        <a
-          href="/paylinks/delete"
-          class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
-        >
-          Delete Paylink
-        </a>
-      </div>
-
-      <div class="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4">
-        <div class="text-sm font-semibold text-zinc-200">
-          Important distinction
-        </div>
-        <p class="mt-2 text-sm text-zinc-400">
-          <span class="text-zinc-200">Payment Requests</span> already exist inside
-          <span class="text-zinc-200">Anonomi Messenger</span>. Paylinks is a
-          separate web tool for publishers and donation buttons.
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold tracking-widest text-zinc-400">
+          MONERO • NO PERSISTENT ADDRESS • QR HANDOFF
         </p>
-        <a
-          href="/messenger#tab-payments"
-          class="mt-3 inline-block text-xs text-zinc-400 underline underline-offset-2 hover:text-zinc-300"
-        >
-          See in-app Payment Requests →
-        </a>
+
+        <h1 class="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+          Private donations without exposing your wallet.
+        </h1>
+
+        <p class="mt-4 text-zinc-300">
+          Anonomi Paylinks lets publishers embed a "Donate" button on their website or blog
+          without revealing a long-lived wallet address. Each donation request generates a
+          fresh subaddress — reducing correlation risk and protecting both publishers and donors.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="/paylinks/create"
+            class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+          >
+            Create Paylink
+          </a>
+          <a
+            href="#how-it-works"
+            class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+          >
+            How it works
+          </a>
+          <a
+            href="/docs/paylinks/what-is"
+            class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5"
+          >
+            Learn more
+          </a>
+        </div>
+
+        <p class="mt-6 text-xs text-zinc-500">
+          Beta release. Monero only. We never ask for your spend key — we can't move your funds.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHO IS IT FOR -->
+    <section id="who" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Built for people under pressure.
+      </h2>
+
+      <div class="mt-4 h-[2px] w-20 rounded-full bg-fuchsia-500/90"></div>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Traditional donation buttons expose a static wallet address that can be tracked,
+        correlated, and used against you. Paylinks changes that.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Journalists</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Receive support without creating a permanent financial trail that can be subpoenaed or surveilled.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Bloggers</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Accept donations from readers without exposing a wallet that links all your supporters together.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Activists</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Protect your donors. If one supporter is compromised, they can't expose others.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Content creators</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Monetize your work without relying on platforms that track, censor, or de-platform.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        How Paylinks works
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Two roles: publishers who receive donations, and donors who send them.
+        Both benefit from fresh addresses and minimal metadata.
+      </p>
+
+      <!-- Publishers -->
+      <div class="mt-12">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+            <svg class="h-5 w-5 text-zinc-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 1115 0" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold tracking-tight">For publishers</h3>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-3">
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 1</div>
+            <div class="mt-1 font-medium">Create a Paylink</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Enter your Monero address and private view key. Configure an optional label and index range.
+            </p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 2</div>
+            <div class="mt-1 font-medium">Embed the button</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Copy the HTML snippet and paste it on your website, blog, or anywhere you want to receive donations.
+            </p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 3</div>
+            <div class="mt-1 font-medium">Receive donations</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Donors click the button, get a fresh address, and send payment from their wallet. Funds arrive in your wallet.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <a
+            href="/paylinks/create"
+            class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+          >
+            Create Paylink →
+          </a>
+        </div>
       </div>
 
-      <div class="mt-8 flex flex-wrap gap-3">
+      <!-- Donors -->
+      <div class="mt-14">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+            <svg class="h-5 w-5 text-zinc-300" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M11.28774193548387 12.046451612903226h3.426838709677419
+                C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
+                S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
+                H4.71225806451613V8.006322580645161L8 11.319354838709677
+                11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
+                V3.9535483870967743l5.039096774193548 5.039096774193548
+                L13.058064516129033 3.9535483870967743V10.529032258064515
+                h2.3646451612903228c0.2687096774193548 -0.7934838709677419
+                0.41729032258064513 -1.6438709677419354
+                0.41729032258064513 -2.5290322580645164
+                C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
+                S0.16 3.669032258064516 0.16 8
+                c0 0.8851612903225806 0.14541935483870969 1.735548387096774
+                0.41729032258064513 2.5290322580645164H2.9419354838709677Z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold tracking-tight">For donors</h3>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-3">
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 1</div>
+            <div class="mt-1 font-medium">Click the donate button</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Find a Paylink button on a publisher's site and click it to start a donation.
+            </p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 2</div>
+            <div class="mt-1 font-medium">Get a fresh address</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Optionally enter an amount and description. A unique subaddress and QR code are generated just for you.
+            </p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="text-sm font-medium text-fuchsia-400">Step 3</div>
+            <div class="mt-1 font-medium">Send from your wallet</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Scan the QR or copy the address into your Monero wallet app (Monerujo, Cake Wallet, etc.) and send.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacy" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Privacy by design
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Paylinks is built to minimize data exposure for both publishers and donors.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">No spend key</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            We only use your private view key to derive subaddresses. We can't spend your funds — ever.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">No payment logging</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            We don't log donor IPs, amounts, descriptions, or timestamps. Payment metadata exists only in the donor's browser.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Fresh address per request</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Each donor gets a unique subaddress. No single address links all your supporters together.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Donor isolation</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            If one donor is coerced into revealing their transaction, they can't expose other donors — each received a different address.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8">
         <a
-          href="/"
-          class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+          href="/docs/paylinks/privacy"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
         >
-          Back to Home
+          Read the full privacy documentation
+          <span aria-hidden="true">→</span>
         </a>
       </div>
     </section>
+
+    <!-- DISTINCTION -->
+    <section id="distinction" class="mt-24 scroll-mt-24">
+      <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <h3 class="text-2xl font-semibold tracking-tight">Paylinks vs. Messenger Payment Requests</h3>
+
+        <p class="mt-3 text-zinc-400">
+          Anonomi has two ways to handle Monero payments — use the right one for your situation.
+        </p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="font-medium text-fuchsia-400">Paylinks</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Public donation buttons for websites and blogs. Address generation happens server-side using your view key.
+            </p>
+            <p class="mt-2 text-xs text-zinc-500">Best for: Publishers receiving donations from unknown supporters.</p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="font-medium text-zinc-300">Messenger Payment Requests</div>
+            <p class="mt-2 text-sm text-zinc-400">
+              Private peer-to-peer payments inside encrypted conversations. Address generation happens client-side in your wallet.
+            </p>
+            <p class="mt-2 text-xs text-zinc-500">Best for: Trusted contacts exchanging payments privately.</p>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <a
+            href="/messenger#tab-payments"
+            class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+          >
+            Learn about Messenger Payment Requests
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET STARTED -->
+    <section id="get-started" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Get started
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Create a Paylink in under a minute. You'll need your Monero primary address and private view key.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Create a Paylink</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Generate a donate button for your website. You'll get an embeddable HTML snippet and a unique paylink URL.
+          </p>
+          <div class="mt-4">
+            <a
+              href="/paylinks/create"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              Create Paylink →
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Delete a Paylink</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Remove a paylink you no longer need. You can delete a single paylink or all paylinks for a wallet.
+          </p>
+          <div class="mt-4">
+            <a
+              href="/paylinks/delete"
+              class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+            >
+              Delete Paylink
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-6">
+        <a
+          href="/docs/paylinks/what-is"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          What is Anonomi Paylinks?
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/docs/paylinks/privacy"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          Privacy documentation
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          Back to Home
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
     <footer class="mt-16 border-t border-white/10 pt-10 text-sm text-zinc-500">
       <div class="mx-auto max-w-6xl px-6">
-        <!-- Row 1: URLs -->
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div class="text-xs font-semibold tracking-wide text-zinc-300">
@@ -144,11 +412,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           class="mt-6 border-t border-white/10 pt-4 text-zinc-500 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
-            © {new Date().getFullYear()} Anonomi • No trackers • No analytics • No
-            cookies
+            © {new Date().getFullYear()} Anonomi • No trackers • No analytics • No cookies
           </div>
           <div class="flex items-center gap-5">
-            <!-- Bluesky -->
             <a
               href="https://bsky.app/profile/anonomi.org"
               target="_blank"
@@ -191,7 +457,6 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
               </svg>
             </a>
 
-            <!-- GitHub -->
             <a
               href="https://github.com/anonomi-org"
               target="_blank"
@@ -238,7 +503,6 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
               </svg>
             </a>
 
-            <!-- Build -->
             <div class="font-mono text-[11px] text-zinc-500">
               Build:
               <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">

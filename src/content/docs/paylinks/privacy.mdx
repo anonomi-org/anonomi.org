@@ -1,0 +1,154 @@
+---
+title: Paylinks Privacy
+description: How Anonomi Paylinks protects publisher and donor privacy.
+---
+
+Anonomi Paylinks is designed with privacy as a core principle, not an afterthought. This document explains what data we handle, how we handle it, and what guarantees we can (and cannot) make.
+
+---
+
+## Publisher privacy
+
+### What we store
+
+When you create a Paylink, we store:
+- Your **Monero primary address** (public)
+- Your **private view key** (encrypted at rest)
+- Configuration options (label, index range, generation mode)
+- A derived **owner key** (hash) for authentication
+
+### What we don't store
+
+- Your **spend key** — never requested, never stored
+- Your identity — no accounts, no emails, no phone numbers
+- IP addresses or access logs tied to paylinks
+
+### The view key
+
+Your private view key allows us to derive subaddresses but **cannot be used to spend funds**. It is:
+- Encrypted before storage
+- Used only during subaddress generation
+- Never exposed in API responses
+
+---
+
+## Donor privacy
+
+### What we collect
+
+**Nothing.**
+
+When a donor generates a payment request:
+- No IP address is logged
+- No amount is stored
+- No description is saved
+- No timestamp is recorded
+
+The payment details exist only in the donor's browser during the session.
+
+### Network considerations
+
+Donors should be aware:
+- **Clearnet**: Requests go through standard HTTPS. Your ISP can see you visited anonomi.org (but not the content).
+- **Tor**: Use the onion service for stronger anonymity. Exit nodes don't apply since it's a hidden service.
+
+For maximum privacy, donors should:
+- Use Tor Browser
+- Access the onion version of Paylinks
+- Use a privacy-respecting Monero wallet
+
+---
+
+## Subaddress generation
+
+### How it works
+
+Monero subaddresses are derived deterministically from:
+- The primary address
+- The private view key
+- An index number
+
+This means:
+- The server can generate receiving addresses
+- The server **cannot** spend received funds
+- Each subaddress is unlinkable to others (on-chain)
+
+### Generation modes
+
+**Random** (default): A random index within a configured range is selected for each request. This provides good privacy with minimal configuration.
+
+**Sequential** (coming soon): Indices are assigned in order. Useful for tracking donations but reduces privacy.
+
+---
+
+## What we can't protect against
+
+### Blockchain analysis
+
+Once a payment is made, standard Monero privacy applies. Monero provides strong on-chain privacy by default.
+
+**Donor isolation**: Each donor receives a distinct subaddress. If one donor is coerced into revealing their transaction, they cannot expose other donors — they only know the address they sent to, not the addresses given to others. This is particularly important for groups (e.g., supporters of a cause) where one compromised individual should not endanger the rest.
+
+**Subaddress reuse**: If the same subaddress is given to multiple donors (e.g., due to a narrow index range), payments to that address could be correlated. Use a sufficiently wide index range to minimize this risk.
+
+### Device compromise
+
+If the donor's device is compromised, the payment address and amount may be exposed regardless of Paylinks privacy measures.
+
+### Publisher OPSEC failures
+
+If a publisher exposes their own identity through other means (blog content, social media, etc.), Paylinks cannot retroactively protect that.
+
+---
+
+## Comparison with alternatives
+
+| Method | Address reuse | View key exposure | Metadata logging |
+|--------|--------------|-------------------|------------------|
+| Static donation address | Every payment | N/A | Depends on platform |
+| Paylinks | Fresh per request | Server only (encrypted) | None |
+| Messenger Payment Requests | Fresh per request | Never leaves device | None |
+
+---
+
+## Technical details
+
+### API endpoints
+
+The Paylinks API is available at:
+- **Clearnet**: `https://paylinksd.anonomi.org`
+- **Onion**: `http://[onion-address].onion`
+
+### Data retention
+
+- Paylinks can be deleted by the publisher at any time
+- No payment metadata is retained
+- Deleted paylinks are permanently removed
+
+### Open source
+
+Both the client (this website) and the API are open source:
+- Website: [anonomi.org repository](https://github.com/anonomi-org/anonomi.org)
+- API: Available in the Anonomi organization
+
+---
+
+## Summary
+
+| Aspect | Guarantee |
+|--------|-----------|
+| Spend key | Never requested |
+| View key | Encrypted at rest |
+| Donor IP | Not logged |
+| Payment amounts | Not stored |
+| Payment descriptions | Not stored |
+| Subaddresses | Fresh per request |
+
+---
+
+## Related
+
+- [What is Anonomi Paylinks?](/docs/paylinks/what-is)
+- [Create a Paylink](/paylinks/create)
+- [Threat model](/docs/security/threat-model)
+- [Operational security basics](/docs/usage/opsec)
