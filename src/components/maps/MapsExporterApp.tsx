@@ -9,7 +9,7 @@ import { saveAs } from "file-saver";
 type DetailLevel = "Low" | "Medium" | "High";
 
 
-type TileProviderId = "none" | "carto_dark" | "osm" | "opentopo" | "carto" | "custom";
+type TileProviderId = "none" | "carto_dark" | "osm" | "opentopo" | "carto" | "google" | "custom";
 
 type TileProvider = {
   id: TileProviderId;
@@ -48,6 +48,12 @@ const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
     url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
     attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
     subdomains: ["a", "b", "c", "d"],
+  },
+  google: {
+    id: "google",
+    label: "Google Maps",
+    url: "", // Not used - redirects to docs
+    attribution: "",
   },
   custom: {
     id: "custom",
@@ -521,7 +527,7 @@ function cancelExport() {
         </p>
 
         <div className="mt-3 grid grid-cols-2 gap-2">
-            {(["carto_dark", "carto", "osm", "opentopo", "custom"] as const).map((id) => (
+            {(["carto_dark", "carto", "osm", "opentopo", "google", "custom"] as const).map((id) => (
             <button
                 key={id}
                 type="button"
@@ -582,6 +588,18 @@ function cancelExport() {
                 {customUrlApplied ? "Reload map" : "Load map"}
               </button>
             </div>
+        )}
+
+        {tileProviderId === "google" && (
+            <a
+              href="/docs/maps-exporter#using-google-maps-as-source"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-fuchsia-400 hover:text-fuchsia-300"
+            >
+              Learn more about Google Maps as source
+              <span aria-hidden="true">→</span>
+            </a>
         )}
 
         </div>
