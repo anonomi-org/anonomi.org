@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import type { LatLngBounds } from "leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -169,6 +169,18 @@ function BboxTracker({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
   return null;
 }
 
+function MapInitializer({ mapRef, onBounds }: { mapRef: React.MutableRefObject<L.Map | null>; onBounds: (b: LatLngBounds) => void }) {
+  const map = useMap();
+
+  useEffect(() => {
+    mapRef.current = map;
+    map.invalidateSize();
+    onBounds(map.getBounds());
+  }, [map, mapRef, onBounds]);
+
+  return null;
+}
+
 export default function MapsExporterApp() {
   // Simple mode
   const [detailLevel, setDetailLevel] = useState<DetailLevel>("Medium");
@@ -185,6 +197,7 @@ export default function MapsExporterApp() {
   const [tileProviderId, setTileProviderId] = useState<TileProviderId>("none");
   const [customTileUrl, setCustomTileUrl] = useState("");
   const [customAttribution, setCustomAttribution] = useState("");
+  const [customUrlApplied, setCustomUrlApplied] = useState(false);
 
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
@@ -214,12 +227,20 @@ const tileAttribution =
 
 const tileSubdomains =
   tileProviderId === "custom"
-    ? (tileTemplate.includes("{s}") ? ["a", "b", "c"] : undefined)
+    ? (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [])
     : tileProviderId === "none"
-      ? undefined
-      : TILE_PROVIDERS[tileProviderId].subdomains;
+      ? []
+      : TILE_PROVIDERS[tileProviderId].subdomains ?? [];
 
-const isTileSourceSelected = tileTemplate.length > 0;
+// For custom mode, only consider selected when URL has required placeholders AND user clicked "Load"
+const isValidCustomUrl = tileProviderId === "custom" &&
+  customTileUrl.includes("{z}") &&
+  customTileUrl.includes("{x}") &&
+  customTileUrl.includes("{y}");
+
+const isTileSourceSelected = tileProviderId === "custom"
+  ? isValidCustomUrl && customUrlApplied
+  : tileTemplate.length > 0;
 
   // When not in advanced, detail level implies a zoom range.
   const effectiveZooms = useMemo(() => {
@@ -471,21 +492,15 @@ function cancelExport() {
             </div>
             ) : (
             <MapContainer
-                key={tileTemplate} // remount when source changes
-                center={[37.138, -8.536]}
+                key={tileProviderId} // remount when source changes (but not on every keystroke for custom)
+                center={[37.138, -8.536] as [number, number]}
                 zoom={12}
                 className="h-full w-full"
                 style={{ height: "100%", width: "100%" }}
-                whenCreated={(m) => {
-                mapRef.current = m;
-                setTimeout(() => {
-                    m.invalidateSize();
-                    setBounds(m.getBounds());
-                }, 0);
-                }}
             >
                 <TileLayer url={tileTemplate} attribution={tileAttribution} subdomains={tileSubdomains as any} />
                 <BboxTracker onBounds={(b) => setBounds(b)} />
+                <MapInitializer mapRef={mapRef} onBounds={(b) => setBounds(b)} />
             </MapContainer>
             )}
 
@@ -515,6 +530,7 @@ function cancelExport() {
                 setTileProviderId(id);
                 setBounds(null);
                 mapRef.current = null;
+                setCustomUrlApplied(false);
                 }}
                 className={[
                 "rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
@@ -551,6 +567,20 @@ function cancelExport() {
                 className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                 />
             </label>
+
+            <button
+                type="button"
+                disabled={!isValidCustomUrl}
+                onClick={() => setCustomUrlApplied(true)}
+                className={[
+                  "mt-2 w-full rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
+                  isValidCustomUrl
+                    ? "bg-white/15 text-white hover:bg-white/20"
+                    : "bg-white/5 text-zinc-500 cursor-not-allowed",
+                ].join(" ")}
+              >
+                {customUrlApplied ? "Reload map" : "Load map"}
+              </button>
             </div>
         )}
 
