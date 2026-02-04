@@ -3,13 +3,15 @@ import logo from "../assets/logo.png";
 
 const links = [
   { label: "Messenger", href: "/messenger" },
-  { label: "Maps", href: "/maps" },
   { label: "Paylinks", href: "/paylinks" },
+  { label: "Maps", href: "/maps" },
   { label: "Docs", href: "/docs/" },
 ];
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
+<header
+  class="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/70 backdrop-blur"
+>
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
     <!-- Brand -->
     <a href="/" class="flex items-center">
@@ -18,14 +20,16 @@ const links = [
 
     <!-- Primary nav -->
     <nav class="hidden items-center gap-6 md:flex">
-      {links.map((l) => (
-        <a
-          href={l.href}
-          class="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-        >
-          {l.label}
-        </a>
-      ))}
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+          >
+            {l.label}
+          </a>
+        ))
+      }
     </nav>
 
     <!-- Actions -->
@@ -50,5 +54,4 @@ const links = [
       </a>
     </div>
   </div>
-
 </header>

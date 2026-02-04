@@ -10,29 +10,43 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
 <Layout
   title="Anonomi"
-  description="A privacy suite for high-threat environments: messenger, offline maps, and paylinks.">
-
+  description="A privacy suite for high-threat environments: messenger, offline maps, and paylinks."
+>
   <NavBar />
 
   <!-- HERO SECTION -->
-  <section id="statement" class="relative flex min-h-screen items-center justify-center px-6">
+  <section
+    id="statement"
+    class="relative flex min-h-screen items-center justify-center px-6"
+  >
     <!-- Background -->
     <div class="pointer-events-none absolute inset-0 -z-10">
       <!-- Base wash matches body -->
       <div class="absolute inset-0 bg-zinc-950"></div>
 
       <!-- Subtle vertical depth (no black at the end) -->
-      <div class="absolute inset-0 bg-gradient-to-b from-zinc-900/60 via-zinc-950 to-zinc-950"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-zinc-900/60 via-zinc-950 to-zinc-950"
+      >
+      </div>
 
       <!-- Much dimmer radial highlight -->
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_60%)]"></div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_60%)]"
+      >
+      </div>
 
       <!-- Bottom “settle” overlay so it matches the next section -->
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-950"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-950"
+      >
+      </div>
     </div>
 
     <div class="mx-auto max-w-5xl text-center">
-      <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
+      <h1
+        class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
+      >
         <span class="block">
           BUILT TO PROTECT <span class="text-fuchsia-500/90">FREEDOM</span>
         </span>
@@ -59,19 +73,25 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
   <!-- MANIFESTO (INTRO) -->
   <section id="manifesto" class="mt-4 scroll-mt-24">
     <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Manifesto</h2>
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Manifesto
+      </h2>
 
       <p class="mt-4 max-w-4xl text-base text-zinc-300 sm:text-lg">
-        Power doesn’t just accumulate — it consolidates. Surveillance is no longer an exception or a scandal;
-        it’s an operating system for modern institutions. Corporations monetize attention and behavior.
-        States normalize monitoring. “Public safety” becomes an all-purpose excuse. And the price is metadata:
-        who you talk to, when, where, how often — enough to map your life without reading a single message.
+        Power doesn’t just accumulate — it consolidates. Surveillance is no
+        longer an exception or a scandal; it’s an operating system for modern
+        institutions. Corporations monetize attention and behavior. States
+        normalize monitoring. “Public safety” becomes an all-purpose excuse. And
+        the price is metadata: who you talk to, when, where, how often — enough
+        to map your life without reading a single message.
       </p>
 
       <p class="mt-4 max-w-4xl text-base text-zinc-300 sm:text-lg">
-        Anonomi is built for people who can’t afford to be naive. Assume the network is watched.
-        Assume disruption, blocking, and manipulation. Assume devices get searched. Assume contacts get pressured.
-        When the internet is the threat, go offline. When the network is hostile, route through Tor.
+        Anonomi is built for people who can’t afford to be naive. Assume the
+        network is watched. Assume disruption, blocking, and manipulation.
+        Assume devices get searched. Assume contacts get pressured. When the
+        internet is the threat, go offline. When the network is hostile, route
+        through Tor.
       </p>
 
       <div class="mt-8 flex flex-wrap gap-3">
@@ -86,141 +106,227 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
   </section>
 
   <main class="mx-auto max-w-6xl px-6 pb-16">
-  <section id="products" class="mt-24 scroll-mt-24">
-    <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-      Anonomi is a privacy suite for hostile conditions.
-    </h2>
+    <section id="products" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Anonomi is a privacy suite for hostile conditions.
+      </h2>
 
-    <div class="mt-4 h-[2px] w-20 rounded-full bg-fuchsia-500/90"></div>
+      <div class="mt-4 h-[2px] w-20 rounded-full bg-fuchsia-500/90"></div>
 
-    <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-      Built for high-risk environments: decentralized messaging, offline navigation tooling,
-      and privacy-preserving payment requests. No trackers. No analytics. No cookies.
-    </p>
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Built for high-risk environments: decentralized messaging, offline
+        navigation tooling, and privacy-preserving payment requests. No
+        trackers. No analytics. No cookies.
+      </p>
 
-    <!-- Stacked selectors (like messenger features, but vertical) -->
-    <div class="mt-12 space-y-10">
-      <!-- Messenger -->
-      <a href="/messenger" class="group block">
-        <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
-            <svg class="h-5 w-5 text-zinc-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <!-- Stacked selectors (like messenger features, but vertical) -->
+      <div class="mt-12 space-y-10">
+        <!-- Messenger -->
+        <a href="/messenger" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Anonomi Messenger
+            </h3>
+
+            <span
+              class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200"
+              >Open →</span
+            >
           </div>
 
-          <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Anonomi Messenger
-          </h3>
+          <p
+            class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            Decentralized messaging over Tor or fully offline. No servers. Built
+            to stop metadata exposure.
+          </p>
 
-          <span class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200">Open →</span>
-        </div>
-
-        <p class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300">
-          Decentralized messaging over Tor or fully offline. No servers. Built to stop metadata exposure.
-        </p>
-
-        <div class="mt-4 flex flex-wrap gap-2 text-xs">
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Android</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Tor</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Offline</span>
-        </div>
-
-        <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
-      </a>
-
-      <!-- Maps -->
-      <a href="/maps" class="group block">
-        <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
-            <svg class="h-5 w-5 text-zinc-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z" />
-            </svg>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Android</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Tor</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Offline</span
+            >
           </div>
 
-          <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Anonomi Maps
-          </h3>
+          <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
 
-          <span class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200">Open →</span>
-        </div>
+        <!-- Paylinks -->
+        <a href="/paylinks" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v12m-6-6h12"></path>
+              </svg>
+            </div>
 
-        <p class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300">
-          Generate offline tile packs locally in your browser for offline navigation.
-        </p>
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Anonomi Paylinks
+            </h3>
 
-        <div class="mt-4 flex flex-wrap gap-2 text-xs">
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Local-first</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Offline packs</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">No trackers</span>
-        </div>
-
-        <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
-      </a>
-
-      <!-- Paylinks -->
-      <a href="/paylinks" class="group block">
-        <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5">
-            <svg class="h-5 w-5 text-zinc-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-6-6h12" />
-            </svg>
+            <span
+              class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200"
+              >Open →</span
+            >
           </div>
 
-          <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Anonomi Paylinks
-          </h3>
+          <p
+            class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            Create a donate button without exposing a long-lived wallet address.
+            Each donation request generates a fresh subaddress.
+          </p>
 
-          <span class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200">Open →</span>
-        </div>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Publishers</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >No persistent address</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >QR handoff</span
+            >
+          </div>
 
-        <p class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300">
-          Create a donate button without exposing a long-lived wallet address.
-          Each donation request generates a fresh subaddress.
-        </p>
+          <p class="mt-3 text-xs text-zinc-500">
+            Separate from <span class="text-zinc-300">Payment Requests</span> inside
+            the Messenger app.
+          </p>
 
-        <div class="mt-4 flex flex-wrap gap-2 text-xs">
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">Publishers</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">No persistent address</span>
-          <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">QR handoff</span>
-        </div>
+          <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
 
-        <p class="mt-3 text-xs text-zinc-500">
-          Separate from <span class="text-zinc-300">Payment Requests</span> inside the Messenger app.
-        </p>
+        <!-- Maps -->
+        <a href="/maps" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z"></path>
+              </svg>
+            </div>
 
-        <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
-      </a>
-    </div>
-  </section>
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Anonomi Maps
+            </h3>
 
-  <!-- OPEN -->
+            <span
+              class="ml-auto text-sm text-zinc-400 group-hover:text-zinc-200"
+              >Open →</span
+            >
+          </div>
+
+          <p
+            class="mt-3 max-w-3xl text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            Generate offline tile packs locally in your browser for offline
+            navigation.
+          </p>
+
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Local-first</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >Offline packs</span
+            >
+            <span
+              class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+              >No trackers</span
+            >
+          </div>
+
+          <div class="mt-5 h-px w-24 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- OPEN -->
     <section id="open" class="mt-24 scroll-mt-24">
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">Open</h2>
       <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        Anonomi is built in public. Auditable code, community scrutiny, and designs that assume hostile conditions —
-        not corporate platforms, not walled gardens.
+        Anonomi is built in public. Auditable code, community scrutiny, and
+        designs that assume hostile conditions — not corporate platforms, not
+        walled gardens.
       </p>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">Open source</div>
           <p class="mt-2 text-sm text-zinc-400">
-            Code you can inspect, fork, and verify. Security through transparency, not marketing promises.
+            Code you can inspect, fork, and verify. Security through
+            transparency, not marketing promises.
           </p>
         </div>
 
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">No trackers</div>
           <p class="mt-2 text-sm text-zinc-400">
-            No analytics, no ad pixels, no behavioral profiling. Your device is not a product.
+            No analytics, no ad pixels, no behavioral profiling. Your device is
+            not a product.
           </p>
         </div>
 
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">Community-driven</div>
           <p class="mt-2 text-sm text-zinc-400">
-            Built for real users in real risk. Decisions should be accountable to the people who rely on it.
+            Built for real users in real risk. Decisions should be accountable
+            to the people who rely on it.
           </p>
         </div>
       </div>
@@ -228,7 +334,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       <!-- Onion repository -->
       <div class="mt-16">
         <div class="flex items-center gap-3">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/10">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/10"
+          >
             <img
               src="/icons/tor.svg"
               alt="Tor"
@@ -237,18 +345,22 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
             />
           </div>
 
-          <h3 class="text-2xl font-semibold tracking-tight">Onion repository</h3>
+          <h3 class="text-2xl font-semibold tracking-tight">
+            Onion repository
+          </h3>
         </div>
 
         <p class="mt-3 max-w-3xl text-base text-zinc-400">
-          <strong class="font-medium text-zinc-300">Open source must be reachable.</strong>
+          <strong class="font-medium text-zinc-300"
+            >Open source must be reachable.</strong
+          >
           Anonomi is mirrored as a Tor onion service so code and releases remain accessible
           where GitHub and developer platforms are blocked, monitored, or censored.
         </p>
 
         <p class="mt-3 max-w-3xl text-base text-zinc-400">
-          If you can reach Tor, you can audit the code — no accounts, no permissions,
-          no gatekeepers.
+          If you can reach Tor, you can audit the code — no accounts, no
+          permissions, no gatekeepers.
         </p>
       </div>
 
@@ -280,47 +392,52 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       </div>
     </section>
 
-
-  <!-- ABOUT US -->
+    <!-- ABOUT US -->
     <section id="about" class="mt-24 scroll-mt-24">
-      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">About Us</h2>
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        About Us
+      </h2>
       <p class="mt-2 text-lg font-medium text-zinc-300">
         Our community and goals
       </p>
 
       <p class="mt-6 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        We’re a global community of contributors with a shared goal:
-        to keep private, resilient communication possible — even when
-        power centralizes, networks are hostile, and trust assumptions fail.
+        We’re a global community of contributors with a shared goal: to keep
+        private, resilient communication possible — even when power centralizes,
+        networks are hostile, and trust assumptions fail.
       </p>
 
       <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        Anonomi is developed by people who believe privacy is not a feature
-        you enable, but a condition you defend. Our focus is on practical tools
-        for real-world risk: decentralized by design, usable offline, and honest
+        Anonomi is developed by people who believe privacy is not a feature you
+        enable, but a condition you defend. Our focus is on practical tools for
+        real-world risk: decentralized by design, usable offline, and honest
         about their limitations.
       </p>
 
       <div class="mt-10 grid gap-4 lg:grid-cols-3">
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 lg:col-span-2">
+        <div
+          class="rounded-2xl border border-white/10 bg-white/5 p-6 lg:col-span-2"
+        >
           <div class="text-base font-semibold">What we’re building</div>
           <p class="mt-2 text-sm text-zinc-400">
             A decentralized communications suite — messaging, private payments,
-            and offline maps — designed to keep working when networks are blocked,
-            monitored, or unavailable.
+            and offline maps — designed to keep working when networks are
+            blocked, monitored, or unavailable.
           </p>
 
           <div class="mt-6 grid gap-4 sm:grid-cols-2">
             <div class="rounded-xl border border-white/10 bg-white/5 p-4">
               <div class="font-medium">Community-driven</div>
               <p class="mt-1 text-sm text-zinc-400">
-                Decisions are shaped by contributors and users, not sponsors or institutions.
+                Decisions are shaped by contributors and users, not sponsors or
+                institutions.
               </p>
             </div>
             <div class="rounded-xl border border-white/10 bg-white/5 p-4">
               <div class="font-medium">Threat-aware by default</div>
               <p class="mt-1 text-sm text-zinc-400">
-                We assume surveillance, coercion, and disruption are realistic risks.
+                We assume surveillance, coercion, and disruption are realistic
+                risks.
               </p>
             </div>
           </div>
@@ -355,9 +472,10 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       </h2>
 
       <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        Anonomi is an early-stage, independent project. It exists because some people believe
-        private communication should remain possible even under pressure — and are willing to
-        contribute time, infrastructure, or resources to make that happen.
+        Anonomi is an early-stage, independent project. It exists because some
+        people believe private communication should remain possible even under
+        pressure — and are willing to contribute time, infrastructure, or
+        resources to make that happen.
       </p>
 
       <div class="mt-10 grid gap-4">
@@ -365,8 +483,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">Developers & contributors</div>
           <p class="mt-2 text-sm text-zinc-400">
-            Android, networking, cryptography, UX, documentation — contributions of all sizes matter.
-            Review code, propose improvements, or help stress-test assumptions.
+            Android, networking, cryptography, UX, documentation — contributions
+            of all sizes matter. Review code, propose improvements, or help
+            stress-test assumptions.
           </p>
         </div>
 
@@ -377,34 +496,45 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           </div>
 
           <p class="mt-2 text-sm text-zinc-400">
-            Infrastructure, hardware, testing devices, and long-term maintenance require funding.
-            Financial support helps keep the project independent, sustainable, and operational.
+            Infrastructure, hardware, testing devices, and long-term maintenance
+            require funding. Financial support helps keep the project
+            independent, sustainable, and operational.
           </p>
 
           <p class="mt-3 text-sm text-zinc-400">
-            Part of this support goes directly toward contributing to the Tor ecosystem by running
-            relays and bridges — strengthening the network that millions of people around the globe depend on.
+            Part of this support goes directly toward contributing to the Tor
+            ecosystem by running relays and bridges — strengthening the network
+            that millions of people around the globe depend on.
           </p>
 
           <p class="mt-3 text-sm font-semibold text-zinc-300">
-            Sponsorship does not equal influence. Anonomi is governed by its community —
-            not sponsors, not donors, not institutions.
+            Sponsorship does not equal influence. Anonomi is governed by its
+            community — not sponsors, not donors, not institutions.
           </p>
         </div>
 
         <!-- Donations -->
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="flex flex-wrap items-center justify-between gap-3">
-            <div class="text-base font-semibold">Donate (privacy-respecting)</div>
+            <div class="text-base font-semibold">
+              Donate (privacy-respecting)
+            </div>
 
             <div class="flex items-center gap-2 text-xs">
-              <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">No trackers</span>
-              <span class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300">No donor list</span>
+              <span
+                class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+                >No trackers</span
+              >
+              <span
+                class="rounded-full bg-white/10 px-3 py-1 font-medium text-zinc-300"
+                >No donor list</span
+              >
             </div>
           </div>
 
           <p class="mt-2 text-sm text-zinc-400">
-            If you donate, Monero is preferred. Bitcoin is accepted but is public by default.
+            If you donate, Monero is preferred. Bitcoin is accepted but is
+            public by default.
           </p>
 
           <div class="mt-6 grid gap-4 lg:grid-cols-2">
@@ -412,7 +542,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
             <div class="rounded-xl border border-white/10 bg-black/20 p-4">
               <div class="flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                  <div class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <div
+                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5"
+                  >
                     <!-- Monero SVG -->
                     <svg
                       class="h-4 w-4 text-zinc-300"
@@ -420,7 +552,8 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                       fill="currentColor"
                       aria-hidden="true"
                     >
-                      <path d="M11.28774193548387 12.046451612903226h3.426838709677419
+                      <path
+                        d="M11.28774193548387 12.046451612903226h3.426838709677419
                         C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
                         S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
                         H4.71225806451613V8.006322580645161L8 11.319354838709677
@@ -433,13 +566,16 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                         C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
                         S0.16 3.669032258064516 0.16 8
                         c0 0.8851612903225806 0.14541935483870969 1.735548387096774
-                        0.41729032258064513 2.5290322580645164H2.9419354838709677Z" />
+                        0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
+                      ></path>
                     </svg>
                   </div>
 
                   <div class="text-sm font-semibold text-zinc-200">
                     Monero (XMR)
-                    <span class="ml-2 text-xs font-medium text-fuchsia-500/90">Preferred</span>
+                    <span class="ml-2 text-xs font-medium text-fuchsia-500/90"
+                      >Preferred</span
+                    >
                   </div>
                 </div>
 
@@ -485,7 +621,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
             <div class="rounded-xl border border-white/10 bg-black/20 p-4">
               <div class="flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                  <div class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                  <div
+                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5"
+                  >
                     <!-- Bitcoin SVG -->
                     <svg
                       class="h-4 w-4 text-zinc-300"
@@ -493,8 +631,10 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                       fill="currentColor"
                       aria-hidden="true"
                     >
-                      <path d="M13.5 10.5c.9-.3 1.5-1 1.5-2 0-1.5-1.2-2.5-3-2.5H10V4H8v2H6v2h2v8H6v2h2v2h2v-2h2.2c2 0 3.8-1 3.8-3
-                        0-1.3-.7-2.3-2-2.7zM10 8h2c.8 0 1.5.3 1.5 1s-.7 1-1.5 1H10V8zm2.2 8H10v-3h2.2c1 0 1.8.4 1.8 1.5S13.2 16 12.2 16z"/>
+                      <path
+                        d="M13.5 10.5c.9-.3 1.5-1 1.5-2 0-1.5-1.2-2.5-3-2.5H10V4H8v2H6v2h2v8H6v2h2v2h2v-2h2.2c2 0 3.8-1 3.8-3
+                        0-1.3-.7-2.3-2-2.7zM10 8h2c.8 0 1.5.3 1.5 1s-.7 1-1.5 1H10V8zm2.2 8H10v-3h2.2c1 0 1.8.4 1.8 1.5S13.2 16 12.2 16z"
+                      ></path>
                     </svg>
                   </div>
 
@@ -543,7 +683,8 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           </div>
 
           <p class="mt-4 text-xs text-zinc-500">
-            Tip: for network privacy, use Tor Browser when viewing this page. For donation privacy, prefer Monero.
+            Tip: for network privacy, use Tor Browser when viewing this page.
+            For donation privacy, prefer Monero.
           </p>
         </div>
       </div>
@@ -553,7 +694,7 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         function toggleQr(kind) {
           const el = document.getElementById(`qr-${kind}`);
           if (!el) return;
-          el.classList.toggle('hidden');
+          el.classList.toggle("hidden");
         }
 
         async function copyToClipboard(kind) {
@@ -561,32 +702,36 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           const msgEl = document.getElementById(`msg-${kind}`);
           if (!addrEl) return;
 
-          const address = (addrEl.dataset.address || addrEl.textContent || '').trim();
+          const address = (
+            addrEl.dataset.address ||
+            addrEl.textContent ||
+            ""
+          ).trim();
 
           const showMsg = (m) => {
             if (!msgEl) return;
             msgEl.textContent = m;
             clearTimeout(msgEl._t);
-            msgEl._t = setTimeout(() => (msgEl.textContent = ''), 2500);
+            msgEl._t = setTimeout(() => (msgEl.textContent = ""), 2500);
           };
 
           try {
             await navigator.clipboard.writeText(address);
-            showMsg('Copied to clipboard.');
+            showMsg("Copied to clipboard.");
           } catch {
             try {
-              const ta = document.createElement('textarea');
+              const ta = document.createElement("textarea");
               ta.value = address;
-              ta.setAttribute('readonly', '');
-              ta.style.position = 'absolute';
-              ta.style.left = '-9999px';
+              ta.setAttribute("readonly", "");
+              ta.style.position = "absolute";
+              ta.style.left = "-9999px";
               document.body.appendChild(ta);
               ta.select();
-              document.execCommand('copy');
+              document.execCommand("copy");
               document.body.removeChild(ta);
-              showMsg('Copied to clipboard.');
+              showMsg("Copied to clipboard.");
             } catch {
-              showMsg('Copy failed. Please copy manually.');
+              showMsg("Copy failed. Please copy manually.");
             }
           }
         }
@@ -600,7 +745,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           rel="noreferrer"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
         >
-          <span data-clearnet-text="Contribute on GitHub">Contribute in our repo (onion)</span>
+          <span data-clearnet-text="Contribute on GitHub"
+            >Contribute in our repo (onion)</span
+          >
           <span aria-hidden="true">→</span>
         </a>
 
@@ -613,83 +760,88 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       </div>
     </section>
 
-
     <footer class="mt-16 border-t border-white/10 pt-10 text-sm text-zinc-500">
-    <div class="mx-auto max-w-6xl px-6">
-
-      <!-- Access Points -->
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            Onion Website
+      <div class="mx-auto max-w-6xl px-6">
+        <!-- Access Points -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+            </div>
           </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi
+              (mirror)
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi.org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi-org.github.io
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://github.com/anonomi-org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://codeberg.org/Anonomi (mirror)
+            </div>
           </div>
         </div>
 
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            Onion Code Repository
+        <!-- Footer meta -->
+        <div
+          class="mt-6 border-t border-white/10 pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            © {new Date().getFullYear()} Anonomi • No trackers • No analytics • No
+            cookies
           </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi (mirror)
-          </div>
-        </div>
-
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            ClearNet Website
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://anonomi.org
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://anonomi-org.github.io
-          </div>
-        </div>
-
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            ClearNet Code Repository
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://github.com/anonomi-org
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://codeberg.org/Anonomi (mirror)
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer meta -->
-      <div class="mt-6 border-t border-white/10 pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>© {new Date().getFullYear()} Anonomi • No trackers • No analytics • No cookies</div>
-        <div class="flex items-center gap-5">
-          <!-- Bluesky -->
-          <a
-            href="https://bsky.app/profile/anonomi.org"
-            target="_blank"
-            rel="noreferrer"
-            title="Anonomi on Bluesky"
-            aria-label="Anonomi on Bluesky"
-            class="text-zinc-400 hover:text-white transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 256"
-              class="h-7 w-7"
-              aria-hidden="true"
+          <div class="flex items-center gap-5">
+            <!-- Bluesky -->
+            <a
+              href="https://bsky.app/profile/anonomi.org"
+              target="_blank"
+              rel="noreferrer"
+              title="Anonomi on Bluesky"
+              aria-label="Anonomi on Bluesky"
+              class="text-zinc-400 hover:text-white transition-colors"
             >
-              <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                <path
-                  d="M45 90C20.147 90 0 69.853 0 45 0 20.147 20.147 0 45 0
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 256 256"
+                class="h-7 w-7"
+                aria-hidden="true"
+              >
+                <g
+                  transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)"
+                >
+                  <path
+                    d="M45 90C20.147 90 0 69.853 0 45 0 20.147 20.147 0 45 0
                     c24.853 0 45 20.147 45 45
                     0 24.853-20.147 45-45 45z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M29.977 25.793C36.058 30.358 42.599 39.615 45 44.582
+                    fill="currentColor"></path>
+                  <path
+                    d="M29.977 25.793C36.058 30.358 42.599 39.615 45 44.582
                     c2.402-4.967 8.942-14.224 15.023-18.789
                     4.388-3.294 11.497-5.843 11.497 2.267
                     0 1.62-.929 13.607-1.473 15.553
@@ -703,31 +855,30 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                     -6.137 1.044-13.036-.681-14.929-7.447
                     -.545-1.946-1.473-13.933-1.473-15.553
                     0-8.11 7.109-5.561 11.497-2.267z"
-                  fill="black"
-                />
-              </g>
-            </svg>
-          </a>
+                    fill="black"></path>
+                </g>
+              </svg>
+            </a>
 
-          <!-- GitHub -->
-          <a
-            href="https://github.com/anonomi-org"
-            target="_blank"
-            rel="noreferrer"
-            title="Anonomi on GitHub"
-            aria-label="Anonomi on GitHub"
-            class="text-zinc-400 hover:text-white transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              class="h-[2rem] w-[2rem]"
-              fill="currentColor"
-              aria-hidden="true"
+            <!-- GitHub -->
+            <a
+              href="https://github.com/anonomi-org"
+              target="_blank"
+              rel="noreferrer"
+              title="Anonomi on GitHub"
+              aria-label="Anonomi on GitHub"
+              class="text-zinc-400 hover:text-white transition-colors"
             >
-              <path
-                fill-rule="evenodd"
-                d="M12 2C6.48 2 2 6.58 2 12.26
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="h-[2rem] w-[2rem]"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2C6.48 2 2 6.58 2 12.26
                 c0 4.5 2.87 8.32 6.84 9.67
                 .5.1.68-.22.68-.48
                 0-.24-.01-.87-.01-1.7
@@ -752,22 +903,20 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                 0 .26.18.58.69.48
                 A10.03 10.03 0 0022 12.26
                 C22 6.58 17.52 2 12 2z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </a>
-
-          <!-- Build -->
-          <div class="font-mono text-[11px] text-zinc-500">
-            Build:
-            <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
-              {BUILD_SHORT}
+                  clip-rule="evenodd"></path>
+              </svg>
             </a>
+
+            <!-- Build -->
+            <div class="font-mono text-[11px] text-zinc-500">
+              Build:
+              <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+                {BUILD_SHORT}
+              </a>
+            </div>
           </div>
         </div>
       </div>
-
-    </div>
-  </footer>
+    </footer>
   </main>
 </Layout>
