@@ -1,0 +1,80 @@
+---
+title: Clearnet and Tor Separation
+description: Why Anonomi Paylinks runs separate services for clearnet and Tor.
+---
+
+Anonomi Paylinks operates **separate services** for clearnet (regular internet) and Tor (onion services). This is intentional and designed to maximize security for users in hostile environments.
+
+---
+
+## Why separate services?
+
+### No cross-origin requests
+
+When you create a Paylink on the clearnet website (`anonomi.org`), it communicates with the clearnet API (`paylinksd.anonomi.org`). When you use the onion website, it communicates with the onion API.
+
+We do **not** allow cross-origin requests between clearnet and Tor. This means:
+- The clearnet site cannot talk to the onion API
+- The onion site cannot talk to the clearnet API
+
+This prevents several attack vectors and metadata leaks.
+
+### Traffic isolation
+
+If you're using Tor for privacy, your browser should only communicate with onion services. Allowing the onion website to contact clearnet APIs would:
+- Route traffic through Tor exit nodes (which can be monitored)
+- Potentially expose your activity to clearnet infrastructure
+- Defeat the purpose of using Tor in the first place
+
+### Independent infrastructure
+
+The clearnet and onion services run on separate infrastructure. If one is compromised or taken down, the other continues to operate independently.
+
+---
+
+## What this means for you
+
+### Creating a Paylink
+
+| If you want... | Use this website |
+|----------------|------------------|
+| Donate button for clearnet | `anonomi.org/paylinks/create` |
+| Donate button for Tor | `[onion]/paylinks/create` |
+
+The donate button you create will point to the same network you created it on.
+
+### For donors
+
+Donors clicking your button will be directed to the same network (clearnet or onion) where the button was created. This ensures their traffic stays within the expected network path.
+
+---
+
+## Onion addresses
+
+**Website:**
+```
+http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+```
+
+**Paylinks (create):**
+```
+http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/create
+```
+
+---
+
+## Summary
+
+- **Clearnet users**: Create paylinks on `anonomi.org`
+- **Tor users**: Create paylinks on the onion website
+- **Never mix**: Don't expect clearnet pages to work with onion APIs or vice versa
+
+This separation is a security feature, not a limitation.
+
+---
+
+## Related
+
+- [Paylinks Privacy](/docs/paylinks/privacy)
+- [What is Anonomi Paylinks?](/docs/paylinks/what-is)
+- [Onion Services](/docs/onion-services)

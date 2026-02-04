@@ -46,7 +46,7 @@ const SITE_BASE =
           <span>
             We never ask for your
             <span class="font-medium text-zinc-400"
-              >spend key, we can’t move your funds</span
+              >spend key, we can't move your funds</span
             >.
             <a
               href="/docs/paylinks/privacy"
@@ -58,6 +58,43 @@ const SITE_BASE =
             </a>
           </span>
         </p>
+
+        <p id="torNotice" class="mt-3 flex items-start gap-2 text-xs text-zinc-500">
+          <span
+            aria-hidden="true"
+            class="mt-[1px] font-medium"
+            style="color:#ce27e6"
+          >
+            ⓘ
+          </span>
+          <span>
+            <span class="font-medium text-zinc-400">Tor users:</span>
+            To create a donate button for Tor, use the
+            <a
+              href="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/create"
+              class="underline underline-offset-2 hover:text-zinc-300"
+            >
+              onion version
+            </a>
+            of this page.
+            <a
+              href="/docs/paylinks/tor-separation"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-1 underline underline-offset-2 hover:text-zinc-300"
+            >
+              Why?
+            </a>
+          </span>
+        </p>
+
+        <script is:inline>
+          // Hide Tor notice if already on .onion
+          if (window.location.hostname.endsWith('.onion')) {
+            const notice = document.getElementById('torNotice');
+            if (notice) notice.style.display = 'none';
+          }
+        </script>
 
         <form id="form" class="mt-8 space-y-6">
           <div class="space-y-4">

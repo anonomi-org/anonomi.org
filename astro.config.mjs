@@ -98,6 +98,7 @@ export default defineConfig({
           items: [
             { label: "What is Paylinks?", link: "/docs/paylinks/what-is" },
             { label: "Privacy", link: "/docs/paylinks/privacy" },
+            { label: "Clearnet and Tor separation", link: "/docs/paylinks/tor-separation" },
           ],
         },
         {
