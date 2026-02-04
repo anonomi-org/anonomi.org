@@ -1,0 +1,114 @@
+---
+title: Infrastructure & Data Security
+description: How Anonomi Paylinks infrastructure is designed to resist seizure, coercion, and interference.
+---
+
+Anonomi is designed for adversarial conditions — including legal pressure, infrastructure seizures, and coercion attempts. Our infrastructure reflects that assumption from the ground up.
+
+---
+
+## Our principles
+
+Anonomi is built on two core principles: **no control** and **no centralization**.
+
+We don't want control over your data — and we don't want anyone else to have it either. Centralization creates single points of failure, coercion, and compromise. Our architecture reflects these principles at every layer.
+
+For Paylinks, servers are technically necessary to generate subaddresses for donors. But we've designed the system so that **publishers can run their own Paylinks server** if they prefer — keeping full control of their data and eliminating any dependency on Anonomi infrastructure.
+
+If you want to self-host, the Paylinks API is open source and documented.
+
+---
+
+## Architecture: Edge vs. Core
+
+Anonomi uses a **split architecture**:
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| **Edge servers** | Cloud datacenters | Entry points, traffic routing, DDoS mitigation |
+| **Core servers** | Self-hosted, physical control | APIs, databases, all persistent data |
+
+Cloud providers can be compelled to hand over servers or shut down accounts. By using cloud infrastructure only as disposable edge nodes, we limit what can be seized to routing configuration — not user data.
+
+**If our edge servers are seized or become unavailable**, the core infrastructure remains intact. We spin up new edge servers and resume operations.
+
+---
+
+## Physical control
+
+The core infrastructure runs in a small, privately-operated datacenter in a rural location. It's intentionally modest — but more than sufficient for the current and projected demand of API calls.
+
+We don't host high-bandwidth resources like media or downloads. Paylinks is lightweight API traffic — small requests, small responses. This lets us prioritize **control over performance**. We'd rather own the infrastructure outright than chase CDN-level throughput we don't need.
+
+Resilience matters more than scale. The facility has no dependencies on external providers for power or primary connectivity.
+
+### Power independence
+
+- **27 kW solar generation** — primary power source
+- **28 kWh battery storage** (Pylontech) — overnight and buffer capacity
+- **Diesel backup generators** — extended outage resilience
+
+The facility operates off-grid by default. Grid connection exists as a tertiary fallback only.
+
+### Connectivity redundancy
+
+- **10 Gbps fiber** (1:1 symmetric) — primary link
+- **Multiple 5G cellular links** with multihoming — secondary failover
+- **Starlink** — tertiary failover
+
+If one link goes down, traffic automatically routes through the next available path.
+
+---
+
+## Data destruction
+
+In the event of physical interference — unauthorized access attempts, forced entry, or seizure attempts — automated processes are in place to destroy all databases.
+
+This is a last-resort measure. The goal is to ensure that even under coercion, user data cannot be extracted.
+
+**What this means for users:**
+- Your data is protected even in worst-case scenarios
+- We cannot be compelled to hand over what no longer exists
+- This aligns with our principle: if we can't protect it, we destroy it
+
+---
+
+## What we store
+
+For Paylinks specifically, we store:
+
+- Your Monero primary address (public)
+- Your private view key (encrypted at rest)
+- Configuration options (label, index range)
+- A derived owner key (hash) for authentication
+
+We do **not** store:
+- Your spend key (never requested)
+- Donor IP addresses
+- Payment amounts or descriptions
+- Any personally identifiable information
+
+See [Paylinks Privacy](/docs/paylinks/privacy) for full details.
+
+---
+
+## Why this matters
+
+Most services rely entirely on cloud infrastructure. When a government issues a takedown order or seizes servers, the service disappears — and user data goes with it.
+
+Anonomi is designed to survive that scenario:
+
+1. **Edge seizure** → Spin up new edge servers, no data loss
+2. **Coercion attempts** → We don't have spend keys, can't move funds
+3. **Physical interference** → Automated destruction, no data to extract
+
+This isn't paranoia — it's operational security for a project built to serve people in hostile environments.
+
+---
+
+## Related
+
+- [Paylinks Privacy](/docs/paylinks/privacy)
+- [Clearnet and Tor Separation](/docs/paylinks/tor-separation)
+- [Threat Model](/docs/security/threat-model)
+- [Manifesto](/docs/manifesto)

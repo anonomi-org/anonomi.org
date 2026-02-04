@@ -245,12 +245,19 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         </div>
       </div>
 
-      <div class="mt-8">
+      <div class="mt-8 flex flex-wrap gap-6">
         <a
           href="/docs/paylinks/privacy"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
         >
           Read the full privacy documentation
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/docs/paylinks/infrastructure"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          Infrastructure & data security
           <span aria-hidden="true">→</span>
         </a>
       </div>
