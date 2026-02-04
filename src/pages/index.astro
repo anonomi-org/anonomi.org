@@ -538,83 +538,78 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
           </p>
 
           <div class="mt-6 grid gap-4 lg:grid-cols-2">
-            <!-- XMR -->
+            <!-- XMR (Anonomi Paylinks) -->
             <div class="rounded-xl border border-white/10 bg-black/20 p-4">
-              <div class="flex items-center justify-between gap-3">
-                <div class="flex items-center gap-3">
-                  <div
-                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5"
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5"
+                >
+                  <!-- Monero SVG -->
+                  <svg
+                    class="h-4 w-4 text-zinc-300"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
                   >
-                    <!-- Monero SVG -->
-                    <svg
-                      class="h-4 w-4 text-zinc-300"
-                      viewBox="0 0 16 16"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M11.28774193548387 12.046451612903226h3.426838709677419
-                        C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
-                        S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
-                        H4.71225806451613V8.006322580645161L8 11.319354838709677
-                        11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
-                        V3.9535483870967743l5.039096774193548 5.039096774193548
-                        L13.058064516129033 3.9535483870967743V10.529032258064515
-                        h2.3646451612903228c0.2687096774193548 -0.7934838709677419
-                        0.41729032258064513 -1.6438709677419354
-                        0.41729032258064513 -2.5290322580645164
-                        C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
-                        S0.16 3.669032258064516 0.16 8
-                        c0 0.8851612903225806 0.14541935483870969 1.735548387096774
-                        0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
-                      ></path>
-                    </svg>
-                  </div>
-
-                  <div class="text-sm font-semibold text-zinc-200">
-                    Monero (XMR)
-                    <span class="ml-2 text-xs font-medium text-fuchsia-500/90"
-                      >Preferred</span
-                    >
-                  </div>
+                    <path
+                      d="M11.28774193548387 12.046451612903226h3.426838709677419
+                      C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
+                      S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
+                      H4.71225806451613V8.006322580645161L8 11.319354838709677
+                      11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
+                      V3.9535483870967743l5.039096774193548 5.039096774193548
+                      L13.058064516129033 3.9535483870967743V10.529032258064515
+                      h2.3646451612903228c0.2687096774193548 -0.7934838709677419
+                      0.41729032258064513 -1.6438709677419354
+                      0.41729032258064513 -2.5290322580645164
+                      C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
+                      S0.16 3.669032258064516 0.16 8
+                      c0 0.8851612903225806 0.14541935483870969 1.735548387096774
+                      0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
+                    ></path>
+                  </svg>
                 </div>
 
-                <div class="flex items-center gap-2">
-                  <button
-                    class="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
-                    type="button"
-                    onclick={`copyToClipboard('xmr')`}
-                  >
-                    Copy
-                  </button>
-
-                  <button
-                    class="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
-                    type="button"
-                    onclick={`toggleQr('xmr')`}
-                  >
-                    QR Code
-                  </button>
+                <div class="text-sm font-semibold text-zinc-200">
+                  Monero (XMR)
+                  <span class="ml-2 text-xs font-medium text-fuchsia-500/90">Preferred</span>
                 </div>
               </div>
 
-              <div
-                id="addr-xmr"
-                class="mt-3 break-all rounded-lg border border-white/10 bg-black/30 p-3 font-mono text-[11px] text-zinc-200"
-                data-address="85kkMcowoNwQwji3ugetQvfwismWuvGWWLWfhWoyLjqnDAcgsnpVMsWG76zMm3zEb9WfUcJqBCKZKQ8wVox58tfr7dY7CXF"
-              >
-                85kkMcowoNwQwji3ugetQvfwismWuvGWWLWfhWoyLjqnDAcgsnpVMsWG76zMm3zEb9WfUcJqBCKZKQ8wVox58tfr7dY7CXF
+              <p class="mt-3 text-sm text-zinc-400">
+                Donate using Anonomi Paylinks — each donation generates a fresh subaddress for privacy.
+              </p>
+
+              <div class="mt-4">
+                <!-- Clearnet button (hidden on .onion) -->
+                <a
+                  id="donate-xmr-clearnet"
+                  href="https://anonomi.org/paylinks/d#5ece7ffb-fcea-4a8f-9de9-73d1ec8a5ce7"
+                  target="_blank"
+                  rel="nofollow noopener"
+                  class="inline-flex items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
+                >
+                  <span class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"></span>
+                  Donate XMR
+                </a>
+
+                <!-- Tor button (hidden on clearnet) -->
+                <a
+                  id="donate-xmr-tor"
+                  href="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/d#bf268351-beb4-4399-9a1e-151abd210bf0"
+                  target="_blank"
+                  rel="nofollow noopener"
+                  style="display:none"
+                  class="items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
+                >
+                  <span class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"></span>
+                  Donate XMR
+                </a>
               </div>
 
-              <div id="qr-xmr" class="mt-4 hidden">
-                <img
-                  src="/donate/xmr.png"
-                  alt="Monero donation QR"
-                  class="w-40 rounded-lg border border-white/10"
-                />
-              </div>
-
-              <p id="msg-xmr" class="mt-3 text-xs text-zinc-500"></p>
+              <p class="mt-3 text-xs text-zinc-500">
+                Powered by <a href="/paylinks" class="text-zinc-400 hover:text-white underline underline-offset-2">Anonomi Paylinks</a>
+              </p>
             </div>
 
             <!-- BTC -->
@@ -691,6 +686,20 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
       <!-- Minimal inline JS -->
       <script is:inline>
+        // Toggle XMR donate button based on clearnet/onion
+        (function() {
+          const isOnion = window.location.hostname.endsWith('.onion');
+          const clearnetBtn = document.getElementById('donate-xmr-clearnet');
+          const torBtn = document.getElementById('donate-xmr-tor');
+          if (isOnion) {
+            if (clearnetBtn) clearnetBtn.style.display = 'none';
+            if (torBtn) torBtn.style.display = 'inline-flex';
+          } else {
+            if (clearnetBtn) clearnetBtn.style.display = 'inline-flex';
+            if (torBtn) torBtn.style.display = 'none';
+          }
+        })();
+
         function toggleQr(kind) {
           const el = document.getElementById(`qr-${kind}`);
           if (!el) return;
