@@ -40,6 +40,7 @@ export default defineConfig({
             { label: "Manifesto", link: "/docs/manifesto" },
             { label: "Threat model", link: "/docs/security/threat-model" },
             { label: "Onion Services", link: "/docs/onion-services" },
+            { label: "Tor is not the Dark Web", link: "/docs/tor" },
             { label: "Maps Exporter", link: "/docs/maps-exporter" },
           ],
         },
