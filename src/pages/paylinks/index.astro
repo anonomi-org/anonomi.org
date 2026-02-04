@@ -256,6 +256,61 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       </div>
     </section>
 
+    <!-- CLEARNET & TOR -->
+    <section id="tor" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Clearnet & Tor separation
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        Paylinks runs separate services for clearnet and Tor. This is a security feature, not a limitation.
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">No cross-origin requests</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            The clearnet site only talks to the clearnet API. The onion site only talks to the onion API. No mixing.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Traffic isolation</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Tor traffic stays within Tor. No exit nodes, no clearnet exposure — your activity remains within the onion network.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Independent infrastructure</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Clearnet and onion services run on separate infrastructure. If one is compromised, the other continues independently.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">Create where you publish</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            Want a donate button for your clearnet site? Create it here. For your onion site? Use the onion version of Paylinks.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-6">
+        <a
+          href="/docs/paylinks/tor-separation"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          Why separate services?
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/docs/onion-services"
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          About Anonomi onion services
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
     <!-- DISTINCTION -->
     <section id="distinction" class="mt-24 scroll-mt-24">
       <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
