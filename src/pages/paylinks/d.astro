@@ -246,6 +246,11 @@ const API_BASE =
           const address = data.address;
           const uri = data.uri;
 
+          // Validate URI protocol to prevent javascript: XSS
+          if (!uri || !uri.toLowerCase().startsWith("monero:")) {
+            throw new Error("Invalid payment URI received.");
+          }
+
           result.innerHTML = `
             <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
               <div class="text-sm font-semibold text-zinc-200">Send Monero</div>
