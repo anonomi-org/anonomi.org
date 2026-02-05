@@ -11,170 +11,185 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
 <Layout
   title="Anonomi • Maps Exporter"
-  description="Generate offline tile packs locally in your browser.">
-
+  description="Generate offline tile packs locally in your browser."
+>
   <NavBar />
 
-    <main class="mx-auto max-w-6xl px-6 py-16">
+  <main class="mx-auto max-w-6xl px-6 py-16">
     <!-- HERO / INTRO BOX -->
-    <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-12">
-        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"></div>
+    <section
+      class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-12"
+    >
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"
+      >
+      </div>
 
-        <div class="max-w-3xl">
+      <div class="max-w-3xl">
         <p class="text-xs font-semibold tracking-widest text-zinc-400">
-            OFFLINE MAPS • LOCAL EXPORT • NO SERVER WORK
+          OFFLINE MAPS • LOCAL EXPORT • NO SERVER WORK
         </p>
 
         <h1 class="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
-            Maps Exporter (beta)
+          Maps Exporter (beta)
         </h1>
 
         <p class="mt-4 text-zinc-300">
-            Select an area, pick zoom levels, and export a tile pack locally. No uploads. No accounts.
+          Select an area, pick zoom levels, and export a tile pack locally. No
+          uploads. No accounts.
         </p>
 
         <p class="mt-4 text-zinc-300">
-            ⓘ Before using this tool, read about
-            <a
+          ⓘ Before using this tool, read about
+          <a
             href="#maps-exporter-disclaimer"
             class="font-semibold text-zinc-100 hover:text-white"
-            >
+          >
             transparency & network behavior
-            </a>.
+          </a>.
         </p>
-        </div>
+      </div>
     </section>
 
     <div class="mt-8 sm:mt-12">
-        <MapsExporterApp client:only="react" />
+      <MapsExporterApp client:only="react" />
     </div>
 
     <!-- Maps Exporter disclaimer -->
     <div
-    id="maps-exporter-disclaimer"
-    class="mt-12 rounded-xl border border-white/10 bg-black/10 p-4 text-xs text-zinc-400"
+      id="maps-exporter-disclaimer"
+      class="mt-12 rounded-xl border border-white/10 bg-black/10 p-4 text-xs text-zinc-400"
     >
-    <h2 class="text-xs font-semibold uppercase tracking-wide text-zinc-300">
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-zinc-300">
         Transparency & network behavior
-    </h2>
+      </h2>
 
-    <p class="mt-2">
-        Maps Exporter ships with all application code and dependencies bundled locally.
-        No third-party scripts, styles, analytics, or background requests are loaded at runtime.
-    </p>
+      <p class="mt-2">
+        Maps Exporter ships with all application code and dependencies bundled
+        locally. No third-party scripts, styles, analytics, or background
+        requests are loaded at runtime.
+      </p>
 
-    <p class="mt-2">
-        Map tile sources are contacted <span class="text-zinc-200">only after you explicitly select one</span>.
-        Requests are made directly by your browser.
-        When accessed over Tor, this may involve Tor exit traffic unless an onion-based tile source is used.
-    </p>
+      <p class="mt-2">
+        Map tile sources are contacted <span class="text-zinc-200"
+          >only after you explicitly select one</span
+        >. Requests are made directly by your browser. When accessed over Tor,
+        this may involve Tor exit traffic unless an onion-based tile source is
+        used.
+      </p>
 
-    <p class="mt-2">
-        Maps Exporter is <span class="text-zinc-200">free and open source software</span>.
-        You are encouraged to inspect, audit, and build it yourself.
-    </p>
+      <p class="mt-2">
+        Maps Exporter is <span class="text-zinc-200"
+          >free and open source software</span
+        >. You are encouraged to inspect, audit, and build it yourself.
+      </p>
 
-    <p class="mt-2">
+      <p class="mt-2">
         Anonomi does not operate, control, or audit third-party tile servers.
         You are responsible for selecting map sources that match your privacy,
         trust, and operational security requirements.
-    </p>
+      </p>
 
-    <div class="mt-3 flex flex-col gap-1 sm:flex-row sm:gap-4">
+      <div class="mt-3 flex flex-col gap-1 sm:flex-row sm:gap-4">
         <a
-        href="/docs/maps-exporter"
-        class="font-semibold text-zinc-200 hover:text-white"
+          href="/docs/maps-exporter"
+          class="font-semibold text-zinc-200 hover:text-white"
         >
-        Read documentation →
+          Read documentation →
         </a>
 
         <a
-        href="https://github.com/anonomi-org/anonomi.github.io"
-        class="font-semibold text-zinc-200 hover:text-white"
-        target="_blank"
-        rel="noopener noreferrer"
+          href="https://github.com/anonomi-org/anonomi.github.io"
+          class="font-semibold text-zinc-200 hover:text-white"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-        View source code →
+          View source code →
         </a>
-    </div>
-
-    
+      </div>
     </div>
 
     <footer class="mt-16 border-t border-white/10 pt-10 text-sm text-zinc-500">
-        <div class="mx-auto max-w-6xl px-6">
-            <!-- Row 1: URLs -->
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            Onion Website
+      <div class="mx-auto max-w-6xl px-6">
+        <!-- Row 1: URLs -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+            </div>
           </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              Onion Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi
+              (mirror)
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Website
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi.org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://anonomi-org.github.io
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs font-semibold tracking-wide text-zinc-300">
+              ClearNet Code Repository
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://github.com/anonomi-org
+            </div>
+            <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
+              https://codeberg.org/Anonomi (mirror)
+            </div>
           </div>
         </div>
 
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            Onion Code Repository
+        <div
+          class="mt-6 border-t border-white/10 pt-4 text-zinc-500 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            © {new Date().getFullYear()} Anonomi • No trackers • No analytics • No
+            cookies
           </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi (mirror)
-          </div>
-        </div>
-
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            ClearNet Website
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://anonomi.org
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://anonomi-org.github.io
-          </div>
-        </div>
-
-        <div>
-          <div class="text-xs font-semibold tracking-wide text-zinc-300">
-            ClearNet Code Repository
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://github.com/anonomi-org
-          </div>
-          <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-            https://codeberg.org/Anonomi (mirror)
-          </div>
-        </div>
-      </div>
-
-            <div class="mt-6 border-t border-white/10 pt-4 text-zinc-500 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>© {new Date().getFullYear()} Anonomi • No trackers • No analytics • No cookies</div>
-              <div class="flex items-center gap-5">
-                <!-- Bluesky -->
-                <a
-                  href="https://bsky.app/profile/anonomi.org"
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Anonomi on Bluesky"
-                  aria-label="Anonomi on Bluesky"
-                  class="text-zinc-400 hover:text-white transition-colors"
+          <div class="flex items-center gap-5">
+            <!-- Bluesky -->
+            <a
+              href="https://bsky.app/profile/anonomi.org"
+              target="_blank"
+              rel="noreferrer"
+              title="Anonomi on Bluesky"
+              aria-label="Anonomi on Bluesky"
+              class="text-zinc-400 hover:text-white transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 256 256"
+                class="h-7 w-7"
+                aria-hidden="true"
+              >
+                <g
+                  transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 256 256"
-                    class="h-7 w-7"
-                    aria-hidden="true"
-                  >
-                    <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                      <path
-                        d="M45 90C20.147 90 0 69.853 0 45 0 20.147 20.147 0 45 0
+                  <path
+                    d="M45 90C20.147 90 0 69.853 0 45 0 20.147 20.147 0 45 0
                           c24.853 0 45 20.147 45 45
                           0 24.853-20.147 45-45 45z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M29.977 25.793C36.058 30.358 42.599 39.615 45 44.582
+                    fill="currentColor"></path>
+                  <path
+                    d="M29.977 25.793C36.058 30.358 42.599 39.615 45 44.582
                           c2.402-4.967 8.942-14.224 15.023-18.789
                           4.388-3.294 11.497-5.843 11.497 2.267
                           0 1.62-.929 13.607-1.473 15.553
@@ -188,31 +203,30 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                           -6.137 1.044-13.036-.681-14.929-7.447
                           -.545-1.946-1.473-13.933-1.473-15.553
                           0-8.11 7.109-5.561 11.497-2.267z"
-                        fill="black"
-                      />
-                    </g>
-                  </svg>
-                </a>
+                    fill="black"></path>
+                </g>
+              </svg>
+            </a>
 
-                <!-- GitHub -->
-                <a
-                  href="https://github.com/anonomi-org"
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Anonomi on GitHub"
-                  aria-label="Anonomi on GitHub"
-                  class="text-zinc-400 hover:text-white transition-colors"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    class="h-[2rem] w-[2rem]"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M12 2C6.48 2 2 6.58 2 12.26
+            <!-- GitHub -->
+            <a
+              href="https://github.com/anonomi-org"
+              target="_blank"
+              rel="noreferrer"
+              title="Anonomi on GitHub"
+              aria-label="Anonomi on GitHub"
+              class="text-zinc-400 hover:text-white transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="h-[2rem] w-[2rem]"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2C6.48 2 2 6.58 2 12.26
                       c0 4.5 2.87 8.32 6.84 9.67
                       .5.1.68-.22.68-.48
                       0-.24-.01-.87-.01-1.7
@@ -237,21 +251,20 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                       0 .26.18.58.69.48
                       A10.03 10.03 0 0022 12.26
                       C22 6.58 17.52 2 12 2z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </a>
+                  clip-rule="evenodd"></path>
+              </svg>
+            </a>
 
-                <!-- Build -->
-                <div class="font-mono text-[11px] text-zinc-500">
-                  Build:
-                  <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
-                    {BUILD_SHORT}
-                  </a>
-                </div>
-              </div>
+            <!-- Build -->
+            <div class="font-mono text-[11px] text-zinc-500">
+              Build:
+              <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+                {BUILD_SHORT}
+              </a>
             </div>
+          </div>
         </div>
-        </footer>
+      </div>
+    </footer>
   </main>
 </Layout>

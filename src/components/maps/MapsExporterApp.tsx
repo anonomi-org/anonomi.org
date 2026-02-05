@@ -8,8 +8,14 @@ import { saveAs } from "file-saver";
 
 type DetailLevel = "Low" | "Medium" | "High";
 
-
-type TileProviderId = "none" | "carto_dark" | "osm" | "opentopo" | "carto" | "google" | "custom";
+type TileProviderId =
+  | "none"
+  | "carto_dark"
+  | "osm"
+  | "opentopo"
+  | "carto"
+  | "google"
+  | "custom";
 
 type TileProvider = {
   id: TileProviderId;
@@ -31,7 +37,8 @@ const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
     id: "opentopo",
     label: "OpenTopoMap",
     url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-    attribution: "&copy; OpenTopoMap (CC-BY-SA) &copy; OpenStreetMap contributors",
+    attribution:
+      "&copy; OpenTopoMap (CC-BY-SA) &copy; OpenStreetMap contributors",
     subdomains: ["a", "b", "c"],
   },
   carto_dark: {
@@ -39,9 +46,9 @@ const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
     label: "CARTO • Dark Matter (dark)",
     url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
     attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: ["a", "b", "c", "d"],
-    },
+  },
   carto: {
     id: "carto",
     label: "CARTO Positron",
@@ -63,15 +70,19 @@ const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
   },
 };
 
-function buildTileUrl(template: string, z: number, x: number, y: number, s?: string) {
+function buildTileUrl(
+  template: string,
+  z: number,
+  x: number,
+  y: number,
+  s?: string,
+) {
   return template
     .replace("{s}", s ?? "")
     .replace("{z}", String(z))
     .replace("{x}", String(x))
     .replace("{y}", String(y));
 }
-
-
 
 function clampZoomPair(from: number, to: number) {
   let a = Math.max(0, Math.min(18, from));
@@ -103,7 +114,7 @@ function tilesForBbox(
   west: number,
   north: number,
   east: number,
-  z: number
+  z: number,
 ) {
   const n = 2 ** z;
   const lon2x = (lon: number) => ((lon + 180) / 360) * n;
@@ -157,7 +168,6 @@ function normalizeName(name: string) {
     .replace(/_+/g, "_");
 }
 
-
 function BboxTracker({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
   const raf = useRef<number | null>(null);
 
@@ -175,7 +185,13 @@ function BboxTracker({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
   return null;
 }
 
-function MapInitializer({ mapRef, onBounds }: { mapRef: React.MutableRefObject<L.Map | null>; onBounds: (b: LatLngBounds) => void }) {
+function MapInitializer({
+  mapRef,
+  onBounds,
+}: {
+  mapRef: React.MutableRefObject<L.Map | null>;
+  onBounds: (b: LatLngBounds) => void;
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -206,7 +222,10 @@ export default function MapsExporterApp() {
   const [customUrlApplied, setCustomUrlApplied] = useState(false);
 
   const [isExporting, setIsExporting] = useState(false);
-  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
+  const [progress, setProgress] = useState<{
+    done: number;
+    total: number;
+  } | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
   const [isPaused, setIsPaused] = useState(false);
@@ -218,50 +237,59 @@ export default function MapsExporterApp() {
   const packNowRef = useRef(false);
 
   const tileTemplate =
-  tileProviderId === "custom"
-    ? customTileUrl.trim()
-    : tileProviderId === "none"
-      ? ""
-      : TILE_PROVIDERS[tileProviderId].url;
+    tileProviderId === "custom"
+      ? customTileUrl.trim()
+      : tileProviderId === "none"
+        ? ""
+        : TILE_PROVIDERS[tileProviderId].url;
 
-const tileAttribution =
-  tileProviderId === "custom"
-    ? customAttribution.trim()
-    : tileProviderId === "none"
-      ? ""
-      : TILE_PROVIDERS[tileProviderId].attribution;
+  const tileAttribution =
+    tileProviderId === "custom"
+      ? customAttribution.trim()
+      : tileProviderId === "none"
+        ? ""
+        : TILE_PROVIDERS[tileProviderId].attribution;
 
-const tileSubdomains =
-  tileProviderId === "custom"
-    ? (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [])
-    : tileProviderId === "none"
-      ? []
-      : TILE_PROVIDERS[tileProviderId].subdomains ?? [];
+  const tileSubdomains =
+    tileProviderId === "custom"
+      ? tileTemplate.includes("{s}")
+        ? ["a", "b", "c"]
+        : []
+      : tileProviderId === "none"
+        ? []
+        : (TILE_PROVIDERS[tileProviderId].subdomains ?? []);
 
-// For custom mode, only consider selected when URL has required placeholders AND user clicked "Load"
-const isValidCustomUrl = tileProviderId === "custom" &&
-  customTileUrl.includes("{z}") &&
-  customTileUrl.includes("{x}") &&
-  customTileUrl.includes("{y}");
+  // For custom mode, only consider selected when URL has required placeholders AND user clicked "Load"
+  const isValidCustomUrl =
+    tileProviderId === "custom" &&
+    customTileUrl.includes("{z}") &&
+    customTileUrl.includes("{x}") &&
+    customTileUrl.includes("{y}");
 
-const isTileSourceSelected = tileProviderId === "custom"
-  ? isValidCustomUrl && customUrlApplied
-  : tileTemplate.length > 0;
+  const isTileSourceSelected =
+    tileProviderId === "custom"
+      ? isValidCustomUrl && customUrlApplied
+      : tileTemplate.length > 0;
 
   // When not in advanced, detail level implies a zoom range.
   const effectiveZooms = useMemo(() => {
-  if (showAdvanced) {
-    const [a, b] = clampZoomPair(zoomFrom, zoomTo);
-    return range(a, b);
-  }
+    if (showAdvanced) {
+      const [a, b] = clampZoomPair(zoomFrom, zoomTo);
+      return range(a, b);
+    }
 
-  if (detailLevel === "Low") return range(0, 8);
-  if (detailLevel === "Medium") return range(0, 12);
-  return range(0, 16); // High
-}, [detailLevel, showAdvanced, zoomFrom, zoomTo]);
+    if (detailLevel === "Low") return range(0, 8);
+    if (detailLevel === "Medium") return range(0, 12);
+    return range(0, 16); // High
+  }, [detailLevel, showAdvanced, zoomFrom, zoomTo]);
 
   const estimate = useMemo(() => {
-    if (!bounds) return { areaKm2: null as number | null, tiles: null as number | null, sizeMB: null as number | null };
+    if (!bounds)
+      return {
+        areaKm2: null as number | null,
+        tiles: null as number | null,
+        sizeMB: null as number | null,
+      };
 
     const south = bounds.getSouth();
     const west = bounds.getWest();
@@ -272,7 +300,8 @@ const isTileSourceSelected = tileProviderId === "custom"
 
     // tiles across all chosen zooms
     let tiles = 0;
-    for (const z of effectiveZooms) tiles += tilesForBbox(south, west, north, east, z);
+    for (const z of effectiveZooms)
+      tiles += tilesForBbox(south, west, north, east, z);
 
     // rough guess: avg tile size 35KB (png/jpg varies wildly)
     const avgKBPerTile = 35;
@@ -282,18 +311,26 @@ const isTileSourceSelected = tileProviderId === "custom"
   }, [bounds, effectiveZooms]);
 
   const estimatedAreaText =
-    estimate.areaKm2 == null ? "—" :
-    estimate.areaKm2 < 1 ? `${(estimate.areaKm2 * 1_000_000).toFixed(0)} m²` :
-    `${estimate.areaKm2.toFixed(2)} km²`;
+    estimate.areaKm2 == null
+      ? "—"
+      : estimate.areaKm2 < 1
+        ? `${(estimate.areaKm2 * 1_000_000).toFixed(0)} m²`
+        : `${estimate.areaKm2.toFixed(2)} km²`;
 
   const estimatedSizeText =
-    estimate.sizeMB == null ? "—" :
-    estimate.sizeMB < 1024 ? `~${estimate.sizeMB.toFixed(0)} MB` :
-    `~${(estimate.sizeMB / 1024).toFixed(2)} GB`;
+    estimate.sizeMB == null
+      ? "—"
+      : estimate.sizeMB < 1024
+        ? `~${estimate.sizeMB.toFixed(0)} MB`
+        : `~${(estimate.sizeMB / 1024).toFixed(2)} GB`;
 
-    function fmtTime(d: Date) {
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-}
+  function fmtTime(d: Date) {
+    return d.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  }
 
   function fmtDuration(ms: number) {
     const s = Math.max(0, Math.floor(ms / 1000));
@@ -302,9 +339,9 @@ const isTileSourceSelected = tileProviderId === "custom"
     const ss = s % 60;
     const pad = (n: number) => String(n).padStart(2, "0");
     return hh > 0 ? `${hh}:${pad(mm)}:${pad(ss)}` : `${mm}:${pad(ss)}`;
-    }
+  }
 
-    function fmtBytes(bytes: number) {
+  function fmtBytes(bytes: number) {
     const kb = bytes / 1024;
     const mb = kb / 1024;
     const gb = mb / 1024;
@@ -312,44 +349,44 @@ const isTileSourceSelected = tileProviderId === "custom"
     if (mb >= 1) return `${mb.toFixed(1)} MB`;
     if (kb >= 1) return `${kb.toFixed(0)} KB`;
     return `${bytes} B`;
-    }
+  }
 
-    async function waitWhilePaused() {
+  async function waitWhilePaused() {
     while (pauseRef.current) {
-        await new Promise((r) => setTimeout(r, 150));
+      await new Promise((r) => setTimeout(r, 150));
     }
-    }
+  }
 
-    function togglePause() {
-  const next = !pauseRef.current;
-  pauseRef.current = next;
-  setIsPaused(next);
-}
+  function togglePause() {
+    const next = !pauseRef.current;
+    pauseRef.current = next;
+    setIsPaused(next);
+  }
 
-function stopAndPack() {
-  // stop fetching new tiles, but still zip what we have
-  packNowRef.current = true;
-  pauseRef.current = false;
-  setIsPaused(false);
-}
+  function stopAndPack() {
+    // stop fetching new tiles, but still zip what we have
+    packNowRef.current = true;
+    pauseRef.current = false;
+    setIsPaused(false);
+  }
 
-function cancelExport() {
-  // hard cancel: abort fetch + reset UI
-  try {
-    abortRef.current?.abort();
-  } catch {}
-  abortRef.current = null;
+  function cancelExport() {
+    // hard cancel: abort fetch + reset UI
+    try {
+      abortRef.current?.abort();
+    } catch {}
+    abortRef.current = null;
 
-  packNowRef.current = false;
-  pauseRef.current = false;
+    packNowRef.current = false;
+    pauseRef.current = false;
 
-  setIsPaused(false);
-  setIsExporting(false);
-  setProgress(null);
-  setStartedAt(null);
-  setDownloadedBytes(0);
-  setExportError("Cancelled.");
-}
+    setIsPaused(false);
+    setIsExporting(false);
+    setProgress(null);
+    setStartedAt(null);
+    setDownloadedBytes(0);
+    setExportError("Cancelled.");
+  }
 
   async function exportZip() {
     if (!bounds) return;
@@ -369,27 +406,27 @@ function cancelExport() {
     abortRef.current = new AbortController();
 
     try {
-        const south = bounds.getSouth();
-        const west = bounds.getWest();
-        const north = bounds.getNorth();
-        const east = bounds.getEast();
+      const south = bounds.getSouth();
+      const west = bounds.getWest();
+      const north = bounds.getNorth();
+      const east = bounds.getEast();
 
-        // For now: use place name derived from center. Later we can let user set it.
-        const center = bounds.getCenter();
-        const placeName = `Maps_${normalizeName(`z${effectiveZooms[0]}_${effectiveZooms[effectiveZooms.length - 1]}`)}`;
+      // For now: use place name derived from center. Later we can let user set it.
+      const center = bounds.getCenter();
+      const placeName = `Maps_${normalizeName(`z${effectiveZooms[0]}_${effectiveZooms[effectiveZooms.length - 1]}`)}`;
 
-        const zip = new JSZip();
-        const root = zip.folder("AnonMapsCache")!;
-        const meta = {
+      const zip = new JSZip();
+      const root = zip.folder("AnonMapsCache")!;
+      const meta = {
         bbox: { south, west, north, east },
         zooms: effectiveZooms,
         createdAt: new Date().toISOString(),
         tileSource: tileTemplate,
-        };
+      };
 
-        // Precompute all tile jobs (so we can show a real progress bar)
-        const jobs: Array<{ z: number; x: number; y: number }> = [];
-        for (const z of effectiveZooms) {
+      // Precompute all tile jobs (so we can show a real progress bar)
+      const jobs: Array<{ z: number; x: number; y: number }> = [];
+      for (const z of effectiveZooms) {
         const nLat = clampLat(north);
         const sLat = clampLat(south);
 
@@ -399,20 +436,22 @@ function cancelExport() {
         const yMax = Math.max(lat2tileY(nLat, z), lat2tileY(sLat, z));
 
         for (let x = xMin; x <= xMax; x++) {
-            for (let y = yMin; y <= yMax; y++) {
+          for (let y = yMin; y <= yMax; y++) {
             jobs.push({ z, x, y });
-            }
+          }
         }
-        }
+      }
 
-        setProgress({ done: 0, total: jobs.length });
+      setProgress({ done: 0, total: jobs.length });
 
-        // IMPORTANT: OSM is just for testing. For real use, you’ll want your own tiles.
-        const subdomains = ["a", "b", "c"];
+      // IMPORTANT: OSM is just for testing. For real use, you’ll want your own tiles.
+      const subdomains = ["a", "b", "c"];
 
-        let done = 0;
-        for (const job of jobs) {
-        const subs = tileSubdomains ?? (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [""]);
+      let done = 0;
+      for (const job of jobs) {
+        const subs =
+          tileSubdomains ??
+          (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [""]);
         const s = subs[(job.x + job.y) % subs.length];
         const url = buildTileUrl(tileTemplate, job.z, job.x, job.y, s);
 
@@ -424,7 +463,10 @@ function cancelExport() {
         if (!ctrl) throw new Error("Export cancelled");
 
         const res = await fetch(url, { signal: ctrl.signal });
-        if (!res.ok) throw new Error(`Tile fetch failed: ${res.status} z${job.z}/${job.x}/${job.y}`);
+        if (!res.ok)
+          throw new Error(
+            `Tile fetch failed: ${res.status} z${job.z}/${job.x}/${job.y}`,
+          );
 
         const blob = await res.blob();
         const arr = await blob.arrayBuffer();
@@ -436,26 +478,26 @@ function cancelExport() {
 
         done++;
         if (done % 25 === 0 || done === jobs.length) {
-            setProgress({ done, total: jobs.length });
-            await new Promise((r) => setTimeout(r, 0)); // yield to UI
+          setProgress({ done, total: jobs.length });
+          await new Promise((r) => setTimeout(r, 0)); // yield to UI
         }
-        }
+      }
 
-        // metadata file beside tile folders
-        root.file("export.amd", JSON.stringify(meta, null, 2));
+      // metadata file beside tile folders
+      root.file("export.amd", JSON.stringify(meta, null, 2));
 
-        const outBlob = await zip.generateAsync({ type: "blob" });
+      const outBlob = await zip.generateAsync({ type: "blob" });
 
-        saveAs(outBlob, `${placeName}.zip`);
+      saveAs(outBlob, `${placeName}.zip`);
     } catch (e: any) {
-        setExportError(e?.message ?? "Export failed");
+      setExportError(e?.message ?? "Export failed");
     } finally {
-        setIsExporting(false);
-        abortRef.current = null;
-        packNowRef.current = false;
-        pauseRef.current = false;
+      setIsExporting(false);
+      abortRef.current = null;
+      packNowRef.current = false;
+      pauseRef.current = false;
     }
-}
+  }
 
   return (
     <div className="space-y-4">
@@ -463,8 +505,9 @@ function cancelExport() {
       <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
         <div className="text-sm font-semibold text-zinc-200">How it works</div>
         <p className="mt-2 text-sm text-zinc-400">
-          Move the map until the area inside the selection frame matches what you want.
-          Then pick the zoom detail and export locally. No uploads. No accounts.
+          Move the map until the area inside the selection frame matches what
+          you want. Then pick the zoom detail and export locally. No uploads. No
+          accounts.
         </p>
       </div>
 
@@ -473,7 +516,9 @@ function cancelExport() {
         {/* Map selection (first on mobile) */}
         <div className="order-1 lg:order-none lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
           <div className="flex items-center justify-between gap-3">
-            <div className="text-sm font-semibold text-zinc-200">Map selection</div>
+            <div className="text-sm font-semibold text-zinc-200">
+              Map selection
+            </div>
             <div className="text-xs text-zinc-500">Client-side only</div>
           </div>
 
@@ -484,126 +529,149 @@ function cancelExport() {
           <div
             className="relative mt-4 h-[420px] rounded-xl border border-white/10 overflow-hidden"
             style={{ touchAction: "none" }}
-            >
-
+          >
             {/* Map */}
             {!isTileSourceSelected ? (
-            <div className="flex h-full w-full items-center justify-center p-6 text-center">
+              <div className="flex h-full w-full items-center justify-center p-6 text-center">
                 <div>
-                <div className="text-sm font-semibold text-zinc-200">Select a map source to load the map</div>
-                <p className="mt-2 text-xs text-zinc-500">
+                  <div className="text-sm font-semibold text-zinc-200">
+                    Select a map source to load the map
+                  </div>
+                  <p className="mt-2 text-xs text-zinc-500">
                     This avoids any external tile requests before user input.
-                </p>
+                  </p>
                 </div>
-            </div>
+              </div>
             ) : (
-            <MapContainer
+              <MapContainer
                 key={tileProviderId} // remount when source changes (but not on every keystroke for custom)
                 center={[37.138, -8.536] as [number, number]}
                 zoom={12}
                 className="h-full w-full"
                 style={{ height: "100%", width: "100%" }}
-            >
-                <TileLayer url={tileTemplate} attribution={tileAttribution} subdomains={tileSubdomains as any} />
+              >
+                <TileLayer
+                  url={tileTemplate}
+                  attribution={tileAttribution}
+                  subdomains={tileSubdomains as any}
+                />
                 <BboxTracker onBounds={(b) => setBounds(b)} />
-                <MapInitializer mapRef={mapRef} onBounds={(b) => setBounds(b)} />
-            </MapContainer>
+                <MapInitializer
+                  mapRef={mapRef}
+                  onBounds={(b) => setBounds(b)}
+                />
+              </MapContainer>
             )}
-
           </div>
-          
         </div>
 
         {/* Export settings */}
         <div className="order-2 lg:order-none rounded-2xl border border-white/10 bg-black/20 p-4">
-        <div className="text-sm font-semibold text-zinc-200">Export settings</div>
+          <div className="text-sm font-semibold text-zinc-200">
+            Export settings
+          </div>
 
-        {/* Tile source */}
-        <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-        <div className="text-sm font-semibold text-zinc-200">Map source</div>
-
-        <p className="mt-3 text-xs text-zinc-500">
-            No map network requests are made until you choose a source.
-        </p>
-
-        <div className="mt-3 grid grid-cols-2 gap-2">
-            {(["carto_dark", "carto", "osm", "opentopo", "google", "custom"] as const).map((id) => (
-            <button
-                key={id}
-                type="button"
-                onClick={() => {
-                // switching sources should reset map-derived state
-                setTileProviderId(id);
-                setBounds(null);
-                mapRef.current = null;
-                setCustomUrlApplied(false);
-                }}
-                className={[
-                "rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
-                tileProviderId === id ? "bg-white/15 text-white" : "bg-black/20 text-zinc-300 hover:bg-white/10",
-                ].join(" ")}
-            >
-                {TILE_PROVIDERS[id].label}
-            </button>
-            ))}
-        </div>
-
-        {tileProviderId === "custom" && (
-            <div className="mt-3 space-y-2">
-            <label className="block">
-                <div className="text-xs text-zinc-400">Tile URL template</div>
-                <input
-                value={customTileUrl}
-                onChange={(e) => setCustomTileUrl(e.target.value)}
-                placeholder="https://example.com/tiles/{z}/{x}/{y}.png"
-                className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
-                />
-                <p className="mt-1 text-xs text-zinc-500">
-                Use <span className="font-mono">{`{z}`}</span>, <span className="font-mono">{`{x}`}</span>, <span className="font-mono">{`{y}`}</span>.
-                Optional <span className="font-mono">{`{s}`}</span> for subdomains.
-                </p>
-            </label>
-
-            <label className="block">
-                <div className="text-xs text-zinc-400">Attribution (optional)</div>
-                <input
-                value={customAttribution}
-                onChange={(e) => setCustomAttribution(e.target.value)}
-                placeholder="&copy; …"
-                className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
-                />
-            </label>
-
-            <button
-                type="button"
-                disabled={!isValidCustomUrl}
-                onClick={() => setCustomUrlApplied(true)}
-                className={[
-                  "mt-2 w-full rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
-                  isValidCustomUrl
-                    ? "bg-white/15 text-white hover:bg-white/20"
-                    : "bg-white/5 text-zinc-500 cursor-not-allowed",
-                ].join(" ")}
-              >
-                {customUrlApplied ? "Reload map" : "Load map"}
-              </button>
+          {/* Tile source */}
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="text-sm font-semibold text-zinc-200">
+              Map source
             </div>
-        )}
 
-        {tileProviderId === "google" && (
-            <a
-              href="/docs/maps-exporter#using-google-maps-as-source"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-fuchsia-400 hover:text-fuchsia-300"
-            >
-              Learn more about Google Maps as source
-              <span aria-hidden="true">→</span>
-            </a>
-        )}
+            <p className="mt-3 text-xs text-zinc-500">
+              No map network requests are made until you choose a source.
+            </p>
 
-        </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {(
+                [
+                  "carto_dark",
+                  "carto",
+                  "osm",
+                  "opentopo",
+                  "google",
+                  "custom",
+                ] as const
+              ).map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => {
+                    // switching sources should reset map-derived state
+                    setTileProviderId(id);
+                    setBounds(null);
+                    mapRef.current = null;
+                    setCustomUrlApplied(false);
+                  }}
+                  className={[
+                    "rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
+                    tileProviderId === id
+                      ? "bg-white/15 text-white"
+                      : "bg-black/20 text-zinc-300 hover:bg-white/10",
+                  ].join(" ")}
+                >
+                  {TILE_PROVIDERS[id].label}
+                </button>
+              ))}
+            </div>
 
+            {tileProviderId === "custom" && (
+              <div className="mt-3 space-y-2">
+                <label className="block">
+                  <div className="text-xs text-zinc-400">Tile URL template</div>
+                  <input
+                    value={customTileUrl}
+                    onChange={(e) => setCustomTileUrl(e.target.value)}
+                    placeholder="https://example.com/tiles/{z}/{x}/{y}.png"
+                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
+                  />
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Use <span className="font-mono">{`{z}`}</span>,{" "}
+                    <span className="font-mono">{`{x}`}</span>,{" "}
+                    <span className="font-mono">{`{y}`}</span>. Optional{" "}
+                    <span className="font-mono">{`{s}`}</span> for subdomains.
+                  </p>
+                </label>
+
+                <label className="block">
+                  <div className="text-xs text-zinc-400">
+                    Attribution (optional)
+                  </div>
+                  <input
+                    value={customAttribution}
+                    onChange={(e) => setCustomAttribution(e.target.value)}
+                    placeholder="&copy; …"
+                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  disabled={!isValidCustomUrl}
+                  onClick={() => setCustomUrlApplied(true)}
+                  className={[
+                    "mt-2 w-full rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-white/10",
+                    isValidCustomUrl
+                      ? "bg-white/15 text-white hover:bg-white/20"
+                      : "bg-white/5 text-zinc-500 cursor-not-allowed",
+                  ].join(" ")}
+                >
+                  {customUrlApplied ? "Reload map" : "Load map"}
+                </button>
+              </div>
+            )}
+
+            {tileProviderId === "google" && (
+              <a
+                href="/docs/maps-exporter#using-google-maps-as-source"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-fuchsia-400 hover:text-fuchsia-300"
+              >
+                Learn more about Google Maps as source
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
 
           {/* Zoom section */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -633,7 +701,8 @@ function cancelExport() {
               </div>
 
               <div className="mt-3 text-xs text-zinc-500">
-                Low detail is safer and faster. High detail can produce very large downloads.
+                Low detail is safer and faster. High detail can produce very
+                large downloads.
               </div>
             </div>
 
@@ -645,7 +714,9 @@ function cancelExport() {
                 className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
               >
                 Advanced
-                <span className="text-zinc-500">{showAdvanced ? "▲" : "▼"}</span>
+                <span className="text-zinc-500">
+                  {showAdvanced ? "▲" : "▼"}
+                </span>
               </button>
 
               {showAdvanced && (
@@ -687,7 +758,8 @@ function cancelExport() {
                   </div>
 
                   <p className="mt-3 text-xs text-zinc-500">
-                    Tip: mobile storage and memory are limited — avoid max zoom unless necessary.
+                    Tip: mobile storage and memory are limited — avoid max zoom
+                    unless necessary.
                   </p>
                 </div>
               )}
@@ -717,7 +789,8 @@ function cancelExport() {
             </div>
 
             <p className="mt-3 text-xs text-zinc-500">
-              Keep this tab open during export. Mobile browsers may pause background work.
+              Keep this tab open during export. Mobile browsers may pause
+              background work.
             </p>
           </div>
 
@@ -727,100 +800,107 @@ function cancelExport() {
             disabled={!bounds || !isTileSourceSelected || isExporting}
             onClick={exportZip}
             className={[
-                "mt-4 w-full rounded-xl px-4 py-2 text-sm font-medium ring-1 ring-white/10",
-                !bounds || isExporting ? "bg-white/10 text-zinc-300 opacity-60" : "bg-white/15 text-white hover:bg-white/20",
+              "mt-4 w-full rounded-xl px-4 py-2 text-sm font-medium ring-1 ring-white/10",
+              !bounds || isExporting
+                ? "bg-white/10 text-zinc-300 opacity-60"
+                : "bg-white/15 text-white hover:bg-white/20",
             ].join(" ")}
-            >
+          >
             {isExporting ? "Exporting…" : "Export zip"}
-            </button>
-
-
+          </button>
         </div>
-        
       </div>
 
       {progress && (
-  <div className="order-3 lg:order-none lg:col-start-3 lg:row-start-2">
-    <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-xs text-zinc-300">
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-zinc-400">
-          <span className="text-zinc-200">
-            {Math.floor((progress.done / Math.max(1, progress.total)) * 100)}%
-          </span>{" "}
-          — Downloaded tiles:{" "}
-          <span className="text-zinc-200">{progress.done}</span> / {progress.total}
-        </div>
+        <div className="order-3 lg:order-none lg:col-start-3 lg:row-start-2">
+          <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-xs text-zinc-300">
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-zinc-400">
+                <span className="text-zinc-200">
+                  {Math.floor(
+                    (progress.done / Math.max(1, progress.total)) * 100,
+                  )}
+                  %
+                </span>{" "}
+                — Downloaded tiles:{" "}
+                <span className="text-zinc-200">{progress.done}</span> /{" "}
+                {progress.total}
+              </div>
 
-        <div className="text-zinc-500">
-          {isPaused ? "Paused" : isExporting ? "Running" : "Idle"}
-        </div>
-      </div>
+              <div className="text-zinc-500">
+                {isPaused ? "Paused" : isExporting ? "Running" : "Idle"}
+              </div>
+            </div>
 
-      <div className="mt-2 grid grid-cols-1 gap-1 text-zinc-400">
-        <div>
-          Started on:{" "}
-          <span className="text-zinc-200">
-            {startedAt ? fmtTime(startedAt) : "—"}
-          </span>
-        </div>
-        <div>
-          Running:{" "}
-          <span className="text-zinc-200">
-            {startedAt ? fmtDuration(Date.now() - startedAt.getTime()) : "—"}
-          </span>
-        </div>
-        <div>
-          Total downloaded:{" "}
-          <span className="text-zinc-200">{fmtBytes(downloadedBytes)}</span>
-        </div>
-      </div>
+            <div className="mt-2 grid grid-cols-1 gap-1 text-zinc-400">
+              <div>
+                Started on:{" "}
+                <span className="text-zinc-200">
+                  {startedAt ? fmtTime(startedAt) : "—"}
+                </span>
+              </div>
+              <div>
+                Running:{" "}
+                <span className="text-zinc-200">
+                  {startedAt
+                    ? fmtDuration(Date.now() - startedAt.getTime())
+                    : "—"}
+                </span>
+              </div>
+              <div>
+                Total downloaded:{" "}
+                <span className="text-zinc-200">
+                  {fmtBytes(downloadedBytes)}
+                </span>
+              </div>
+            </div>
 
-      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-        <button
-          type="button"
-          onClick={togglePause}
-          disabled={!isExporting}
-          className={[
-            "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
-            !isExporting
-              ? "bg-white/10 text-zinc-400 opacity-60"
-              : "bg-white/15 text-white hover:bg-white/20",
-          ].join(" ")}
-        >
-          {isPaused ? "Continue" : "Pause"}
-        </button>
+            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <button
+                type="button"
+                onClick={togglePause}
+                disabled={!isExporting}
+                className={[
+                  "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
+                  !isExporting
+                    ? "bg-white/10 text-zinc-400 opacity-60"
+                    : "bg-white/15 text-white hover:bg-white/20",
+                ].join(" ")}
+              >
+                {isPaused ? "Continue" : "Pause"}
+              </button>
 
-        <button
-          type="button"
-          onClick={stopAndPack}
-          disabled={!isExporting}
-          className={[
-            "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
-            !isExporting
-              ? "bg-white/10 text-zinc-400 opacity-60"
-              : "bg-white/15 text-white hover:bg-white/20",
-          ].join(" ")}
-        >
-          Stop and pack what we have
-        </button>
+              <button
+                type="button"
+                onClick={stopAndPack}
+                disabled={!isExporting}
+                className={[
+                  "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
+                  !isExporting
+                    ? "bg-white/10 text-zinc-400 opacity-60"
+                    : "bg-white/15 text-white hover:bg-white/20",
+                ].join(" ")}
+              >
+                Stop and pack what we have
+              </button>
 
-        {isExporting ? (
-          <button
-            type="button"
-            onClick={cancelExport}
-            className="rounded-xl bg-red-500/15 px-3 py-2 text-xs font-medium text-red-100 ring-1 ring-red-500/30 hover:bg-red-500/20"
-          >
-            Cancel
-          </button>
-        ) : (
-          <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
-            Completed
+              {isExporting ? (
+                <button
+                  type="button"
+                  onClick={cancelExport}
+                  className="rounded-xl bg-red-500/15 px-3 py-2 text-xs font-medium text-red-100 ring-1 ring-red-500/30 hover:bg-red-500/20"
+                >
+                  Cancel
+                </button>
+              ) : (
+                <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
+                  Completed
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-    </div>
-  </div>
-)}
+        </div>
+      )}
     </div>
   );
 }

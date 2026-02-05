@@ -403,7 +403,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
               viewBox="0 0 24 24"
               aria-hidden="true"
             >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              ></path>
             </svg>
           </div>
 
@@ -413,12 +415,16 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         </div>
 
         <p class="mt-3 max-w-3xl text-base text-zinc-400">
-          Tor is not the "dark web" — it's a <strong class="font-medium text-zinc-300">foundational privacy technology</strong>.
-          It protects metadata, resists censorship, and removes intermediaries between you and the services you use.
+          Tor is not the "dark web" — it's a <strong
+            class="font-medium text-zinc-300"
+            >foundational privacy technology</strong
+          >. It protects metadata, resists censorship, and removes
+          intermediaries between you and the services you use.
         </p>
 
         <p class="mt-3 max-w-3xl text-base text-zinc-400">
-          Anonomi is built on Tor because privacy should not require trust in platforms, providers, or gatekeepers.
+          Anonomi is built on Tor because privacy should not require trust in
+          platforms, providers, or gatekeepers.
         </p>
 
         <div class="mt-6">
@@ -613,12 +619,15 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
                 <div class="text-sm font-semibold text-zinc-200">
                   Monero (XMR)
-                  <span class="ml-2 text-xs font-medium text-fuchsia-500/90">Preferred</span>
+                  <span class="ml-2 text-xs font-medium text-fuchsia-500/90"
+                    >Preferred</span
+                  >
                 </div>
               </div>
 
               <p class="mt-3 text-sm text-zinc-400">
-                Donate using Anonomi Paylinks — each donation generates a fresh subaddress for privacy.
+                Donate using Anonomi Paylinks — each donation generates a fresh
+                subaddress for privacy.
               </p>
 
               <div class="mt-4">
@@ -630,7 +639,9 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                   rel="nofollow noopener"
                   class="inline-flex items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
                 >
-                  <span class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"></span>
+                  <span
+                    class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"
+                  ></span>
                   Donate XMR
                 </a>
 
@@ -643,13 +654,19 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
                   style="display:none"
                   class="items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
                 >
-                  <span class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"></span>
+                  <span
+                    class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"
+                  ></span>
                   Donate XMR
                 </a>
               </div>
 
               <p class="mt-3 text-xs text-zinc-500">
-                Powered by <a href="/paylinks" class="text-zinc-400 hover:text-white underline underline-offset-2">Anonomi Paylinks</a>
+                Powered by <a
+                  href="/paylinks"
+                  class="text-zinc-400 hover:text-white underline underline-offset-2"
+                  >Anonomi Paylinks</a
+                >
               </p>
             </div>
 
@@ -728,16 +745,16 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       <!-- Minimal inline JS -->
       <script is:inline>
         // Toggle XMR donate button based on clearnet/onion
-        (function() {
-          const isOnion = window.location.hostname.endsWith('.onion');
-          const clearnetBtn = document.getElementById('donate-xmr-clearnet');
-          const torBtn = document.getElementById('donate-xmr-tor');
+        (function () {
+          const isOnion = window.location.hostname.endsWith(".onion");
+          const clearnetBtn = document.getElementById("donate-xmr-clearnet");
+          const torBtn = document.getElementById("donate-xmr-tor");
           if (isOnion) {
-            if (clearnetBtn) clearnetBtn.style.display = 'none';
-            if (torBtn) torBtn.style.display = 'inline-flex';
+            if (clearnetBtn) clearnetBtn.style.display = "none";
+            if (torBtn) torBtn.style.display = "inline-flex";
           } else {
-            if (clearnetBtn) clearnetBtn.style.display = 'inline-flex';
-            if (torBtn) torBtn.style.display = 'none';
+            if (clearnetBtn) clearnetBtn.style.display = "inline-flex";
+            if (torBtn) torBtn.style.display = "none";
           }
         })();
 
