@@ -587,6 +587,80 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
             </a>
           </div>
         </div>
+        <!-- Anonomi Postbox -->
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold tracking-tight">
+              Anonomi Postbox
+            </h3>
+          </div>
+
+          <p class="mt-3 max-w-3xl text-base text-zinc-400">
+            <strong class="font-medium text-zinc-300">Receive messages while your main device is offline.</strong>
+            Anonomi Postbox is a companion app installed on a separate Android device.
+            It stays online and collects encrypted messages on your behalf, then delivers
+            them automatically when your main device reconnects.
+          </p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">Store-and-forward</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Messages arrive at the Postbox while you are offline and are
+                delivered when your main device comes back online.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">End-to-end encrypted</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                The Postbox cannot read your messages. It only stores and
+                forwards encrypted data.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">QR pairing</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Link a Postbox to your account by scanning a QR code. No
+                accounts, servers, or cloud services involved.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">Optional by design</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Anonomi works without a Postbox. Use it only if asynchronous
+                delivery fits your threat model.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <a
+              href="/docs/usage/settings/mailbox"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Learn how Anonomi Postbox works
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
     <!-- SAFETY UNDER COERCION -->
@@ -768,12 +842,12 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
       </p>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2">
-        <!-- Primary download -->
+        <!-- Anonomi Messenger -->
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div class="text-base font-semibold">Official releases</div>
+          <div class="text-base font-semibold">Anonomi Messenger</div>
           <p class="mt-2 text-sm text-zinc-400">
-            Download signed APKs from the official repository. Releases are
-            published with checksums and verification instructions.
+            The main app. Decentralized messaging over Tor or offline transports,
+            with private payments, offline maps, and safety tools built in.
           </p>
 
           <div class="mt-6">
@@ -784,40 +858,60 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
               rel="noreferrer"
               class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
             >
-              <span data-clearnet-text="Download latest release"
-                >Check the latest release</span
+              <span data-clearnet-text="Download Anonomi Messenger"
+                >Download Anonomi Messenger</span
               >
               <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
 
-        <!-- Verification -->
+        <!-- Anonomi Postbox -->
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <div class="text-base font-semibold">Verify before installing</div>
+          <div class="text-base font-semibold">Anonomi Postbox</div>
           <p class="mt-2 text-sm text-zinc-400">
-            In high-risk environments, installation integrity matters. We
-            strongly recommend verifying signatures and checksums before running
-            the app.
+            Companion app for asynchronous message delivery. Install on a
+            separate device to receive messages while your main phone is offline.
           </p>
 
-          <div class="mt-6 flex flex-col gap-2">
+          <div class="mt-6">
             <a
-              href="/docs/verify"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/latest"
+              data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
             >
-              Learn how to verify Anonomi
-              <span aria-hidden="true">→</span>
-            </a>
-
-            <a
-              href="/docs/features/distribution#app-catalog-offline-kit"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Why is the APK so large?
+              <span data-clearnet-text="Download Anonomi Postbox"
+                >Download Anonomi Postbox</span
+              >
               <span aria-hidden="true">→</span>
             </a>
           </div>
+        </div>
+      </div>
+
+      <!-- Verification -->
+      <div class="mt-6 flex flex-col gap-2 text-sm">
+        <p class="text-zinc-500">
+          Releases are signed and published with checksums.
+          In high-risk environments, always verify before installing.
+        </p>
+        <div class="flex flex-wrap gap-x-6 gap-y-1">
+          <a
+            href="/docs/verify"
+            class="inline-flex items-center gap-2 font-medium text-zinc-300 hover:text-white"
+          >
+            Learn how to verify Anonomi
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/docs/features/distribution#app-catalog-offline-kit"
+            class="inline-flex items-center gap-2 font-medium text-zinc-300 hover:text-white"
+          >
+            Why is the APK so large?
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
 
