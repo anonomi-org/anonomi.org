@@ -78,7 +78,7 @@ export default defineConfig({
                 { label: "Connections", link: "/docs/usage/settings/connections" },
                 { label: "Security", link: "/docs/usage/settings/security" },
                 { label: "Notifications", link: "/docs/usage/settings/notifications" },
-                { label: "Anonomi Postbox", link: "/docs/usage/settings/mailbox" },
+                { label: "Anonomi Postbox", link: "/docs/usage/settings/postbox" },
                 { label: "Monero", link: "/docs/usage/settings/monero" },
                 { label: "Offline Maps", link: "/docs/usage/settings/offline-maps" },
                 { label: "Share this app offline", link: "/docs/usage/settings/share-offline" },

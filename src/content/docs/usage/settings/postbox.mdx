@@ -1,17 +1,17 @@
 ---
 title: Anonomi Postbox
-description: Receive and send messages while offline using a linked Mailbox device.
+description: Receive and send messages while offline using a linked Postbox device.
 ---
 
 Anonomi Postbox is a companion app that allows you to **receive and send messages even when your main Anonomi device is offline**.
 
-From the Settings screen, you can configure and manage how Mailbox is used with your account.
+From the Settings screen, you can configure and manage how Postbox is used with your account.
 
 ---
 
-## What is a Mailbox?
+## What is a Postbox?
 
-A Mailbox is a **separate Anonomi Postbox app** installed on another Android device.
+A Postbox is a **separate Anonomi Postbox app** installed on another Android device.
 
 Its role is simple:
 
@@ -19,15 +19,15 @@ Its role is simple:
 - Store those messages securely
 - Deliver them automatically when your main device comes online again
 
-Likewise, messages you send while your contacts are offline can be delivered through their Mailboxes when they reconnect.
+Likewise, messages you send while your contacts are offline can be delivered through their Postboxes when they reconnect.
 
-The Mailbox **cannot read messages** and does not act as a traditional server.
+The Postbox **cannot read messages** and does not act as a traditional server.
 
 ---
 
-## Why use a Mailbox?
+## Why use a Postbox?
 
-Mailbox is useful when:
+Postbox is useful when:
 
 - Your phone is often offline
 - You intentionally keep your main device disconnected
@@ -40,60 +40,60 @@ Typical setups include:
 
 ---
 
-## How Mailbox works (high level)
+## How Postbox works (high level)
 
 1. You install the **Anonomi Postbox app** on a separate device
 2. You link it to your Anonomi account by scanning a QR code
-3. The Mailbox stays online and receives encrypted messages on your behalf
+3. The Postbox stays online and receives encrypted messages on your behalf
 4. When your main device comes online, it fetches messages automatically
 
 All communication remains end-to-end encrypted.
 
 ---
 
-## Mailbox in Settings
+## Postbox in Settings
 
 From **Settings → Anonomi Postbox**, you can:
 
-- Set up a new Mailbox
-- Link or unlink a Mailbox device
-- View Mailbox status
-- Disable Mailbox usage entirely
+- Set up a new Postbox
+- Link or unlink a Postbox device
+- View Postbox status
+- Disable Postbox usage entirely
 
-Mailbox behavior depends on your **Connections** settings — internet access uses Tor when enabled.
+Postbox behavior depends on your **Connections** settings — internet access uses Tor when enabled.
 
 ---
 
 ## Security considerations
 
-Using a Mailbox changes your threat model slightly:
+Using a Postbox changes your threat model slightly:
 
-- The Mailbox device is a **separate point of exposure**
+- The Postbox device is a **separate point of exposure**
 - If seized, it may reveal:
   - That you use Anonomi
-  - That a Mailbox is linked to your account
+  - That a Postbox is linked to your account
 - It does **not** reveal message contents
 
 Best practices:
 - Use a dedicated device
 - Keep it physically secure
 - Keep it updated
-- Do not log into your main Anonomi app on the Mailbox device
+- Do not log into your main Anonomi app on the Postbox device
 
-If Mailbox increases risk in your environment, do not use it — Anonomi works without it.
+If Postbox increases risk in your environment, do not use it — Anonomi works without it.
 
 ---
 
-## When *not* to use Mailbox
+## When *not* to use Postbox
 
-Avoid using Mailbox if:
+Avoid using Postbox if:
 
 - You expect device seizures
-- You cannot physically secure the Mailbox device
+- You cannot physically secure the Postbox device
 - Being continuously reachable increases risk
 - Offline-only workflows are safer for you
 
-Mailbox is optional by design.
+Postbox is optional by design.
 
 ---
 
@@ -101,4 +101,3 @@ Mailbox is optional by design.
 
 - **[Connections](/docs/usage/settings/connections)**
 - **[Operational security basics](/docs/usage/opsec)**
-- **Dedicated Mailbox guide** *(coming soon)*
