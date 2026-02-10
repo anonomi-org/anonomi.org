@@ -3,87 +3,91 @@ title: Panic button + panic contacts
 description: A last-resort safety workflow to erase local state and optionally alert trusted contacts under coercion.
 ---
 
-Anonomi Messenger includes a **panic workflow** designed for situations where you are under coercion, detention, or immediate risk.
+Anonomi Messenger includes a **panic workflow** designed for situations involving coercion, detention, or immediate risk.
 
-Panic features are **deliberately simple** and designed to be triggered quickly — even when you cannot safely interact with the app.
+Panic features are **deliberately simple** and designed to be triggered quickly — even when you cannot safely navigate the app.
 
 ---
 
-## What the panic button is (and isn’t)
+## What the panic button is (and isn't)
 
 The panic button is a **last-resort safety mechanism**.
 
 It is designed to:
 - Reduce harm if you are forced to unlock or hand over your device
-- Remove sensitive local data as fast as possible
+- Remove sensitive local data as quickly as possible
 - Optionally notify trusted contacts that something is wrong
 
 It is **not** a magic escape button and **cannot guarantee safety**.
 
 ---
 
-## Panic button behavior
+## Panic trigger
 
-When a panic trigger is activated:
+Panic mode is triggered by pressing a **custom volume button sequence** that you define in the app settings.
 
-- Local Anonomi Messenger account state may be **deleted or locked**  
-  (exact behavior depends on configuration and platform)
-- Ongoing conversations become inaccessible on that device
-- The app may appear wiped, locked, or reset
+The sequence is a combination of **short and long presses** on the volume buttons — for example, three short presses followed by a long press. You choose the pattern, so only you know how to activate it.
 
-> Panic actions happen locally and immediately.  
-> Network delivery is **best effort**, not guaranteed.
+The trigger works **across all screens** in the app, including the stealth calculator. No external app is required.
+
+### How to set up the panic trigger
+
+1. Open **Settings**
+2. Go to **Security**
+3. Tap **Panic Button Setup**
+4. Record your chosen volume button pattern (short and long presses)
+5. Confirm the sequence
+
+Once configured, pressing that sequence anywhere in the app will activate panic mode.
+
+---
+
+## Panic options
+
+When panic mode is triggered, the app performs one of three actions depending on which option you selected during setup:
+
+- **Sign out** — immediately signs you out of your account. Your data remains on the device but is no longer accessible without signing back in.
+- **Delete account** — permanently deletes your account and all associated local data from the device.
+- **Show a choice dialog** — displays a prompt with three options: **Sign out**, **Delete account**, or **Cancel**. This gives you a final decision at the moment of activation.
+
+You choose which panic option to use as part of the **Panic Button Setup** in **Settings → Security**.
+
+> Panic actions happen locally and immediately.
+> Network delivery of panic alerts is **best effort**, not guaranteed.
 
 ---
 
 ## Panic contacts
 
-Anonomi Messenger allows you to mark specific contacts as **panic contacts**.
+Anonomi Messenger allows you to designate specific contacts as **panic contacts**.
 
-When panic mode is triggered:
-- An alert message may be sent to those contacts
-- Delivery depends on current connectivity (online or offline)
-- Messages are sent only when technically possible
+When panic mode is triggered, these contacts automatically receive a **panic alert** from you — letting them know something is wrong without any further action on your part. Delivery depends on your current connectivity and is sent on a best-effort basis.
 
-Panic contacts are **opt-in** and must be explicitly configured.
+Panic contacts are **opt-in** and must be explicitly configured for each contact.
 
----
+### How to configure a panic contact
 
-## How to configure panic contacts
-
-Panic contacts are configured **per contact**, not globally.
-
-To mark a contact as a panic contact:
 1. Open a conversation with the contact
 2. Tap the **three dots** in the top-right corner
-3. Open **Contact Settings**
-4. Enable **Panic Contact**
+3. Select **Contact**
+4. Open **Contact Settings**
+5. Enable the **Panic Contact** toggle
 
-Only contacts with this setting enabled will receive panic alerts.
+Only contacts with this toggle enabled will receive automatic panic alerts.
 
 See: **[Contact Settings](/docs/usage/contact-settings)**
 
 ---
 
-## Panic triggers
-
-Panic mode can be triggered by:
-- A dedicated panic sidecar app (such as **Ripple**)
-- Other configured emergency triggers (implementation-specific)
-
-The goal is to allow triggering **without navigating Anonomi Messenger itself**.
-
----
-
-## What is (and isn’t) guaranteed
+## What is (and isn't) guaranteed
 
 **Possible**
-- Local data removal or lock
-- Panic message attempts to trusted contacts
+- Local data removal or sign-out
+- Automatic panic alerts to trusted contacts
 - Fast execution without complex UI steps
 
 **Not guaranteed**
-- Network delivery of panic messages
+- Network delivery of panic alerts
 - Protection against advanced forensic recovery
 - Safety after device seizure
 
@@ -97,7 +101,7 @@ Consider configuring panic features if:
 - You operate in environments with risk of detention
 - You may be forced to unlock your device
 - You need trusted contacts alerted quickly
-- You want a fast, low-interaction escape mechanism
+- You want a fast, low-interaction safety mechanism
 
 For day-to-day privacy, rely on:
 - Screen locks
