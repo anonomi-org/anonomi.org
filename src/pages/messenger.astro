@@ -589,6 +589,129 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         </div>
       </div>
     </section>
+    <!-- SAFETY UNDER COERCION -->
+    <section id="safety" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        Safety under coercion
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        When physical access to your device is the threat, Anonomi provides
+        tools to act fast — erase data, alert trusted contacts, or hide the
+        app entirely.
+      </p>
+
+      <div class="mt-10 space-y-14">
+        <!-- Panic button -->
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold tracking-tight">Panic button</h3>
+          </div>
+
+          <p class="mt-3 max-w-3xl text-base text-zinc-400">
+            A last-resort mechanism triggered by a
+            <strong class="font-medium text-zinc-300">custom volume button sequence</strong>
+            that you define. The trigger works across all screens — including the stealth
+            calculator — with no need to navigate the app.
+          </p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">Custom trigger</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Define a personal sequence of short and long volume presses.
+                Only you know the pattern.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">Panic options</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Choose what happens when triggered: sign out, delete your account,
+                or show a choice dialog at the moment of activation.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div class="text-base font-semibold">Panic contacts</div>
+              <p class="mt-2 text-sm text-zinc-400">
+                Designate trusted contacts who automatically receive a panic alert
+                when the sequence is triggered.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <a
+              href="/docs/features/panic"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Learn how the panic button works
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Stealth mode -->
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-semibold tracking-tight">Stealth mode</h3>
+          </div>
+
+          <p class="mt-3 max-w-3xl text-base text-zinc-400">
+            <strong class="font-medium text-zinc-300">Hide Anonomi behind a calculator.</strong>
+            When stealth mode is enabled, the app disguises itself as a
+            functional calculator. A hidden interaction unlocks the real
+            interface.
+          </p>
+
+          <div class="mt-6">
+            <a
+              href="/docs/features/stealth"
+              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+            >
+              Read how stealth mode works
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- THREAT MODEL -->
     <section id="threat-model" class="mt-24 scroll-mt-24">
       <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
