@@ -228,8 +228,13 @@ export default function MapsExporterApp() {
   } | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
 
+  const [packName, setPackName] = useState("");
+
+  const [failedTiles, setFailedTiles] = useState(0);
+
   const [isPaused, setIsPaused] = useState(false);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
+  const [endedAt, setEndedAt] = useState<Date | null>(null);
   const [downloadedBytes, setDownloadedBytes] = useState(0);
 
   const pauseRef = useRef(false);
@@ -303,8 +308,9 @@ export default function MapsExporterApp() {
     for (const z of effectiveZooms)
       tiles += tilesForBbox(south, west, north, east, z);
 
-    // rough guess: avg tile size 35KB (png/jpg varies wildly)
-    const avgKBPerTile = 35;
+    // Rough average ~8.5 KB/tile based on real-world exports
+    // (low-zoom tiles are tiny, vector-style providers like CARTO average 5-15 KB)
+    const avgKBPerTile = 8.5;
     const sizeMB = (tiles * avgKBPerTile) / 1024;
 
     return { areaKm2, tiles, sizeMB };
@@ -382,9 +388,7 @@ export default function MapsExporterApp() {
 
     setIsPaused(false);
     setIsExporting(false);
-    setProgress(null);
-    setStartedAt(null);
-    setDownloadedBytes(0);
+    setEndedAt(new Date());
     setExportError("Cancelled.");
   }
 
@@ -394,6 +398,7 @@ export default function MapsExporterApp() {
     setExportError(null);
     setIsExporting(true);
     setProgress(null);
+    setFailedTiles(0);
 
     setIsPaused(false);
     pauseRef.current = false;
@@ -401,6 +406,7 @@ export default function MapsExporterApp() {
 
     const started = new Date();
     setStartedAt(started);
+    setEndedAt(null);
     setDownloadedBytes(0);
 
     abortRef.current = new AbortController();
@@ -411,13 +417,13 @@ export default function MapsExporterApp() {
       const north = bounds.getNorth();
       const east = bounds.getEast();
 
-      // For now: use place name derived from center. Later we can let user set it.
-      const center = bounds.getCenter();
-      const placeName = `Maps_${normalizeName(`z${effectiveZooms[0]}_${effectiveZooms[effectiveZooms.length - 1]}`)}`;
+      const regionName = packName.trim() || `Maps z${effectiveZooms[0]}–${effectiveZooms[effectiveZooms.length - 1]}`;
+      const placeName = normalizeName(regionName);
 
       const zip = new JSZip();
       const root = zip.folder("AnonMapsCache")!;
       const meta = {
+        region: regionName,
         bbox: { south, west, north, east },
         zooms: effectiveZooms,
         createdAt: new Date().toISOString(),
@@ -444,8 +450,8 @@ export default function MapsExporterApp() {
 
       setProgress({ done: 0, total: jobs.length });
 
-      // IMPORTANT: OSM is just for testing. For real use, you’ll want your own tiles.
-      const subdomains = ["a", "b", "c"];
+      const MAX_RETRIES = 3;
+      const RETRY_DELAY_MS = 1000;
 
       let done = 0;
       for (const job of jobs) {
@@ -462,19 +468,31 @@ export default function MapsExporterApp() {
         const ctrl = abortRef.current;
         if (!ctrl) throw new Error("Export cancelled");
 
-        const res = await fetch(url, { signal: ctrl.signal });
-        if (!res.ok)
-          throw new Error(
-            `Tile fetch failed: ${res.status} z${job.z}/${job.x}/${job.y}`,
-          );
+        let fetched = false;
+        for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+          try {
+            const res = await fetch(url, { signal: ctrl.signal });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const blob = await res.blob();
-        const arr = await blob.arrayBuffer();
+            const blob = await res.blob();
+            const arr = await blob.arrayBuffer();
 
-        setDownloadedBytes((b) => b + arr.byteLength);
+            setDownloadedBytes((b) => b + arr.byteLength);
+            root.file(`${job.z}/${job.x}/${job.y}.png`, arr);
+            fetched = true;
+            break;
+          } catch (err: any) {
+            // Abort signal means user cancelled — propagate immediately
+            if (err?.name === "AbortError") throw err;
+            if (attempt < MAX_RETRIES - 1) {
+              await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+            }
+          }
+        }
 
-        // Store like: AnonMapsCache/<z>/<x>/<y>.png
-        root.file(`${job.z}/${job.x}/${job.y}.png`, arr);
+        if (!fetched) {
+          setFailedTiles((n) => n + 1);
+        }
 
         done++;
         if (done % 25 === 0 || done === jobs.length) {
@@ -493,6 +511,7 @@ export default function MapsExporterApp() {
       setExportError(e?.message ?? "Export failed");
     } finally {
       setIsExporting(false);
+      setEndedAt(new Date());
       abortRef.current = null;
       packNowRef.current = false;
       pauseRef.current = false;
@@ -774,6 +793,22 @@ export default function MapsExporterApp() {
             </div>
           </div>
 
+          {/* Pack name */}
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="text-sm font-semibold text-zinc-200">
+              Pack name
+            </div>
+            <input
+              value={packName}
+              onChange={(e) => setPackName(e.target.value)}
+              placeholder={`Maps z${effectiveZooms[0]}–${effectiveZooms[effectiveZooms.length - 1]}`}
+              className="mt-3 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
+            />
+            <p className="mt-2 text-xs text-zinc-500">
+              Shown in the app after import. Leave empty for a default name.
+            </p>
+          </div>
+
           {/* Estimate + warnings (after zoom) */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
             <div className="text-sm font-semibold text-zinc-200">Estimate</div>
@@ -825,10 +860,16 @@ export default function MapsExporterApp() {
                 — Downloaded tiles:{" "}
                 <span className="text-zinc-200">{progress.done}</span> /{" "}
                 {progress.total}
+                {failedTiles > 0 && (
+                  <>
+                    {" "}— Failed:{" "}
+                    <span className="text-red-300">{failedTiles}</span>
+                  </>
+                )}
               </div>
 
               <div className="text-zinc-500">
-                {isPaused ? "Paused" : isExporting ? "Running" : "Idle"}
+                {isPaused ? "Paused" : isExporting ? "Running" : endedAt ? "Done" : "Idle"}
               </div>
             </div>
 
@@ -840,10 +881,10 @@ export default function MapsExporterApp() {
                 </span>
               </div>
               <div>
-                Running:{" "}
+                Duration:{" "}
                 <span className="text-zinc-200">
                   {startedAt
-                    ? fmtDuration(Date.now() - startedAt.getTime())
+                    ? fmtDuration((endedAt ?? new Date()).getTime() - startedAt.getTime())
                     : "—"}
                 </span>
               </div>
