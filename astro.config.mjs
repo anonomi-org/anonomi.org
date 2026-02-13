@@ -50,6 +50,7 @@ export default defineConfig({
             { label: "Online + Offline connectivity", link: "/docs/features/connectivity" },
             { label: "Crypto payments (Monero)", link: "/docs/features/monero" },
             { label: "Voice messages + distortion", link: "/docs/features/voice" },
+            { label: "Walkie-Talkie mode", link: "/docs/features/walkie-talkie" },
             { label: "Offline maps", link: "/docs/features/maps" },
             { label: "Stealth mode", link: "/docs/features/stealth" },
             { label: "Offline app distribution", link: "/docs/features/distribution" },
