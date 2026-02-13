@@ -4,8 +4,10 @@ import NavBar from "../../components/NavBar.astro";
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const REPO_URL = "https://github.com/anonomi-org/anonomi.github.io";
-const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
+const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.github.io";
+const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.github.io";
+const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
+const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 ---
 
 <Layout
@@ -564,7 +566,7 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
 
             <div class="font-mono text-[11px] text-zinc-500">
               Build:
-              <a href={COMMIT_URL} class="text-zinc-300 hover:text-white">
+              <a href={COMMIT_URL} data-clearnet-href={CLEARNET_COMMIT_URL} class="text-zinc-300 hover:text-white">
                 {BUILD_SHORT}
               </a>
             </div>
