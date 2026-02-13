@@ -4,8 +4,8 @@ import NavBar from "../../components/NavBar.astro";
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.github.io";
-const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.github.io";
+const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.org";
+const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 
