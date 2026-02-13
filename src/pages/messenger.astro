@@ -213,265 +213,312 @@ const COMMIT_URL = BUILD_SHA ? `${REPO_URL}/commit/${BUILD_SHA}` : REPO_URL;
         </a>
       </div>
 
-      <!-- Panel: Messaging (visible) -->
-      <div
-        id="tab-messaging"
-        class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
-      >
-        <div
-          class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div class="max-w-2xl">
-            <h3 class="text-2xl font-semibold tracking-tight">Messaging</h3>
-            <p class="mt-2 text-zinc-400">
-              Decentralized chat designed for hostile networks — online over Tor
-              or fully offline over local transports.
-            </p>
-
-            <div class="mt-6 grid gap-4 sm:grid-cols-2">
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">No servers</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  No central infrastructure to seize, log, or subpoena.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Tor (online)</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Route communication through Tor, with bridges when blocked.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Offline modes</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Wi-Fi, Bluetooth, and external storage support when the
-                  network is the threat.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Voice + distortion</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Voice messages with optional dynamic distortion to reduce
-                  identification risk.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Walkie-Talkie</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Push-to-talk voice via the volume button. Hold to record,
-                  release to send, auto-play incoming.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Groups</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Private and open groups with full media support — text,
-                  images, voice, and location sharing.
-                </p>
-              </div>
-            </div>
-            <div class="mt-8">
-              <a
-                href="/docs/features/connectivity"
-                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-              >
-                Learn how Anonomi communicates in hostile environments
-                <span
-                  aria-hidden="true"
-                  class="transition-transform group-hover:translate-x-0.5"
-                  >→</span
+      <div class="mt-10 space-y-14">
+        <!-- Messaging -->
+        <div id="tab-messaging" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
                 >
-              </a>
-            </div>
-          </div>
-          <div class="w-full max-w-md flex justify-center">
-            <div class="w-[320px] h-[420px] flex items-center justify-center">
-              <img
-                src="/screenshots/messaging.png"
-                alt="Anonomi messaging interface"
-                loading="lazy"
-                class="h-full w-full rounded-xl border border-white/10 object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-semibold tracking-tight">Messaging without servers</h3>
+              </div>
 
-      <!-- Panel: Payments (visible) -->
-      <div
-        id="tab-payments"
-        class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
-      >
-        <div
-          class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div class="max-w-2xl">
-            <h3 class="text-2xl font-semibold tracking-tight">Payments</h3>
-            <p class="mt-2 text-zinc-400">
-              Private Monero payment requests designed to avoid leaking wallet
-              metadata through unsafe channels.
-            </p>
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Encrypted communication designed for hostile networks — online over Tor
+                or fully offline over local transports.
+              </p>
 
-            <div class="mt-6 grid gap-4 sm:grid-cols-2">
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">In-chat requests</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Request a payment inside the conversation.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Unique subaddress</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Generate a dedicated subaddress per request to avoid
-                  persistent identifiers.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">QR handoff</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Send a QR with subaddress + amount + description for scanning
-                  in a wallet app.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Metadata discipline</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Avoid sharing payment details through insecure channels.
-                </p>
-              </div>
-            </div>
-            <div class="mt-8">
-              <a
-                href="/docs/features/monero"
-                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-              >
-                See how private Monero payment requests work
-                <span
-                  aria-hidden="true"
-                  class="transition-transform group-hover:translate-x-0.5"
-                  >→</span
-                >
-              </a>
-            </div>
-          </div>
-          <div class="w-full max-w-md flex justify-center">
-            <div class="w-[320px] h-[420px] flex items-center justify-center">
-              <img
-                src="/screenshots/xmrrequest.png"
-                alt="Anonomi Monero payment request"
-                loading="lazy"
-                class="h-full w-full rounded-xl border border-white/10 object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Panel: Offline Maps (visible) -->
-      <div
-        id="tab-maps"
-        class="mt-10 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
-      >
-        <div
-          class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div class="max-w-2xl">
-            <h3 class="text-2xl font-semibold tracking-tight">Offline Maps</h3>
-            <p class="mt-2 text-zinc-400">
-              Share locations without contacting external map servers. Import
-              tile packs for offline navigation.
-            </p>
-
-            <div class="mt-6 grid gap-4 sm:grid-cols-2">
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">No external map calls</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Designed to avoid third-party map providers.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Offline tile imports</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Import trusted tile packs for fully offline usage.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Secure location sharing</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Send coordinates to contacts without server round-trips.
-                </p>
-              </div>
-              <div class="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div class="font-medium">Community distribution</div>
-                <p class="mt-1 text-sm text-zinc-400">
-                  Tile packs can be shared via trusted sources (onion/community
-                  mirrors).
-                </p>
-              </div>
-            </div>
-
-            <!-- Maps Exporter callout -->
-            <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div
-                class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div class="max-w-xl">
-                  <div class="text-sm font-semibold text-zinc-200">
-                    Maps Exporter
-                  </div>
-                  <p class="mt-1 text-sm text-zinc-400">
-                    Generate offline tile packs locally in your browser. Tile
-                    sources are only contacted after explicit user selection.
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">No servers</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    No central infrastructure to seize, log, or subpoena.
                   </p>
                 </div>
-
-                <a
-                  href="/maps"
-                  class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
-                >
-                  Open Maps Exporter →
-                </a>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Tor (online)</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Route communication through Tor, with bridges when blocked.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Offline modes</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Wi-Fi, Bluetooth, and external storage support when the
+                    network is the threat.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Voice + distortion</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Voice messages with optional dynamic distortion to reduce
+                    identification risk.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Walkie-Talkie</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Push-to-talk voice via the volume button. Hold to record,
+                    release to send, auto-play incoming.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Groups</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Private and open groups with full media support — text,
+                    images, voice, and location sharing.
+                  </p>
+                </div>
               </div>
 
-              <!-- Docs link (same style as other section) -->
-              <div class="mt-4">
+              <div class="mt-6">
                 <a
-                  href="/docs/maps-exporter"
+                  href="/docs/features/connectivity"
                   class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
                 >
-                  Learn how offline tile exports work
-                  <span
-                    aria-hidden="true"
-                    class="transition-transform group-hover:translate-x-0.5"
-                    >→</span
-                  >
+                  Learn how Anonomi communicates in hostile environments
+                  <span aria-hidden="true">→</span>
                 </a>
               </div>
             </div>
-
-            <div class="mt-8">
-              <a
-                href="/docs/features/maps"
-                class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-              >
-                Explore offline maps and secure location sharing
-                <span
-                  aria-hidden="true"
-                  class="transition-transform group-hover:translate-x-0.5"
-                  >→</span
-                >
-              </a>
+            <div class="w-full max-w-md flex justify-center">
+              <div class="w-[320px] h-[420px] flex items-center justify-center">
+                <img
+                  src="/screenshots/messaging.png"
+                  alt="Anonomi messaging interface"
+                  loading="lazy"
+                  class="h-full w-full rounded-xl border border-white/10 object-contain"
+                />
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="w-full max-w-md flex justify-center">
-            <div class="w-[320px] h-[420px] flex items-center justify-center">
-              <img
-                src="/screenshots/offlinemaps.png"
-                alt="Anonomi Offline Maps"
-                loading="lazy"
-                class="h-full w-full rounded-xl border border-white/10 object-contain"
-              />
+        <!-- Payments -->
+        <div id="tab-payments" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M11.28774193548387 12.046451612903226h3.426838709677419
+                      C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
+                      S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
+                      H4.71225806451613V8.006322580645161L8 11.319354838709677
+                      11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
+                      V3.9535483870967743l5.039096774193548 5.039096774193548
+                      L13.058064516129033 3.9535483870967743V10.529032258064515
+                      h2.3646451612903228c0.2687096774193548 -0.7934838709677419
+                      0.41729032258064513 -1.6438709677419354
+                      0.41729032258064513 -2.5290322580645164
+                      C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
+                      S0.16 3.669032258064516 0.16 8
+                      c0 0.8851612903225806 0.14541935483870969 1.735548387096774
+                      0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-semibold tracking-tight">Private Payments</h3>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Monero payment requests designed to avoid leaking wallet
+                metadata through unsafe channels.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">In-chat requests</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Request a payment inside the conversation.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Unique subaddress</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Generate a dedicated subaddress per request to avoid
+                    persistent identifiers.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">QR handoff</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Send a QR with subaddress + amount + description for scanning
+                    in a wallet app.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Metadata discipline</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Avoid sharing payment details through insecure channels.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/monero"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  See how private Monero payment requests work
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="w-full max-w-md flex justify-center">
+              <div class="w-[320px] h-[420px] flex items-center justify-center">
+                <img
+                  src="/screenshots/xmrrequest.png"
+                  alt="Anonomi Monero payment request"
+                  loading="lazy"
+                  class="h-full w-full rounded-xl border border-white/10 object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offline Maps -->
+        <div id="tab-maps" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-semibold tracking-tight">Offline Maps & Location Sharing</h3>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Share locations without contacting external map servers. Import
+                tile packs for offline navigation.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">No external map calls</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Designed to avoid third-party map providers.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Offline tile imports</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Import trusted tile packs for fully offline usage.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Secure location sharing</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Send coordinates to contacts without server round-trips.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Community distribution</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Tile packs can be shared via trusted sources (onion/community
+                    mirrors).
+                  </p>
+                </div>
+              </div>
+
+              <!-- Maps Exporter callout -->
+              <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div
+                  class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div class="max-w-xl">
+                    <div class="text-sm font-semibold text-zinc-200">
+                      Maps Exporter
+                    </div>
+                    <p class="mt-1 text-sm text-zinc-400">
+                      Generate offline tile packs locally in your browser. Tile
+                      sources are only contacted after explicit user selection.
+                    </p>
+                  </div>
+
+                  <a
+                    href="/maps"
+                    class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
+                  >
+                    Open Maps Exporter →
+                  </a>
+                </div>
+
+                <div class="mt-4">
+                  <a
+                    href="/docs/maps-exporter"
+                    class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                  >
+                    Learn how offline tile exports work
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/maps"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Explore offline maps and secure location sharing
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="w-full max-w-md flex justify-center">
+              <div class="w-[320px] h-[420px] flex items-center justify-center">
+                <img
+                  src="/screenshots/offlinemaps.png"
+                  alt="Anonomi Offline Maps"
+                  loading="lazy"
+                  class="h-full w-full rounded-xl border border-white/10 object-contain"
+                />
+              </div>
             </div>
           </div>
         </div>
