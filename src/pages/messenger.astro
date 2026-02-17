@@ -76,7 +76,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
         <!-- HERO SCREENSHOT -->
         <div class="w-full max-w-lg flex justify-center">
           <img
-            src="/screenshots/chat-intro-accepted.png"
+            src="/screenshots/intro.png"
             alt="Anonomi encrypted messaging interface"
             loading="lazy"
             class="max-h-[520px] w-auto rounded-2xl border border-white/10 shadow-2xl"
@@ -94,16 +94,15 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
       <div class="mt-4 h-[2px] w-20 rounded-full bg-[#6d4aff]"></div>
 
       <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        Anonomi Messenger is built around three pillars: secure communication,
-        private payments requests, and offline maps.
+        Anonomi Messenger is built around three pillars: communication,
+        offline capabilities, and privacy & safety tools.
       </p>
 
-      <!-- Subsection selectors (pillars, not tabs) -->
+      <!-- Category pillars -->
       <div class="mt-16 grid gap-10 sm:grid-cols-3">
-        <!-- Messaging -->
-        <a href="#tab-messaging" class="group block">
+        <!-- Communication -->
+        <a href="#communication" class="group block">
           <div class="flex items-center gap-3">
-            <!-- Icon -->
             <div
               class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
             >
@@ -122,66 +121,21 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
             </div>
 
             <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Messaging
+              Communication
             </h3>
           </div>
 
           <p
             class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
           >
-            Decentralized communication designed for hostile networks.
+            Messaging, groups, voice, walkie-talkie, and decentralized blogs.
           </p>
 
           <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
         </a>
 
-        <!-- Payments -->
-        <a href="#tab-payments" class="group block">
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  d="M11.28774193548387 12.046451612903226h3.426838709677419
-                  C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
-                  S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
-                  H4.71225806451613V8.006322580645161L8 11.319354838709677
-                  11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
-                  V3.9535483870967743l5.039096774193548 5.039096774193548
-                  L13.058064516129033 3.9535483870967743V10.529032258064515
-                  h2.3646451612903228c0.2687096774193548 -0.7934838709677419
-                  0.41729032258064513 -1.6438709677419354
-                  0.41729032258064513 -2.5290322580645164
-                  C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
-                  S0.16 3.669032258064516 0.16 8
-                  c0 0.8851612903225806 0.14541935483870969 1.735548387096774
-                  0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
-                ></path>
-              </svg>
-            </div>
-
-            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Payments
-            </h3>
-          </div>
-
-          <p
-            class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
-          >
-            Private Monero payment requests without metadata leakage.
-          </p>
-
-          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
-        </a>
-
-        <!-- Offline Maps -->
-        <a href="#tab-maps" class="group block">
+        <!-- Privacy & Safety -->
+        <a href="#privacy-safety" class="group block">
           <div class="flex items-center gap-3">
             <div
               class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
@@ -196,30 +150,74 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z"></path>
+                  d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"></path>
               </svg>
             </div>
 
             <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Offline Maps
+              Privacy & Safety
             </h3>
           </div>
 
           <p
             class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
           >
-            Location sharing without external servers.
+            Payments, voice distortion, panic button, and stealth mode.
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+
+        <!-- Offline & Network -->
+        <a href="#offline-network" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"></path>
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Offline & Network
+            </h3>
+          </div>
+
+          <p
+            class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            Transports, offline maps, app distribution, and Postbox.
           </p>
 
           <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
         </a>
       </div>
 
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- COMMUNICATION                              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="communication" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          Communication
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
       <div class="mt-10 space-y-14">
         <!-- Messaging -->
-        <div id="tab-messaging" class="scroll-mt-24">
+        <div id="feature-messaging" class="scroll-mt-24">
           <div
-            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
           >
             <div class="max-w-2xl">
               <div class="flex items-center gap-3">
@@ -240,12 +238,13 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                       d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </div>
-                <h3 class="text-2xl font-semibold tracking-tight">Messaging without servers</h3>
+                <h4 class="text-2xl font-semibold tracking-tight">Messaging</h4>
               </div>
 
               <p class="mt-3 max-w-3xl text-base text-zinc-400">
-                Encrypted communication designed for hostile networks — online over Tor
-                or fully offline over local transports.
+                Encrypted, decentralized messaging designed for hostile networks — online
+                over Tor or fully offline over local transports. No central infrastructure
+                to seize, log, or subpoena.
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
@@ -269,24 +268,10 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                   </p>
                 </div>
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">Voice + distortion</div>
+                  <div class="text-base font-semibold">Full media support</div>
                   <p class="mt-2 text-sm text-zinc-400">
-                    Voice messages with optional dynamic distortion to reduce
-                    identification risk.
-                  </p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">Walkie-Talkie</div>
-                  <p class="mt-2 text-sm text-zinc-400">
-                    Push-to-talk voice via the volume button. Hold to record,
-                    release to send, auto-play incoming.
-                  </p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">Groups</div>
-                  <p class="mt-2 text-sm text-zinc-400">
-                    Private and open groups with full media support — text,
-                    images, voice, and location sharing.
+                    Text, images, voice, and location sharing in every
+                    conversation.
                   </p>
                 </div>
               </div>
@@ -301,23 +286,660 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                 </a>
               </div>
             </div>
-            <div class="w-full max-w-md flex justify-center">
-              <div class="w-[320px] h-[420px] flex items-center justify-center">
-                <img
-                  src="/screenshots/messaging.png"
-                  alt="Anonomi messaging interface"
-                  loading="lazy"
-                  class="h-full w-full rounded-xl border border-white/10 object-contain"
-                />
-              </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/messaging.png">
+                  <img
+                    src="/screenshots/messaging.png"
+                    alt="Anonomi messaging interface"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
             </div>
           </div>
         </div>
 
-        <!-- Payments -->
-        <div id="tab-payments" class="scroll-mt-24">
+        <!-- Groups & Open Groups -->
+        <div id="feature-groups" class="scroll-mt-24">
           <div
-            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Groups & Open Groups</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Create private groups for trusted circles or open groups (forums)
+                for broader communities. Both support full media — text, images,
+                voice, and location sharing.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Private groups</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Invite-only groups for trusted contacts. All messages are
+                    encrypted and synced peer-to-peer.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Open groups (forums)</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Public discussion spaces that anyone with an invitation link
+                    can join. Threaded conversations for organized discussion.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Full media support</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Text, images, voice messages, and location sharing work in
+                    both private groups and forums.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Threaded replies</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Reply to specific messages in group conversations to keep
+                    discussions organized and easy to follow.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/groups"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn about groups and forums
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/groups.png">
+                  <img
+                    src="/screenshots/groups.png"
+                    alt="Anonomi Groups"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Messages -->
+        <div id="feature-voice" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Voice Messages</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Record and send voice messages in any conversation. Voice data is
+                encrypted and transmitted through the same peer-to-peer network as
+                text and images.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Tap to record</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Hold the microphone button to record, release to review or send.
+                    Works in private chats and groups.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Encrypted audio</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Voice data is encrypted end-to-end and routed through the same
+                    peer-to-peer network as all other messages.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Works everywhere</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Send voice messages in private chats, groups, and forums —
+                    over Tor or any offline transport.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Inline playback</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Play voice messages directly in the conversation without
+                    leaving the chat or opening a separate player.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/voice"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn about voice messages
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/voice.png">
+                  <img
+                    src="/screenshots/voice.png"
+                    alt="Anonomi Voice Messages"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Walkie-Talkie -->
+        <div id="feature-walkie-talkie" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m3.75 7.5 16.5-4.125M12 6.75c-2.708 0-5.363.224-7.948.655C2.999 7.58 2.25 8.507 2.25 9.574v9.176A2.25 2.25 0 0 0 4.5 21h15a2.25 2.25 0 0 0 2.25-2.25V9.574c0-1.067-.75-1.994-1.802-2.169A48.329 48.329 0 0 0 12 6.75Zm-1.683 6.443-.005.005-.006-.005.006-.005.005.005Zm-.005 2.127-.005-.006.005-.005.005.005-.005.006Zm-2.116-.006-.005.006-.006-.006.005-.005.006.005Zm-.005-2.116-.006-.005.006-.005.005.005-.005.005ZM9.255 10.5v.008h-.008V10.5h.008Zm3.249 1.88-.007.004-.003-.007.006-.003.004.006Zm-1.38 5.126-.003-.006.006-.004.004.007-.006.003Zm.007-6.501-.003.006-.007-.003.004-.007.006.004Zm1.37 5.129-.007-.004.004-.006.006.003-.004.007Zm.504-1.877h-.008v-.007h.008v.007ZM9.255 18v.008h-.008V18h.008Zm-3.246-1.87-.007.004L6 16.127l.006-.003.004.006Zm1.366-5.119-.004-.006.006-.004.004.007-.006.003ZM7.38 17.5l-.003.006-.007-.003.004-.007.006.004Zm-1.376-5.116L6 12.38l.003-.007.007.004-.004.007Zm-.5 1.873h-.008v-.007h.008v.007ZM17.25 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Zm0 4.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Walkie-Talkie</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Push-to-talk voice messaging via the volume button. Hold to record,
+                release to send. Incoming messages auto-play for hands-free
+                communication in the field.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Volume button trigger</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Press and hold the volume button to record. Release to send
+                    instantly — no need to touch the screen.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Auto-play incoming</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Incoming walkie-talkie messages play automatically through the
+                    speaker for true hands-free operation.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">One conversation at a time</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Select a contact and use the volume button to send instant
+                    voice bursts — simple, focused, and distraction-free.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Encrypted push-to-talk</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    All walkie-talkie audio is end-to-end encrypted and routed
+                    through the same secure network as regular messages.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/walkie-talkie"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn about walkie-talkie mode
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/walkie-talkie.png">
+                  <img
+                    src="/screenshots/walkie-talkie.png"
+                    alt="Anonomi Walkie-Talkie"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blogs -->
+        <div id="feature-blogs" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Blogs</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Publish and follow blogs without servers or platforms. Posts sync
+                peer-to-peer through the same decentralized network used for messaging.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Create posts</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Write blog posts with text, images, and offline map locations.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Like & Comment</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Interact with posts from people you follow — reactions and
+                    comments sync peer-to-peer.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Reblog</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Share posts from others to your own blog, amplifying content
+                    across the network.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Blog Feed</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    A unified feed of posts from all blogs you follow, with
+                    individual blog views available.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">RSS Feeds</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Import RSS feeds from URLs or files and follow external
+                    content alongside peer blogs.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Sharing & Invitations</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Invite contacts to follow your blog or share your blog status
+                    for discovery.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/blogs"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn how decentralized blogs work
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/blogs.png">
+                  <img
+                    src="/screenshots/blogs.png"
+                    alt="Anonomi Blogs"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- PRIVACY & SAFETY                           -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="privacy-safety" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          Privacy & Safety
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
+      <div class="mt-10 space-y-14">
+        <!-- Distorted Voice -->
+        <div id="feature-distorted-voice" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Distorted Voice</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Optional dynamic voice distortion applied to voice messages to
+                reduce identification risk. Distortion is applied at recording time,
+                so the original voice never leaves the device.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">On-device processing</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Distortion is applied before the audio leaves your device.
+                    The original voice is never transmitted or stored.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Dynamic distortion</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Voice characteristics are altered dynamically to prevent
+                    voiceprint identification while keeping speech intelligible.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Optional per message</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Enable or disable distortion for each voice message. Choose
+                    when anonymity matters and when clarity is more important.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Works with walkie-talkie</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Voice distortion can be applied to walkie-talkie messages
+                    too — protecting your identity in real-time communication.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/voice"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn about voice distortion
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/distorted-voice.png">
+                  <img
+                    src="/screenshots/distorted-voice.png"
+                    alt="Anonomi Distorted Voice"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panic Button -->
+        <div id="feature-panic" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Panic Button</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                A last-resort mechanism triggered by a
+                <strong class="font-medium text-zinc-300">custom volume button sequence</strong>
+                that you define. The trigger works across all screens — including the stealth
+                calculator — with no need to navigate the app.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Custom trigger</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Define a personal sequence of short and long volume presses.
+                    Only you know the pattern.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Panic options</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Choose what happens when triggered: sign out, delete your account,
+                    or show a choice dialog at the moment of activation.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Panic contacts</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Designate trusted contacts who automatically receive a panic alert
+                    when the sequence is triggered.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Works in stealth mode</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    The panic sequence can be triggered from the calculator
+                    disguise screen — no need to unlock the real interface first.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/panic"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn how the panic button works
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/panic.png">
+                  <img
+                    src="/screenshots/panic.png"
+                    alt="Anonomi Panic Button"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stealth Mode -->
+        <div id="feature-stealth" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Stealth Mode</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">Hide Anonomi behind a calculator.</strong>
+                When stealth mode is enabled, the app disguises itself as a
+                functional calculator. A hidden interaction unlocks the real
+                interface.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Calculator disguise</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    The app icon, name, and interface are replaced with a fully
+                    functional calculator that works normally.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Hidden unlock</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    A secret interaction within the calculator reveals the real
+                    Anonomi interface. Only you know the unlock method.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">No traces</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Anonomi doesn't appear in recent apps, notifications, or
+                    system logs while stealth mode is active.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Persistent disguise</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    The calculator disguise persists across reboots and app
+                    updates — no need to re-enable it each time.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/stealth"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Read how stealth mode works
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/stealth.png">
+                  <img
+                    src="/screenshots/stealth.png"
+                    alt="Anonomi Stealth Mode"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Private Payments -->
+        <div id="feature-payments" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
           >
             <div class="max-w-2xl">
               <div class="flex items-center gap-3">
@@ -348,7 +970,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                     ></path>
                   </svg>
                 </div>
-                <h3 class="text-2xl font-semibold tracking-tight">Private Payments</h3>
+                <h4 class="text-2xl font-semibold tracking-tight">Private Payments</h4>
               </div>
 
               <p class="mt-3 max-w-3xl text-base text-zinc-400">
@@ -395,23 +1017,119 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                 </a>
               </div>
             </div>
-            <div class="w-full max-w-md flex justify-center">
-              <div class="w-[320px] h-[420px] flex items-center justify-center">
-                <img
-                  src="/screenshots/xmrrequest.png"
-                  alt="Anonomi Monero payment request"
-                  loading="lazy"
-                  class="h-full w-full rounded-xl border border-white/10 object-contain"
-                />
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/xmrrequest.png">
+                  <img
+                    src="/screenshots/xmrrequest.png"
+                    alt="Anonomi Monero payment request"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- OFFLINE & NETWORK                          -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="offline-network" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          Offline & Network
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
+      <div class="mt-10 space-y-14">
+        <!-- Transports -->
+        <div id="feature-transports" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Transports</h4>
               </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                Choose the best path for the situation: Tor when the internet is
+                usable, local links when the internet is the threat.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                {
+                  [
+                    [
+                      "Tor (online)",
+                      "Secure and anonymized routing over the internet. Bridges when Tor is blocked.",
+                    ],
+                    [
+                      "Wi-Fi (offline)",
+                      "Communicate inside a local network with no traffic leaving the area.",
+                    ],
+                    [
+                      "Bluetooth (offline)",
+                      "Proximity comms for situations without internet or Wi-Fi infrastructure.",
+                    ],
+                    [
+                      "External storage",
+                      "Store-and-forward via SD card or file transfer for checkpoints and border crossings.",
+                    ],
+                  ].map(([t, d]) => (
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                      <div class="text-base font-semibold">{t}</div>
+                      <p class="mt-2 text-sm text-zinc-400">{d}</p>
+                    </div>
+                  ))
+                }
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/usage/scenarios"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Explore real-world scenarios and transport tradeoffs
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/transports.png">
+                  <img
+                    src="/screenshots/transports.png"
+                    alt="Anonomi Transports"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
             </div>
           </div>
         </div>
 
         <!-- Offline Maps -->
-        <div id="tab-maps" class="scroll-mt-24">
+        <div id="feature-maps" class="scroll-mt-24">
           <div
-            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
           >
             <div class="max-w-2xl">
               <div class="flex items-center gap-3">
@@ -432,7 +1150,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                       d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z"></path>
                   </svg>
                 </div>
-                <h3 class="text-2xl font-semibold tracking-tight">Offline Maps & Location Sharing</h3>
+                <h4 class="text-2xl font-semibold tracking-tight">Offline Maps & Location Sharing</h4>
               </div>
 
               <p class="mt-3 max-w-3xl text-base text-zinc-400">
@@ -512,338 +1230,193 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
                 </a>
               </div>
             </div>
-            <div class="w-full max-w-md flex justify-center">
-              <div class="w-[320px] h-[420px] flex items-center justify-center">
-                <img
-                  src="/screenshots/offlinemaps.png"
-                  alt="Anonomi Offline Maps"
-                  loading="lazy"
-                  class="h-full w-full rounded-xl border border-white/10 object-contain"
-                />
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/offlinemaps.png">
+                  <img
+                    src="/screenshots/offlinemaps.png"
+                    alt="Anonomi Offline Maps"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offline Distribution -->
+        <div id="feature-distribution" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 3v12m0 0l-3-3m3 3l3-3M5.25 21h13.5a1.5 1.5 0 001.5-1.5v-3.75a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5V19.5a1.5 1.5 0 001.5 1.5z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Offline Distribution</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">Install without app stores.</strong>
+                Anonomi can be shared directly between Android devices using local connections,
+                even when the internet is unavailable, monitored, or unsafe.
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Device-to-device</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Share the app directly between Android devices over local
+                    connections — no internet or app store required.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">App Catalog</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    A built-in offline kit bundles Anonomi and companion apps
+                    for distribution in disconnected environments.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">No internet needed</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    The entire sharing process works over local connections —
+                    Wi-Fi, Bluetooth, or removable storage.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Verified integrity</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Shared app files include checksums so recipients can verify
+                    the app hasn't been tampered with during transfer.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href="/docs/features/distribution"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Read how offline distribution works
+                  <span aria-hidden="true">→</span>
+                </a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MODES -->
-    <section id="modes" class="mt-24 scroll-mt-24">
-      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-        Works online or offline
-      </h2>
-      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        Different environments require different paths. Anonomi supports
-        multiple transports — and a fully offline way to share the app.
-      </p>
-
-      <div class="mt-10 space-y-14">
-        <!-- Transports -->
-        <div>
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"
-                ></path>
-              </svg>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/distribution.png">
+                  <img
+                    src="/screenshots/distribution.png"
+                    alt="Anonomi Offline Distribution"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
             </div>
-            <h3 class="text-2xl font-semibold tracking-tight">Transports</h3>
-          </div>
-
-          <p class="mt-3 max-w-3xl text-base text-zinc-400">
-            Choose the best path for the situation: Tor when the internet is
-            usable, local links when the internet is the threat.
-          </p>
-
-          <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            {
-              [
-                [
-                  "Tor (online)",
-                  "Secure and anonymized routing over the internet. Bridges when Tor is blocked.",
-                ],
-                [
-                  "Wi-Fi (offline)",
-                  "Communicate inside a local network with no traffic leaving the area.",
-                ],
-                [
-                  "Bluetooth (offline)",
-                  "Proximity comms for situations without internet or Wi-Fi infrastructure.",
-                ],
-                [
-                  "External storage",
-                  "Store-and-forward via SD card or file transfer for checkpoints and border crossings.",
-                ],
-              ].map(([t, d]) => (
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{d}</p>
-                </div>
-              ))
-            }
-          </div>
-
-          <div class="mt-6">
-            <a
-              href="/docs/usage/scenarios"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Explore real-world scenarios and transport tradeoffs
-              <span aria-hidden="true">→</span>
-            </a>
           </div>
         </div>
 
-        <!-- Offline distribution -->
-        <div>
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 3v12m0 0l-3-3m3 3l3-3M5.25 21h13.5a1.5 1.5 0 001.5-1.5v-3.75a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5V19.5a1.5 1.5 0 001.5 1.5z"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-semibold tracking-tight">
-              Offline distribution
-            </h3>
-          </div>
-
-          <p class="mt-3 max-w-3xl text-base text-zinc-400">
-            <strong class="font-medium text-zinc-300"
-              >Install without app stores.</strong
-            >
-            Anonomi can be shared directly between Android devices using local connections,
-            even when the internet is unavailable, monitored, or unsafe.
-          </p>
-
-          <div class="mt-6">
-            <a
-              href="/docs/features/distribution"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Read how offline distribution works
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
         <!-- Anonomi Postbox -->
-        <div>
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-semibold tracking-tight">
-              Anonomi Postbox
-            </h3>
-          </div>
+        <div id="feature-postbox" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">Anonomi Postbox</h4>
+              </div>
 
-          <p class="mt-3 max-w-3xl text-base text-zinc-400">
-            <strong class="font-medium text-zinc-300">Receive messages while your main device is offline.</strong>
-            Anonomi Postbox is a companion app installed on a separate Android device.
-            It stays online and collects encrypted messages on your behalf, then delivers
-            them automatically when your main device reconnects.
-          </p>
-
-          <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">Store-and-forward</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Messages arrive at the Postbox while you are offline and are
-                delivered when your main device comes back online.
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">Receive messages while your main device is offline.</strong>
+                Anonomi Postbox is a companion app installed on a separate Android device.
+                It stays online and collects encrypted messages on your behalf, then delivers
+                them automatically when your main device reconnects.
               </p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">End-to-end encrypted</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                The Postbox cannot read your messages. It only stores and
-                forwards encrypted data.
-              </p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">QR pairing</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Link a Postbox to your account by scanning a QR code. No
-                accounts, servers, or cloud services involved.
-              </p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">Optional by design</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Anonomi works without a Postbox. Use it only if asynchronous
-                delivery fits your threat model.
-              </p>
-            </div>
-          </div>
 
-          <div class="mt-6">
-            <a
-              href="/docs/usage/settings/postbox"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Learn how Anonomi Postbox works
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- SAFETY UNDER COERCION -->
-    <section id="safety" class="mt-24 scroll-mt-24">
-      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
-        Safety under coercion
-      </h2>
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Store-and-forward</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Messages arrive at the Postbox while you are offline and are
+                    delivered when your main device comes back online.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">End-to-end encrypted</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    The Postbox cannot read your messages. It only stores and
+                    forwards encrypted data.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">QR pairing</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Link a Postbox to your account by scanning a QR code. No
+                    accounts, servers, or cloud services involved.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">Optional by design</div>
+                  <p class="mt-2 text-sm text-zinc-400">
+                    Anonomi works without a Postbox. Use it only if asynchronous
+                    delivery fits your threat model.
+                  </p>
+                </div>
+              </div>
 
-      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        When physical access to your device is the threat, Anonomi Messenger provides
-        tools to act fast — erase data, alert trusted contacts, or hide the
-        app entirely.
-      </p>
-
-      <div class="mt-10 space-y-14">
-        <!-- Panic button -->
-        <div>
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-                ></path>
-              </svg>
+              <div class="mt-6">
+                <a
+                  href="/docs/usage/settings/postbox"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  Learn how Anonomi Postbox works
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
-            <h3 class="text-2xl font-semibold tracking-tight">Panic button</h3>
-          </div>
-
-          <p class="mt-3 max-w-3xl text-base text-zinc-400">
-            A last-resort mechanism triggered by a
-            <strong class="font-medium text-zinc-300">custom volume button sequence</strong>
-            that you define. The trigger works across all screens — including the stealth
-            calculator — with no need to navigate the app.
-          </p>
-
-          <div class="mt-6 grid gap-4 sm:grid-cols-3">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">Custom trigger</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Define a personal sequence of short and long volume presses.
-                Only you know the pattern.
-              </p>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/postbox.png">
+                  <img
+                    src="/screenshots/postbox.png"
+                    alt="Anonomi Postbox"
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">Panic options</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Choose what happens when triggered: sign out, delete your account,
-                or show a choice dialog at the moment of activation.
-              </p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-base font-semibold">Panic contacts</div>
-              <p class="mt-2 text-sm text-zinc-400">
-                Designate trusted contacts who automatically receive a panic alert
-                when the sequence is triggered.
-              </p>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <a
-              href="/docs/features/panic"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Learn how the panic button works
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Stealth mode -->
-        <div>
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
-            >
-              <svg
-                class="h-5 w-5 text-zinc-300"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
-                ></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-semibold tracking-tight">Stealth mode</h3>
-          </div>
-
-          <p class="mt-3 max-w-3xl text-base text-zinc-400">
-            <strong class="font-medium text-zinc-300">Hide Anonomi behind a calculator.</strong>
-            When stealth mode is enabled, the app disguises itself as a
-            functional calculator. A hidden interaction unlocks the real
-            interface.
-          </p>
-
-          <div class="mt-6">
-            <a
-              href="/docs/features/stealth"
-              class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
-            >
-              Read how stealth mode works
-              <span aria-hidden="true">→</span>
-            </a>
           </div>
         </div>
       </div>
@@ -1159,4 +1732,52 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
       </div>
     </footer>
   </main>
+
+  <!-- Screenshot lightbox -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm"
+  >
+    <button
+      id="lightbox-close"
+      class="absolute inset-0 w-full h-full cursor-default"
+      aria-label="Close lightbox"
+    ></button>
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="relative z-10 max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/10 shadow-2xl"
+    />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+
+    document.querySelectorAll(".screenshot-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const src = btn.getAttribute("data-full");
+        if (src && lightbox && lightboxImg) {
+          lightboxImg.src = src;
+          lightbox.classList.remove("hidden");
+          lightbox.classList.add("flex");
+        }
+      });
+    });
+
+    function closeLightbox() {
+      if (lightbox && lightboxImg) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        lightboxImg.src = "";
+      }
+    }
+
+    document.getElementById("lightbox-close")?.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+  </script>
 </Layout>

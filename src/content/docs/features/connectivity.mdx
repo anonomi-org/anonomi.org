@@ -1,56 +1,174 @@
 ---
-title: Online + Offline connectivity
-description: Communicate over Tor when the internet is usable — or go fully offline when the internet is the threat.
+title: Communicating in hostile environments
+description: How Anonomi Messenger helps you communicate, organise, and move when networks are monitored, devices are seized, and infrastructure can't be trusted.
 ---
 
-Anonomi Messenger is built to keep working under pressure — when networks are **monitored, blocked, unreliable, or unsafe**.
+Anonomi Messenger is built for situations where **communication itself is a risk** — where networks are monitored, devices may be seized, and metadata can be as dangerous as message content.
 
-This page is a high-level overview of how Anonomi Messenger communicates. For exact switches and step-by-step choices, use the linked docs below.
+Most messaging apps assume a cooperative environment: reliable internet, trustworthy infrastructure, app stores that aren't weaponised. Anonomi assumes none of that. It's designed for the cases where those assumptions break down — internet shutdowns during protests, conflict zones with active surveillance, regions where possessing certain apps is criminalised, or any situation where being seen communicating is itself a threat.
 
----
-
-## Two operating modes
-
-### Online (Internet via Tor)
-Use this when you need **long-distance communication** and the internet is available.
-
-- All internet connections are routed through **Tor**
-- No direct connections to contacts or servers
-- If Tor is blocked, **bridges** can be used when supported and configured
-
-**Read more**
-- **[Connections settings](/docs/usage/settings/connections)**
-- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+This page explains how Anonomi Messenger's features work together across the problems you actually face: getting messages through, coordinating people, moving safely, surviving device seizure, and operating when infrastructure disappears.
 
 ---
 
-### Offline (no internet)
-Use this when the internet is **dangerous**, **blocked**, or **not available**.
+## Getting messages through when networks fail
 
-Anonomi Messenger supports multiple offline communication methods that do not rely on external infrastructure:
+The most fundamental problem in hostile environments is that the network itself becomes unreliable or adversarial. Internet connections may be throttled, blocked, or monitored. Cell towers may be shut down. Simply connecting to a server can reveal who you are and where you are.
 
-- **Bluetooth (proximity)**  
-  Short-range, device-to-device communication for nearby contacts.
+Anonomi addresses this by **not depending on any single network path**. All messages are end-to-end encrypted and delivered peer-to-peer — there are no central servers that store messages, log connections, or can be compelled to hand over data.
 
-- **Wi-Fi (same network)**  
-  Local communication when devices share the same Wi-Fi network, with no traffic leaving the area.
+### When the internet is available
 
-- **External storage (store-and-forward)**  
-  Messages can be written to **external storage** (such as an SD card or removable media), physically transferred, and later imported on another device.  
-  This enables fully **air-gapped communication** with no live connectivity at all.
+All internet traffic is routed through **Tor**, which prevents network observers from seeing who you're communicating with. Anonomi never makes direct connections to contacts or to its own infrastructure. If Tor is blocked in your region, **bridges** can help bypass censorship by disguising Tor traffic.
 
-**Read more**
-- **[Connections settings](/docs/usage/settings/connections)**
-- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
+This matters because even encrypted messaging apps that rely on central servers leave connection metadata — who connected, when, how often, from which IP. Anonomi's Tor routing eliminates that exposure at the network level.
+
+### When the internet is gone
+
+During internet shutdowns, Anonomi keeps working through **local transports** that don't touch the internet at all:
+
+- **Bluetooth** — device-to-device communication over short range. Useful when people are physically near each other but can't use the network. Messages hop between nearby devices without any internet infrastructure.
+- **Wi-Fi** — communication over a shared local network. Devices on the same Wi-Fi can exchange messages with no traffic leaving the local area. This works even with a portable router or phone hotspot that isn't connected to the internet.
+- **Removable storage** — messages are written to an SD card or USB drive, physically carried to another location, and imported on the receiving device. This enables fully **air-gapped communication** — no radio signals, no network connections, no electronic trace of the exchange happening. A courier carries the data.
+
+These aren't fallback modes. They're first-class communication channels built into the same interface. A group conversation can seamlessly include messages that arrived over Tor, Bluetooth, and removable storage.
+
+**Read more:** [Transports](/docs/features/transports) · [Connections settings](/docs/usage/settings/connections) · [Scenarios and tradeoffs](/docs/usage/scenarios)
 
 ---
 
-## The rule of thumb
+## Organising people without centralised infrastructure
 
-- If the internet is usable but risky → **Tor**
-- If the internet is the threat → **Offline**
+Coordination requires more than one-to-one messaging. You need group spaces, broadcast channels, and ways to share information with people who aren't online at the same time.
 
-Connectivity choices are part of your **threat model**, not just a convenience setting.
+### Private groups
+
+Invite-only encrypted groups for trusted circles. Every message is end-to-end encrypted and synced peer-to-peer between members. There's no server hosting the group, no admin panel an adversary can seize, and no membership list stored anywhere except on participants' own devices.
+
+Private groups support text, images, voice messages, and location sharing — everything needed to coordinate without switching between apps.
+
+### Open groups (forums)
+
+For broader communities that need structured discussion — organising efforts, information sharing, Q&A — open groups provide threaded conversations that anyone with an invitation link can join. Forums give structure to discussions that would become chaotic in a flat chat.
+
+### Blogs
+
+For one-to-many communication — announcements, reports, situation updates — blogs let you publish content to followers through the same peer-to-peer network. Followers see posts in a chronological feed. Posts support text, images, and map locations. Others can like, comment, and reblog to amplify content.
+
+There's no platform hosting this content. No algorithm deciding who sees it. No company that can be pressured to take it down. Blog content lives on followers' devices and syncs between them directly.
+
+Blogs also support **RSS feed imports**, so you can aggregate external information sources alongside peer content in a single feed.
+
+### Postbox for asynchronous contacts
+
+Not everyone can be online at the same time — especially in hostile environments where connectivity is intermittent. **Postbox** provides store-and-forward delivery through an encrypted mailbox. Messages are held until the recipient comes online, then delivered and deleted from the mailbox. This is critical for contacts who operate on different schedules, in different time zones, or with unpredictable access to connectivity.
+
+Postbox is optional, end-to-end encrypted, and paired via QR code. It exists to solve the specific problem of two people who are rarely online at the same moment.
+
+**Read more:** [Groups & Open Groups](/docs/features/groups) · [Blogs](/docs/features/blogs) · [Postbox](/docs/features/postbox)
+
+---
+
+## Moving safely with offline maps and locations
+
+In hostile environments, knowing where to go — and sharing that information securely — is as important as communication. But standard map apps are a surveillance liability. Every map tile request, search query, and navigation route is sent to Google, Apple, or another provider. That data reveals where you are, where you're going, and what you're looking for.
+
+Anonomi eliminates this by using **locally stored map tiles**. Map data is downloaded once, stored on your device, and never fetched at runtime. When you view a map or share a location, **no request is made to any external server**.
+
+You can share coordinates with contacts inside conversations. The recipient views the location on their own offline maps. No third party learns that a location was shared, viewed, or navigated to.
+
+For higher-risk workflows, Anonomi is designed to work **without requesting GPS or location permissions** from Android. You can receive and view locations shared by others without ever enabling location services on your device — reducing the metadata footprint across the entire operating system, not just within the app.
+
+Map packs can be created using the **Maps Exporter** tool, which runs in a browser and lets you select regions, zoom levels, and tile sources. The exported packs are imported into Anonomi for offline use.
+
+**Read more:** [Offline Maps](/docs/features/maps) · [Maps Exporter](/docs/features/maps-exporter) · [Offline Maps settings](/docs/usage/settings/offline-maps)
+
+---
+
+## Surviving device seizure
+
+In many threat environments, the most dangerous moment isn't interception of a message — it's the physical seizure of a device. Checkpoints, raids, border crossings, arbitrary detention. If someone takes your phone and can see that you're using a secure messenger, the app itself becomes evidence. If they can open it, the content becomes evidence.
+
+Anonomi has three layers designed for this scenario.
+
+### Stealth Mode — hide the app entirely
+
+When stealth mode is enabled, Anonomi **disappears from your phone**. The app icon, name, and launcher entry are replaced with a fully functional calculator. The calculator works normally — it does math. There is no visible indication that a messaging app exists on the device.
+
+To access the real interface, you perform a hidden interaction within the calculator that only you know. The disguise persists across reboots and app updates. Anonomi won't appear in recent apps or generate visible notifications while disguised.
+
+Someone inspecting your phone sees a calculator. They can open it, use it, and find nothing unusual.
+
+### Panic Button — emergency response under pressure
+
+If you're in a situation where you need to act immediately — a checkpoint, a raid, someone demanding your phone — the **panic button** lets you trigger emergency actions without navigating the app.
+
+You define a **custom sequence of volume button presses** (short and long) that only you know. When triggered, the panic button can:
+
+- **Sign out** of Anonomi, locking all content behind authentication.
+- **Delete your account** entirely, removing all data from the device.
+- **Ask you to choose** at the moment of activation.
+- **Alert panic contacts** — trusted people who automatically receive a notification that you've triggered a panic.
+
+The panic sequence works from any screen inside the app, including the stealth calculator. You don't need to unlock the real interface, navigate to a settings page, or even look at your screen. The volume buttons are enough.
+
+### Message Retention — limit what exists on the device
+
+Even with stealth mode and a panic button, the safest message is one that no longer exists. **Message Retention** automatically deletes messages older than a period you choose — 7, 30, 90, or 180 days — on a per-group basis.
+
+This is a deliberate reduction of exposure surface. In a high-threat environment, there's no reason to keep six months of conversation history on a device that might be seized tomorrow. Message retention makes this automatic so you don't have to remember to clean up manually.
+
+The setting is local-only — it deletes messages from your device. It doesn't affect other participants' copies.
+
+**Read more:** [Stealth Mode](/docs/features/stealth) · [Panic Button](/docs/features/panic) · [Message Retention](/docs/features/message-retention)
+
+---
+
+## Protecting voice identity
+
+Voice messages are convenient for field communication — faster than typing, possible while hands are busy. But a voice recording is a biometric identifier. Voiceprint analysis can link recordings to a specific person, even across different conversations and contexts.
+
+**Distorted Voice** applies dynamic voice distortion at recording time. The distortion alters voice characteristics enough to prevent voiceprint identification while keeping speech intelligible. Critically, the processing happens **on your device before the audio is transmitted** — the original, undistorted voice is never sent or stored anywhere.
+
+Distortion is **optional per message**. You choose when identity protection matters and when natural voice is more appropriate. It also works with **walkie-talkie mode**, so push-to-talk communication in the field can be voice-anonymous.
+
+Walkie-talkie mode itself is designed for situations where you need fast, hands-free voice communication. Press and hold the volume button to record, release to send. Incoming messages play automatically through the speaker. This works without looking at or touching the screen — useful when you're moving, driving, or need to keep your attention elsewhere.
+
+**Read more:** [Distorted Voice](/docs/features/voice) · [Walkie-Talkie](/docs/features/walkie-talkie)
+
+---
+
+## Private payments without metadata leaks
+
+Fundraising, resource sharing, and financial support are often part of organising in hostile environments. But sharing payment details through insecure channels — screenshots of wallet addresses in regular messaging apps, payment links over email — creates exactly the kind of metadata trail that secure communication is meant to prevent.
+
+Anonomi integrates **Monero payment requests** directly into conversations. Each request generates a **unique subaddress** (avoiding persistent identifiers) and a **QR code** that the recipient scans in their wallet app. The request includes the amount and description, so there's no need to send payment details through a separate, potentially insecure channel.
+
+This doesn't make Anonomi a wallet — it's a secure way to initiate a payment without leaking the metadata that surrounds it.
+
+**Read more:** [Private Payments](/docs/features/monero)
+
+---
+
+## Getting the app when app stores are blocked
+
+In some regions, secure communication apps are removed from app stores, or downloading them is monitored. Anonomi can be **distributed entirely offline** — shared directly between Android devices over Bluetooth, Wi-Fi, or removable storage.
+
+A built-in **app catalog** bundles Anonomi and companion apps into an offline distribution kit. One person with the app can spread it to others without anyone connecting to the internet. Shared files include checksums for verifying integrity, so recipients can confirm the app hasn't been tampered with during transfer.
+
+This means Anonomi can spread through a community even when the infrastructure needed to download it has been blocked or is too dangerous to use.
+
+**Read more:** [Offline Distribution](/docs/features/distribution)
+
+---
+
+## How the pieces fit together
+
+No single feature solves the problem of hostile-environment communication. The value is in how they combine.
+
+A person operating under surveillance might use **Tor** for daily communication, switch to **Bluetooth** during an internet shutdown, coordinate a group through a **private group** with **7-day message retention**, share a meeting location through **offline maps**, receive a **walkie-talkie** check-in while moving, and trigger the **panic button** at a checkpoint — all within the same app, hidden behind a **calculator**.
+
+Anonomi doesn't promise magic anonymity. It gives you tools to **reduce exposure at every layer** — network, metadata, content, device, voice identity, location, and app presence — and lets you decide which protections matter for your specific situation.
 
 ---
 
@@ -58,4 +176,4 @@ Connectivity choices are part of your **threat model**, not just a convenience s
 
 - **[Threat model](/docs/security/threat-model)**
 - **[Operational security basics](/docs/usage/opsec)**
-- **[Offline app distribution](/docs/features/distribution)**
+- **[Scenarios and tradeoffs](/docs/usage/scenarios)**
