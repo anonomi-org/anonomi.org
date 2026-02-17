@@ -1739,45 +1739,80 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm"
   >
     <button
-      id="lightbox-close"
+      id="lightbox-close-bg"
       class="absolute inset-0 w-full h-full cursor-default"
       aria-label="Close lightbox"
     ></button>
+    <button
+      id="lightbox-close-btn"
+      class="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
+      aria-label="Close"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
     <img
       id="lightbox-img"
       src=""
       alt=""
-      class="relative z-10 max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/10 shadow-2xl"
+      class="relative z-10 max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/10 shadow-2xl cursor-pointer"
     />
   </div>
 
   <script>
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+    let lightboxOpen = false;
 
-    document.querySelectorAll(".screenshot-trigger").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const src = btn.getAttribute("data-full");
-        if (src && lightbox && lightboxImg) {
-          lightboxImg.src = src;
-          lightbox.classList.remove("hidden");
-          lightbox.classList.add("flex");
-        }
-      });
-    });
+    function openLightbox(src: string) {
+      if (lightbox && lightboxImg) {
+        lightboxImg.src = src;
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        lightboxOpen = true;
+        history.pushState({ lightbox: true }, "");
+      }
+    }
 
     function closeLightbox() {
       if (lightbox && lightboxImg) {
         lightbox.classList.add("hidden");
         lightbox.classList.remove("flex");
         lightboxImg.src = "";
+        if (lightboxOpen) {
+          lightboxOpen = false;
+          history.back();
+        }
       }
     }
 
-    document.getElementById("lightbox-close")?.addEventListener("click", closeLightbox);
+    function closeLightboxFromBack() {
+      if (lightbox && lightboxImg) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        lightboxImg.src = "";
+        lightboxOpen = false;
+      }
+    }
+
+    document.querySelectorAll(".screenshot-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const src = btn.getAttribute("data-full");
+        if (src) openLightbox(src);
+      });
+    });
+
+    document.getElementById("lightbox-close-bg")?.addEventListener("click", closeLightbox);
+    document.getElementById("lightbox-close-btn")?.addEventListener("click", closeLightbox);
+    lightboxImg?.addEventListener("click", closeLightbox);
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLightbox();
+      if (e.key === "Escape" && lightboxOpen) closeLightbox();
+    });
+
+    window.addEventListener("popstate", () => {
+      if (lightboxOpen) closeLightboxFromBack();
     });
   </script>
 </Layout>
