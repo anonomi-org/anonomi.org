@@ -15,5 +15,8 @@
     "search.devWarning": "خاصية البحث متاحة فقط في الإصدارات الإنتاجية.\n\nجرّب إنشاء الموقع ومعاينته لاختباره محليًا.",
     "search.ctrlKey": "كنترول",
     "search.label": "يبحث",
-    "tableOfContents.onThisPage": "في هذه الصفحة"
+    "tableOfContents.onThisPage": "في هذه الصفحة",
+    "page.nextLink": "التالي",
+    "search.cancelLabel": "إلغاء",
+    "page.lastUpdated": "آخر تحديث:"
 }
