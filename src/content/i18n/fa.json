@@ -15,5 +15,8 @@
     "search.devWarning": "جستجو فقط در نسخه‌های نهایی موجود است.\nبرای آزمایش محلی، سایت را بسازید و پیش‌نمایش آن را ببینید.",
     "search.ctrlKey": "کنترل",
     "search.label": "جستجو",
-    "tableOfContents.onThisPage": "در این صفحه"
+    "tableOfContents.onThisPage": "در این صفحه",
+    "page.nextLink": "بعد",
+    "search.cancelLabel": "لغو",
+    "page.lastUpdated": "آخرین به روز رسانی:"
 }
