@@ -1,2 +1,19 @@
 {
+    "page.editLink": "قم بتعديل هذه الصفحة",
+    "i18n.untranslatedContent": "هذا المحتوى لم تتم ترجمته بعد.",
+    "aside.note": "ملحوظة",
+    "page.previousLink": "سابق",
+    "aside.danger": "خطر",
+    "skipLink.label": "انتقل إلى المحتوى",
+    "fileTree.directory": "دليل",
+    "page.draft": "هذا المحتوى عبارة عن مسودة ولن يتم نشره.",
+    "pageSidebar.tabLabel": "في هذه الصفحة",
+    "404.text": "الصفحة غير موجودة.",
+    "aside.tip": "نصيحة",
+    "builtWithStarlight.label": "بُني باستخدام ضوء النجوم",
+    "aside.caution": "حذر",
+    "search.devWarning": "خاصية البحث متاحة فقط في الإصدارات الإنتاجية.\n\nجرّب إنشاء الموقع ومعاينته لاختباره محليًا.",
+    "search.ctrlKey": "كنترول",
+    "search.label": "يبحث",
+    "tableOfContents.onThisPage": "في هذه الصفحة"
 }
