@@ -1,2 +1,22 @@
 {
+    "page.editLink": "ویرایش این صفحه",
+    "i18n.untranslatedContent": "این محتوا هنوز ترجمه نشده است.",
+    "aside.note": "توجه داشته باشید",
+    "page.previousLink": "قبلی",
+    "aside.danger": "خطر",
+    "skipLink.label": "پرش به محتوا",
+    "fileTree.directory": "دایرکتوری",
+    "page.draft": "این محتوا پیش‌نویس است و منتشر نخواهد شد.",
+    "pageSidebar.tabLabel": "در این صفحه",
+    "404.text": "صفحه یافت نشد.",
+    "aside.tip": "نکته",
+    "builtWithStarlight.label": "ساخته شده با استارلایت",
+    "aside.caution": "احتیاط",
+    "search.devWarning": "جستجو فقط در نسخه‌های نهایی موجود است.\nبرای آزمایش محلی، سایت را بسازید و پیش‌نمایش آن را ببینید.",
+    "search.ctrlKey": "کنترل",
+    "search.label": "جستجو",
+    "tableOfContents.onThisPage": "در این صفحه",
+    "page.nextLink": "بعد",
+    "search.cancelLabel": "لغو",
+    "page.lastUpdated": "آخرین به روز رسانی:"
 }

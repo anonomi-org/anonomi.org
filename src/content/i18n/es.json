@@ -1,2 +1,22 @@
 {
+    "page.editLink": "Editar esta página",
+    "i18n.untranslatedContent": "Este contenido aún no está traducido.",
+    "aside.note": "Nota",
+    "page.previousLink": "Anterior",
+    "aside.danger": "Peligro",
+    "skipLink.label": "Saltar al contenido",
+    "fileTree.directory": "Directorio",
+    "page.draft": "Este contenido es un borrador y no se publicará.",
+    "pageSidebar.tabLabel": "En esta página",
+    "404.text": "Página no encontrada.",
+    "aside.tip": "Consejo",
+    "builtWithStarlight.label": "Construido con Starlight",
+    "aside.caution": "Precaución",
+    "search.devWarning": "La búsqueda solo está disponible en versiones de producción. Intenta crear y obtener una vista previa del sitio para probarlo localmente.",
+    "search.ctrlKey": "Control",
+    "search.label": "Buscar",
+    "tableOfContents.onThisPage": "En esta página",
+    "page.nextLink": "Siguiente",
+    "search.cancelLabel": "Cancelar",
+    "page.lastUpdated": "Última actualización:"
 }

@@ -1,2 +1,22 @@
 {
+    "page.editLink": "编辑此页面",
+    "i18n.untranslatedContent": "此内容尚未翻译。",
+    "aside.note": "笔记",
+    "page.previousLink": "以前的",
+    "aside.danger": "危险",
+    "skipLink.label": "跳至内容",
+    "fileTree.directory": "目录",
+    "page.draft": "此内容为草稿，不会发布。",
+    "pageSidebar.tabLabel": "本页",
+    "404.text": "页面未找到。",
+    "aside.tip": "提示",
+    "builtWithStarlight.label": "用星光建造",
+    "aside.caution": "警告",
+    "search.devWarning": "搜索功能仅在正式版中可用。\n\n请尝试构建并预览网站，以便在本地进行测试。",
+    "search.ctrlKey": "Ctrl",
+    "search.label": "搜索",
+    "tableOfContents.onThisPage": "本页",
+    "page.nextLink": "下一步",
+    "search.cancelLabel": "取消",
+    "page.lastUpdated": "最后更新于："
 }
