@@ -70,6 +70,62 @@ const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
   },
 };
 
+export type MapsExporterStrings = {
+  howItWorks: string;
+  howItWorksDesc: string;
+  mapSelection: string;
+  clientSideOnly: string;
+  bboxExplanation: string;
+  selectMapSource: string;
+  noTileRequestsBefore: string;
+  exportSettings: string;
+  mapSource: string;
+  noRequestsUntilChoice: string;
+  tileUrlTemplate: string;
+  tileUrlHelp: string;
+  attributionOptional: string;
+  reloadMap: string;
+  loadMap: string;
+  googleMapsLink: string;
+  zoom: string;
+  detailLevel: string;
+  detailLow: string;
+  detailMedium: string;
+  detailHigh: string;
+  detailHint: string;
+  advanced: string;
+  customZoomLevels: string;
+  zoomFrom: string;
+  zoomTo: string;
+  zoomTip: string;
+  selectedZooms: string;
+  packName: string;
+  packNameHint: string;
+  estimate: string;
+  area: string;
+  estimatedPackSize: string;
+  keepTabOpen: string;
+  exportZip: string;
+  exporting: string;
+  downloadedTiles: string;
+  failed: string;
+  statusPaused: string;
+  statusRunning: string;
+  statusDone: string;
+  statusIdle: string;
+  startedOn: string;
+  duration: string;
+  totalDownloaded: string;
+  continue: string;
+  pause: string;
+  stopAndPack: string;
+  cancel: string;
+  completed: string;
+  cancelled: string;
+  exportCancelled: string;
+  exportFailed: string;
+};
+
 function buildTileUrl(
   template: string,
   z: number,
@@ -203,7 +259,7 @@ function MapInitializer({
   return null;
 }
 
-export default function MapsExporterApp() {
+export default function MapsExporterApp({ strings: s }: { strings: MapsExporterStrings }) {
   // Simple mode
   const [detailLevel, setDetailLevel] = useState<DetailLevel>("Medium");
 
@@ -240,6 +296,12 @@ export default function MapsExporterApp() {
   const pauseRef = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
   const packNowRef = useRef(false);
+
+  const detailLabels: Record<DetailLevel, string> = {
+    Low: s.detailLow,
+    Medium: s.detailMedium,
+    High: s.detailHigh,
+  };
 
   const tileTemplate =
     tileProviderId === "custom"
@@ -389,7 +451,7 @@ export default function MapsExporterApp() {
     setIsPaused(false);
     setIsExporting(false);
     setEndedAt(new Date());
-    setExportError("Cancelled.");
+    setExportError(s.cancelled);
   }
 
   async function exportZip() {
@@ -458,15 +520,15 @@ export default function MapsExporterApp() {
         const subs =
           tileSubdomains ??
           (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [""]);
-        const s = subs[(job.x + job.y) % subs.length];
-        const url = buildTileUrl(tileTemplate, job.z, job.x, job.y, s);
+        const sub = subs[(job.x + job.y) % subs.length];
+        const url = buildTileUrl(tileTemplate, job.z, job.x, job.y, sub);
 
         await waitWhilePaused();
 
         if (packNowRef.current) break;
 
         const ctrl = abortRef.current;
-        if (!ctrl) throw new Error("Export cancelled");
+        if (!ctrl) throw new Error(s.exportCancelled);
 
         let fetched = false;
         for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
@@ -508,7 +570,7 @@ export default function MapsExporterApp() {
 
       saveAs(outBlob, `${placeName}.zip`);
     } catch (e: any) {
-      setExportError(e?.message ?? "Export failed");
+      setExportError(e?.message ?? s.exportFailed);
     } finally {
       setIsExporting(false);
       setEndedAt(new Date());
@@ -522,11 +584,9 @@ export default function MapsExporterApp() {
     <div className="space-y-4">
       {/* Small explanation (first thing user reads) */}
       <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-        <div className="text-sm font-semibold text-zinc-200">How it works</div>
+        <div className="text-sm font-semibold text-zinc-200">{s.howItWorks}</div>
         <p className="mt-2 text-sm text-zinc-400">
-          Move the map until the area inside the selection frame matches what
-          you want. Then pick the zoom detail and export locally. No uploads. No
-          accounts.
+          {s.howItWorksDesc}
         </p>
       </div>
 
@@ -536,13 +596,13 @@ export default function MapsExporterApp() {
         <div className="order-1 lg:order-none lg:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
           <div className="flex items-center justify-between gap-3">
             <div className="text-sm font-semibold text-zinc-200">
-              Map selection
+              {s.mapSelection}
             </div>
-            <div className="text-xs text-zinc-500">Client-side only</div>
+            <div className="text-xs text-zinc-500">{s.clientSideOnly}</div>
           </div>
 
           <p className="mt-2 text-xs text-zinc-500">
-            The visible area inside the frame is the export boundary (bbox).
+            {s.bboxExplanation}
           </p>
 
           <div
@@ -554,10 +614,10 @@ export default function MapsExporterApp() {
               <div className="flex h-full w-full items-center justify-center p-6 text-center">
                 <div>
                   <div className="text-sm font-semibold text-zinc-200">
-                    Select a map source to load the map
+                    {s.selectMapSource}
                   </div>
                   <p className="mt-2 text-xs text-zinc-500">
-                    This avoids any external tile requests before user input.
+                    {s.noTileRequestsBefore}
                   </p>
                 </div>
               </div>
@@ -587,17 +647,17 @@ export default function MapsExporterApp() {
         {/* Export settings */}
         <div className="order-2 lg:order-none rounded-2xl border border-white/10 bg-black/20 p-4">
           <div className="text-sm font-semibold text-zinc-200">
-            Export settings
+            {s.exportSettings}
           </div>
 
           {/* Tile source */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
             <div className="text-sm font-semibold text-zinc-200">
-              Map source
+              {s.mapSource}
             </div>
 
             <p className="mt-3 text-xs text-zinc-500">
-              No map network requests are made until you choose a source.
+              {s.noRequestsUntilChoice}
             </p>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
@@ -636,7 +696,7 @@ export default function MapsExporterApp() {
             {tileProviderId === "custom" && (
               <div className="mt-3 space-y-2">
                 <label className="block">
-                  <div className="text-xs text-zinc-400">Tile URL template</div>
+                  <div className="text-xs text-zinc-400">{s.tileUrlTemplate}</div>
                   <input
                     value={customTileUrl}
                     onChange={(e) => setCustomTileUrl(e.target.value)}
@@ -644,16 +704,13 @@ export default function MapsExporterApp() {
                     className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                   />
                   <p className="mt-1 text-xs text-zinc-500">
-                    Use <span className="font-mono">{`{z}`}</span>,{" "}
-                    <span className="font-mono">{`{x}`}</span>,{" "}
-                    <span className="font-mono">{`{y}`}</span>. Optional{" "}
-                    <span className="font-mono">{`{s}`}</span> for subdomains.
+                    {s.tileUrlHelp}
                   </p>
                 </label>
 
                 <label className="block">
                   <div className="text-xs text-zinc-400">
-                    Attribution (optional)
+                    {s.attributionOptional}
                   </div>
                   <input
                     value={customAttribution}
@@ -674,7 +731,7 @@ export default function MapsExporterApp() {
                       : "bg-white/5 text-zinc-500 cursor-not-allowed",
                   ].join(" ")}
                 >
-                  {customUrlApplied ? "Reload map" : "Load map"}
+                  {customUrlApplied ? s.reloadMap : s.loadMap}
                 </button>
               </div>
             )}
@@ -686,7 +743,7 @@ export default function MapsExporterApp() {
                 rel="noopener noreferrer"
                 className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-fuchsia-400 hover:text-fuchsia-300"
               >
-                Learn more about Google Maps as source
+                {s.googleMapsLink}
                 <span aria-hidden="true">→</span>
               </a>
             )}
@@ -694,11 +751,11 @@ export default function MapsExporterApp() {
 
           {/* Zoom section */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="text-sm font-semibold text-zinc-200">Zoom</div>
+            <div className="text-sm font-semibold text-zinc-200">{s.zoom}</div>
 
             <div className="mt-3">
               <div className="text-xs font-medium tracking-wide text-zinc-400">
-                Detail level
+                {s.detailLevel}
               </div>
 
               <div className="mt-2 grid grid-cols-3 gap-2">
@@ -714,14 +771,13 @@ export default function MapsExporterApp() {
                         : "bg-black/20 text-zinc-300 hover:bg-white/10",
                     ].join(" ")}
                   >
-                    {lvl}
+                    {detailLabels[lvl]}
                   </button>
                 ))}
               </div>
 
               <div className="mt-3 text-xs text-zinc-500">
-                Low detail is safer and faster. High detail can produce very
-                large downloads.
+                {s.detailHint}
               </div>
             </div>
 
@@ -732,7 +788,7 @@ export default function MapsExporterApp() {
                 onClick={() => setShowAdvanced((v) => !v)}
                 className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
               >
-                Advanced
+                {s.advanced}
                 <span className="text-zinc-500">
                   {showAdvanced ? "▲" : "▼"}
                 </span>
@@ -741,12 +797,12 @@ export default function MapsExporterApp() {
               {showAdvanced && (
                 <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3">
                   <div className="text-xs font-medium tracking-wide text-zinc-400">
-                    Set custom zoom levels
+                    {s.customZoomLevels}
                   </div>
 
                   <div className="mt-3 grid grid-cols-2 gap-3">
                     <label className="block">
-                      <div className="text-xs text-zinc-400">Zoom from</div>
+                      <div className="text-xs text-zinc-400">{s.zoomFrom}</div>
                       <select
                         value={zoomFrom}
                         onChange={(e) => setZoomFrom(Number(e.target.value))}
@@ -761,7 +817,7 @@ export default function MapsExporterApp() {
                     </label>
 
                     <label className="block">
-                      <div className="text-xs text-zinc-400">Zoom to</div>
+                      <div className="text-xs text-zinc-400">{s.zoomTo}</div>
                       <select
                         value={zoomTo}
                         onChange={(e) => setZoomTo(Number(e.target.value))}
@@ -777,8 +833,7 @@ export default function MapsExporterApp() {
                   </div>
 
                   <p className="mt-3 text-xs text-zinc-500">
-                    Tip: mobile storage and memory are limited — avoid max zoom
-                    unless necessary.
+                    {s.zoomTip}
                   </p>
                 </div>
               )}
@@ -786,7 +841,7 @@ export default function MapsExporterApp() {
 
             {/* Selected zooms */}
             <div className="mt-4 text-xs text-zinc-400">
-              Selected zooms:{" "}
+              {s.selectedZooms}{" "}
               <span className="font-mono text-zinc-200">
                 {effectiveZooms.join(" ")}
               </span>
@@ -796,7 +851,7 @@ export default function MapsExporterApp() {
           {/* Pack name */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
             <div className="text-sm font-semibold text-zinc-200">
-              Pack name
+              {s.packName}
             </div>
             <input
               value={packName}
@@ -805,27 +860,26 @@ export default function MapsExporterApp() {
               className="mt-3 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
             />
             <p className="mt-2 text-xs text-zinc-500">
-              Shown in the app after import. Leave empty for a default name.
+              {s.packNameHint}
             </p>
           </div>
 
           {/* Estimate + warnings (after zoom) */}
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-semibold text-zinc-200">Estimate</div>
+            <div className="text-sm font-semibold text-zinc-200">{s.estimate}</div>
 
             <div className="mt-2 text-sm text-zinc-400">
               <div>
-                Area: <span className="text-zinc-200">{estimatedAreaText}</span>
+                {s.area} <span className="text-zinc-200">{estimatedAreaText}</span>
               </div>
               <div className="mt-1">
-                Estimated pack size:{" "}
+                {s.estimatedPackSize}{" "}
                 <span className="text-zinc-200">{estimatedSizeText}</span>
               </div>
             </div>
 
             <p className="mt-3 text-xs text-zinc-500">
-              Keep this tab open during export. Mobile browsers may pause
-              background work.
+              {s.keepTabOpen}
             </p>
           </div>
 
@@ -841,7 +895,7 @@ export default function MapsExporterApp() {
                 : "bg-white/15 text-white hover:bg-white/20",
             ].join(" ")}
           >
-            {isExporting ? "Exporting…" : "Export zip"}
+            {isExporting ? s.exporting : s.exportZip}
           </button>
         </div>
       </div>
@@ -857,31 +911,31 @@ export default function MapsExporterApp() {
                   )}
                   %
                 </span>{" "}
-                — Downloaded tiles:{" "}
+                — {s.downloadedTiles}{" "}
                 <span className="text-zinc-200">{progress.done}</span> /{" "}
                 {progress.total}
                 {failedTiles > 0 && (
                   <>
-                    {" "}— Failed:{" "}
+                    {" "}— {s.failed}{" "}
                     <span className="text-red-300">{failedTiles}</span>
                   </>
                 )}
               </div>
 
               <div className="text-zinc-500">
-                {isPaused ? "Paused" : isExporting ? "Running" : endedAt ? "Done" : "Idle"}
+                {isPaused ? s.statusPaused : isExporting ? s.statusRunning : endedAt ? s.statusDone : s.statusIdle}
               </div>
             </div>
 
             <div className="mt-2 grid grid-cols-1 gap-1 text-zinc-400">
               <div>
-                Started on:{" "}
+                {s.startedOn}{" "}
                 <span className="text-zinc-200">
                   {startedAt ? fmtTime(startedAt) : "—"}
                 </span>
               </div>
               <div>
-                Duration:{" "}
+                {s.duration}{" "}
                 <span className="text-zinc-200">
                   {startedAt
                     ? fmtDuration((endedAt ?? new Date()).getTime() - startedAt.getTime())
@@ -889,7 +943,7 @@ export default function MapsExporterApp() {
                 </span>
               </div>
               <div>
-                Total downloaded:{" "}
+                {s.totalDownloaded}{" "}
                 <span className="text-zinc-200">
                   {fmtBytes(downloadedBytes)}
                 </span>
@@ -908,7 +962,7 @@ export default function MapsExporterApp() {
                     : "bg-white/15 text-white hover:bg-white/20",
                 ].join(" ")}
               >
-                {isPaused ? "Continue" : "Pause"}
+                {isPaused ? s.continue : s.pause}
               </button>
 
               <button
@@ -922,7 +976,7 @@ export default function MapsExporterApp() {
                     : "bg-white/15 text-white hover:bg-white/20",
                 ].join(" ")}
               >
-                Stop and pack what we have
+                {s.stopAndPack}
               </button>
 
               {isExporting ? (
@@ -931,11 +985,11 @@ export default function MapsExporterApp() {
                   onClick={cancelExport}
                   className="rounded-xl bg-red-500/15 px-3 py-2 text-xs font-medium text-red-100 ring-1 ring-red-500/30 hover:bg-red-500/20"
                 >
-                  Cancel
+                  {s.cancel}
                 </button>
               ) : (
                 <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
-                  Completed
+                  {s.completed}
                 </div>
               )}
             </div>

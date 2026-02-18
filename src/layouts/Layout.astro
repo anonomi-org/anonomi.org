@@ -3,10 +3,13 @@ import "../styles/global.css";
 
 const { title = "Anonomi", description = "Private chat over Tor." } =
   Astro.props;
+
+const locale = Astro.currentLocale || 'en';
+const dir = locale === 'ar' || locale === 'fa' ? 'rtl' : 'ltr';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale} dir={dir}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

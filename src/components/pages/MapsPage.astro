@@ -1,0 +1,163 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../NavBar.astro";
+import Footer from "../Footer.astro";
+import MapsExporterApp from "../maps/MapsExporterApp.tsx";
+import type { MapsExporterStrings } from "../maps/MapsExporterApp.tsx";
+import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const exporterStrings: MapsExporterStrings = {
+  howItWorks: t(lang, "maps.exporter.howItWorks"),
+  howItWorksDesc: t(lang, "maps.exporter.howItWorksDesc"),
+  mapSelection: t(lang, "maps.exporter.mapSelection"),
+  clientSideOnly: t(lang, "maps.exporter.clientSideOnly"),
+  bboxExplanation: t(lang, "maps.exporter.bboxExplanation"),
+  selectMapSource: t(lang, "maps.exporter.selectMapSource"),
+  noTileRequestsBefore: t(lang, "maps.exporter.noTileRequestsBefore"),
+  exportSettings: t(lang, "maps.exporter.exportSettings"),
+  mapSource: t(lang, "maps.exporter.mapSource"),
+  noRequestsUntilChoice: t(lang, "maps.exporter.noRequestsUntilChoice"),
+  tileUrlTemplate: t(lang, "maps.exporter.tileUrlTemplate"),
+  tileUrlHelp: t(lang, "maps.exporter.tileUrlHelp"),
+  attributionOptional: t(lang, "maps.exporter.attributionOptional"),
+  reloadMap: t(lang, "maps.exporter.reloadMap"),
+  loadMap: t(lang, "maps.exporter.loadMap"),
+  googleMapsLink: t(lang, "maps.exporter.googleMapsLink"),
+  zoom: t(lang, "maps.exporter.zoom"),
+  detailLevel: t(lang, "maps.exporter.detailLevel"),
+  detailLow: t(lang, "maps.exporter.detailLow"),
+  detailMedium: t(lang, "maps.exporter.detailMedium"),
+  detailHigh: t(lang, "maps.exporter.detailHigh"),
+  detailHint: t(lang, "maps.exporter.detailHint"),
+  advanced: t(lang, "maps.exporter.advanced"),
+  customZoomLevels: t(lang, "maps.exporter.customZoomLevels"),
+  zoomFrom: t(lang, "maps.exporter.zoomFrom"),
+  zoomTo: t(lang, "maps.exporter.zoomTo"),
+  zoomTip: t(lang, "maps.exporter.zoomTip"),
+  selectedZooms: t(lang, "maps.exporter.selectedZooms"),
+  packName: t(lang, "maps.exporter.packName"),
+  packNameHint: t(lang, "maps.exporter.packNameHint"),
+  estimate: t(lang, "maps.exporter.estimate"),
+  area: t(lang, "maps.exporter.area"),
+  estimatedPackSize: t(lang, "maps.exporter.estimatedPackSize"),
+  keepTabOpen: t(lang, "maps.exporter.keepTabOpen"),
+  exportZip: t(lang, "maps.exporter.exportZip"),
+  exporting: t(lang, "maps.exporter.exporting"),
+  downloadedTiles: t(lang, "maps.exporter.downloadedTiles"),
+  failed: t(lang, "maps.exporter.failed"),
+  statusPaused: t(lang, "maps.exporter.statusPaused"),
+  statusRunning: t(lang, "maps.exporter.statusRunning"),
+  statusDone: t(lang, "maps.exporter.statusDone"),
+  statusIdle: t(lang, "maps.exporter.statusIdle"),
+  startedOn: t(lang, "maps.exporter.startedOn"),
+  duration: t(lang, "maps.exporter.duration"),
+  totalDownloaded: t(lang, "maps.exporter.totalDownloaded"),
+  continue: t(lang, "maps.exporter.continue"),
+  pause: t(lang, "maps.exporter.pause"),
+  stopAndPack: t(lang, "maps.exporter.stopAndPack"),
+  cancel: t(lang, "maps.exporter.cancel"),
+  completed: t(lang, "maps.exporter.completed"),
+  cancelled: t(lang, "maps.exporter.cancelled"),
+  exportCancelled: t(lang, "maps.exporter.exportCancelled"),
+  exportFailed: t(lang, "maps.exporter.exportFailed"),
+};
+---
+
+<Layout
+  title={t(lang, "maps.meta.title")}
+  description={t(lang, "maps.meta.description")}
+>
+  <NavBar />
+
+  <main class="mx-auto max-w-6xl px-6 py-16">
+    <!-- HERO / INTRO BOX -->
+    <section
+      class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-12"
+    >
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"
+      >
+      </div>
+
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold tracking-widest text-zinc-400">
+          {t(lang, "maps.hero.tagline")}
+        </p>
+
+        <h1 class="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
+          {t(lang, "maps.hero.heading")}
+        </h1>
+
+        <p class="mt-4 text-zinc-300">
+          {t(lang, "maps.hero.description")}
+        </p>
+
+        <p class="mt-4 text-zinc-300">
+          {t(lang, "maps.hero.disclaimer.before")}
+          <a
+            href="#maps-exporter-disclaimer"
+            class="font-semibold text-zinc-100 hover:text-white"
+          >
+            {t(lang, "maps.hero.disclaimer.link")}
+          </a>.
+        </p>
+      </div>
+    </section>
+
+    <div class="mt-8 sm:mt-12">
+      <MapsExporterApp client:only="react" strings={exporterStrings} />
+    </div>
+
+    <!-- Maps Exporter disclaimer -->
+    <div
+      id="maps-exporter-disclaimer"
+      class="mt-12 rounded-xl border border-white/10 bg-black/10 p-4 text-xs text-zinc-400"
+    >
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-zinc-300">
+        {t(lang, "maps.disclaimer.heading")}
+      </h2>
+
+      <p class="mt-2">
+        {t(lang, "maps.disclaimer.p1")}
+      </p>
+
+      <p class="mt-2">
+        {t(lang, "maps.disclaimer.p2.before")}<span class="text-zinc-200"
+          >{t(lang, "maps.disclaimer.p2.highlight")}</span
+        >{t(lang, "maps.disclaimer.p2.after")}
+      </p>
+
+      <p class="mt-2">
+        {t(lang, "maps.disclaimer.p3.before")}<span class="text-zinc-200"
+          >{t(lang, "maps.disclaimer.p3.highlight")}</span
+        >{t(lang, "maps.disclaimer.p3.after")}
+      </p>
+
+      <p class="mt-2">
+        {t(lang, "maps.disclaimer.p4")}
+      </p>
+
+      <div class="mt-3 flex flex-col gap-1 sm:flex-row sm:gap-4">
+        <a
+          href={localizedPath("/docs/maps-exporter", lang)}
+          class="font-semibold text-zinc-200 hover:text-white"
+        >
+          {t(lang, "maps.disclaimer.docs")}
+        </a>
+
+        <a
+          href="https://github.com/anonomi-org/anonomi.github.io"
+          class="font-semibold text-zinc-200 hover:text-white"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t(lang, "maps.disclaimer.source")}
+        </a>
+      </div>
+    </div>
+
+    <Footer />
+  </main>
+</Layout>

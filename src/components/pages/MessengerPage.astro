@@ -1,0 +1,1468 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../NavBar.astro";
+import Footer from "../Footer.astro";
+import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<Layout
+  title={t(lang, "messenger.meta.title")}
+  description={t(lang, "messenger.meta.description")}
+>
+  <NavBar />
+
+  <main class="mx-auto max-w-6xl px-6 py-16">
+    <!-- HERO -->
+    <section
+      class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12"
+    >
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-transparent"
+      >
+      </div>
+
+      <div
+        class="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <div class="max-w-2xl">
+          <p class="text-xs font-semibold tracking-widest text-zinc-400">
+            {t(lang, "messenger.hero.tagline")}
+          </p>
+
+          <h1
+            class="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl"
+          >
+            {t(lang, "messenger.hero.heading")}
+          </h1>
+
+          <p class="mt-4 text-zinc-300">
+            {t(lang, "messenger.hero.description")}
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#download"
+              class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              {t(lang, "messenger.hero.download")}
+            </a>
+            <a
+              href="#features"
+              class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
+            >
+              {t(lang, "messenger.hero.features")}
+            </a>
+            <a
+              href={localizedPath("/#manifesto", lang)}
+              class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5"
+            >
+              {t(lang, "messenger.hero.manifesto")}
+            </a>
+          </div>
+
+          <p class="mt-6 text-xs text-zinc-500">
+            {t(lang, "messenger.hero.disclaimer")}
+          </p>
+        </div>
+
+        <!-- HERO SCREENSHOT -->
+        <div class="w-full max-w-lg flex justify-center">
+          <img
+            src="/screenshots/intro.png"
+            alt={t(lang, "messenger.hero.imgAlt")}
+            loading="lazy"
+            class="max-h-[520px] w-auto rounded-2xl border border-white/10 shadow-2xl"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        {t(lang, "messenger.features.heading")}
+      </h2>
+
+      <div class="mt-4 h-[2px] w-20 rounded-full bg-[#6d4aff]"></div>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        {t(lang, "messenger.features.description")}
+      </p>
+
+      <!-- Category pillars -->
+      <div class="mt-16 grid gap-10 sm:grid-cols-3">
+        <!-- Communication -->
+        <a href="#communication" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(lang, "messenger.features.communication")}
+            </h3>
+          </div>
+
+          <p
+            class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            {t(lang, "messenger.cat.communication.desc")}
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+
+        <!-- Privacy & Safety -->
+        <a href="#privacy-safety" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"></path>
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(lang, "messenger.cat.privacy")}
+            </h3>
+          </div>
+
+          <p
+            class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            {t(lang, "messenger.cat.privacy.desc")}
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+
+        <!-- Offline & Network -->
+        <a href="#offline-network" class="group block">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+            >
+              <svg
+                class="h-5 w-5 text-zinc-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"></path>
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              {t(lang, "messenger.cat.offline")}
+            </h3>
+          </div>
+
+          <p
+            class="mt-3 max-w-sm text-base text-zinc-400 group-hover:text-zinc-300"
+          >
+            {t(lang, "messenger.cat.offline.desc")}
+          </p>
+
+          <div class="mt-4 h-px w-16 bg-white/20 group-hover:bg-white/40"></div>
+        </a>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- COMMUNICATION                              -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="communication" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {t(lang, "messenger.features.communication")}
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
+      <div class="mt-10 space-y-14">
+        <!-- Messaging -->
+        <div id="feature-messaging" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8 10h8m-8 4h5m9-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.messaging.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.messaging.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.noServers")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.noServers.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.tor")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.tor.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.offline")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.offline.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.media")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.media.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/connectivity", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.messaging.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/messaging.png">
+                  <img
+                    src="/screenshots/messaging.png"
+                    alt={t(lang, "messenger.messaging.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Groups & Open Groups -->
+        <div id="feature-groups" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.groups.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.groups.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.groups.private")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.private.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.groups.open")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.open.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.groups.media")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.media.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.groups.threads")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.threads.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/groups", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.groups.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/groups.png">
+                  <img
+                    src="/screenshots/groups.png"
+                    alt={t(lang, "messenger.groups.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Messages -->
+        <div id="feature-voice" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.voice.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.voice.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.voice.record")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.record.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.voice.encrypted")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.encrypted.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.voice.everywhere")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.everywhere.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.voice.playback")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.playback.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/voice", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.voice.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/voice.png">
+                  <img
+                    src="/screenshots/voice.png"
+                    alt={t(lang, "messenger.voice.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Walkie-Talkie -->
+        <div id="feature-walkie-talkie" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m3.75 7.5 16.5-4.125M12 6.75c-2.708 0-5.363.224-7.948.655C2.999 7.58 2.25 8.507 2.25 9.574v9.176A2.25 2.25 0 0 0 4.5 21h15a2.25 2.25 0 0 0 2.25-2.25V9.574c0-1.067-.75-1.994-1.802-2.169A48.329 48.329 0 0 0 12 6.75Zm-1.683 6.443-.005.005-.006-.005.006-.005.005.005Zm-.005 2.127-.005-.006.005-.005.005.005-.005.006Zm-2.116-.006-.005.006-.006-.006.005-.005.006.005Zm-.005-2.116-.006-.005.006-.005.005.005-.005.005ZM9.255 10.5v.008h-.008V10.5h.008Zm3.249 1.88-.007.004-.003-.007.006-.003.004.006Zm-1.38 5.126-.003-.006.006-.004.004.007-.006.003Zm.007-6.501-.003.006-.007-.003.004-.007.006.004Zm1.37 5.129-.007-.004.004-.006.006.003-.004.007Zm.504-1.877h-.008v-.007h.008v.007ZM9.255 18v.008h-.008V18h.008Zm-3.246-1.87-.007.004L6 16.127l.006-.003.004.006Zm1.366-5.119-.004-.006.006-.004.004.007-.006.003ZM7.38 17.5l-.003.006-.007-.003.004-.007.006.004Zm-1.376-5.116L6 12.38l.003-.007.007.004-.004.007Zm-.5 1.873h-.008v-.007h.008v.007ZM17.25 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Zm0 4.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.walkie.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.walkie.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.trigger")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.trigger.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.autoplay")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.autoplay.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.oneConvo")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.oneConvo.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.encrypted")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.encrypted.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/walkie-talkie", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.walkie.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/walkie-talkie.png">
+                  <img
+                    src="/screenshots/walkie-talkie.png"
+                    alt={t(lang, "messenger.walkie.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blogs -->
+        <div id="feature-blogs" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.blogs.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.blogs.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.create")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.create.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.like")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.like.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.reblog")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.reblog.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.feed")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.feed.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.rss")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.rss.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.sharing")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.sharing.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/blogs", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.blogs.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/blogs.png">
+                  <img
+                    src="/screenshots/blogs.png"
+                    alt={t(lang, "messenger.blogs.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- PRIVACY & SAFETY                           -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="privacy-safety" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {t(lang, "messenger.cat.privacy")}
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
+      <div class="mt-10 space-y-14">
+        <!-- Distorted Voice -->
+        <div id="feature-distorted-voice" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.distorted.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.distorted.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.onDevice")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.onDevice.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.dynamic")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.dynamic.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.optional")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.optional.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.walkie")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.walkie.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/voice", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.distorted.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/distorted-voice.png">
+                  <img
+                    src="/screenshots/distorted-voice.png"
+                    alt={t(lang, "messenger.distorted.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panic Button -->
+        <div id="feature-panic" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.panic.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.panic.desc.before")}<strong class="font-medium text-zinc-300">{t(lang, "messenger.panic.desc.highlight")}</strong>{t(lang, "messenger.panic.desc.after")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.panic.trigger")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.trigger.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.panic.options")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.options.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.panic.contacts")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.contacts.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.panic.stealth")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.stealth.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/panic", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.panic.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/panic.png">
+                  <img
+                    src="/screenshots/panic.png"
+                    alt={t(lang, "messenger.panic.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stealth Mode -->
+        <div id="feature-stealth" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.stealth.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">{t(lang, "messenger.stealth.desc.highlight")}</strong>{t(lang, "messenger.stealth.desc.after")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.disguise")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.disguise.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.unlock")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.unlock.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.noTraces")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.noTraces.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.persistent")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.persistent.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/stealth", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.stealth.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/stealth.png">
+                  <img
+                    src="/screenshots/stealth.png"
+                    alt={t(lang, "messenger.stealth.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Private Payments -->
+        <div id="feature-payments" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M11.28774193548387 12.046451612903226h3.426838709677419
+                      C13.34258064516129 14.31941935483871 10.848322580645162 15.84 8 15.84
+                      S2.6574193548387095 14.31941935483871 1.2854193548387096 12.046451612903226
+                      H4.71225806451613V8.006322580645161L8 11.319354838709677
+                      11.28774193548387 8v4.046451612903225ZM2.9419354838709677 10.529032258064515
+                      V3.9535483870967743l5.039096774193548 5.039096774193548
+                      L13.058064516129033 3.9535483870967743V10.529032258064515
+                      h2.3646451612903228c0.2687096774193548 -0.7934838709677419
+                      0.41729032258064513 -1.6438709677419354
+                      0.41729032258064513 -2.5290322580645164
+                      C15.84 3.669032258064516 12.330967741935483 0.16 8 0.16
+                      S0.16 3.669032258064516 0.16 8
+                      c0 0.8851612903225806 0.14541935483870969 1.735548387096774
+                      0.41729032258064513 2.5290322580645164H2.9419354838709677Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.payments.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.payments.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.payments.inChat")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.inChat.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.payments.subaddress")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.subaddress.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.payments.qr")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.qr.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.payments.metadata")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.metadata.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/monero", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.payments.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/xmrrequest.png">
+                  <img
+                    src="/screenshots/xmrrequest.png"
+                    alt={t(lang, "messenger.payments.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- OFFLINE & NETWORK                          -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="offline-network" class="mt-20 scroll-mt-24">
+        <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {t(lang, "messenger.cat.offline")}
+        </h3>
+        <div class="mt-2 h-px w-12 bg-white/20"></div>
+      </div>
+
+      <div class="mt-10 space-y-14">
+        <!-- Transports -->
+        <div id="feature-transports" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7.5 12h9m-9 0a4.5 4.5 0 119 0m-9 0a4.5 4.5 0 009 0M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.transports.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.transports.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.transports.tor")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.tor.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.transports.wifi")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.wifi.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.transports.bluetooth")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.bluetooth.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.transports.storage")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.storage.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/usage/scenarios", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.transports.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/transports.png">
+                  <img
+                    src="/screenshots/transports.png"
+                    alt={t(lang, "messenger.transports.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offline Maps -->
+        <div id="feature-maps" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 20l-5-2V6l5 2 6-2 5 2v12l-5-2-6 2z"></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.maps.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                {t(lang, "messenger.maps.desc")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.maps.noCalls")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.noCalls.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.maps.tileImport")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.tileImport.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.maps.secureShare")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.secureShare.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.maps.community")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.community.desc")}</p>
+                </div>
+              </div>
+
+              <!-- Maps Exporter callout -->
+              <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div
+                  class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div class="max-w-xl">
+                    <div class="text-sm font-semibold text-zinc-200">
+                      {t(lang, "messenger.maps.exporter.title")}
+                    </div>
+                    <p class="mt-1 text-sm text-zinc-400">
+                      {t(lang, "messenger.maps.exporter.desc")}
+                    </p>
+                  </div>
+
+                  <a
+                    href={localizedPath("/maps", lang)}
+                    class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
+                  >
+                    {t(lang, "messenger.maps.exporter.button")}
+                  </a>
+                </div>
+
+                <div class="mt-4">
+                  <a
+                    href={localizedPath("/docs/maps-exporter", lang)}
+                    class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                  >
+                    {t(lang, "messenger.maps.exporter.link")}
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/maps", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.maps.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/offlinemaps.png">
+                  <img
+                    src="/screenshots/offlinemaps.png"
+                    alt={t(lang, "messenger.maps.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offline Distribution -->
+        <div id="feature-distribution" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 3v12m0 0l-3-3m3 3l3-3M5.25 21h13.5a1.5 1.5 0 001.5-1.5v-3.75a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5V19.5a1.5 1.5 0 001.5 1.5z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.distribution.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">{t(lang, "messenger.distribution.desc.highlight")}</strong>{t(lang, "messenger.distribution.desc.after")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.d2d")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.d2d.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.catalog")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.catalog.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.noInternet")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.noInternet.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.verified")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.verified.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/features/distribution", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.distribution.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/distribution.png">
+                  <img
+                    src="/screenshots/distribution.png"
+                    alt={t(lang, "messenger.distribution.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anonomi Postbox -->
+        <div id="feature-postbox" class="scroll-mt-24">
+          <div
+            class="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8"
+          >
+            <div class="max-w-2xl">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5"
+                >
+                  <svg
+                    class="h-5 w-5 text-zinc-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="text-2xl font-semibold tracking-tight">{t(lang, "messenger.postbox.title")}</h4>
+              </div>
+
+              <p class="mt-3 max-w-3xl text-base text-zinc-400">
+                <strong class="font-medium text-zinc-300">{t(lang, "messenger.postbox.desc.highlight")}</strong>{t(lang, "messenger.postbox.desc.after")}
+              </p>
+
+              <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.storeForward")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.storeForward.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.e2ee")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.e2ee.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.qr")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.qr.desc")}</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.optional")}</div>
+                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.optional.desc")}</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <a
+                  href={localizedPath("/docs/usage/settings/postbox", lang)}
+                  class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+                >
+                  {t(lang, "messenger.postbox.link")}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl h-[420px] lg:h-auto">
+              <button class="screenshot-trigger cursor-pointer absolute inset-0" data-full="/screenshots/postbox.png">
+                  <img
+                    src="/screenshots/postbox.png"
+                    alt={t(lang, "messenger.postbox.imgAlt")}
+                    loading="lazy"
+                    class="h-full w-full rounded-xl border border-white/10 object-cover object-top"
+                  />
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THREAT MODEL -->
+    <section id="threat-model" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        {t(lang, "messenger.threat.heading")}
+      </h2>
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        {t(lang, "messenger.threat.desc")}
+      </p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">{t(lang, "messenger.threat.assumptions")}</div>
+          <ul class="mt-3 space-y-2 text-sm text-zinc-400">
+            <li>{t(lang, "messenger.threat.assumptions.1")}</li>
+            <li>{t(lang, "messenger.threat.assumptions.2")}</li>
+            <li>{t(lang, "messenger.threat.assumptions.3")}</li>
+            <li>{t(lang, "messenger.threat.assumptions.4")}</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">{t(lang, "messenger.threat.goals")}</div>
+          <ul class="mt-3 space-y-2 text-sm text-zinc-400">
+            <li>{t(lang, "messenger.threat.goals.1")}</li>
+            <li>{t(lang, "messenger.threat.goals.2")}</li>
+            <li>{t(lang, "messenger.threat.goals.3")}</li>
+            <li>{t(lang, "messenger.threat.goals.4")}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8">
+        <a
+          href={localizedPath("/docs/security/threat-model", lang)}
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          {t(lang, "messenger.threat.link")}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download" class="mt-24 scroll-mt-24">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+        {t(lang, "messenger.download.heading")}
+      </h2>
+
+      <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
+        {t(lang, "messenger.download.desc")}
+      </p>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <!-- Anonomi Messenger -->
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">{t(lang, "messenger.download.messenger.label")}</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            {t(lang, "messenger.download.messenger.desc")}
+          </p>
+
+          <div class="mt-6">
+            <a
+              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases/latest"
+              data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              <span data-clearnet-text={t(lang, "messenger.download.messenger.button")}
+                >{t(lang, "messenger.download.messenger.button")}</span
+              >
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Anonomi Postbox -->
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div class="text-base font-semibold">{t(lang, "messenger.download.postbox.label")}</div>
+          <p class="mt-2 text-sm text-zinc-400">
+            {t(lang, "messenger.download.postbox.desc")}
+          </p>
+
+          <div class="mt-6">
+            <a
+              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/latest"
+              data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+            >
+              <span data-clearnet-text={t(lang, "messenger.download.postbox.button")}
+                >{t(lang, "messenger.download.postbox.button")}</span
+              >
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verification -->
+      <div class="mt-6 flex flex-col gap-2 text-sm">
+        <p class="text-zinc-500">
+          {t(lang, "messenger.download.verification")}
+        </p>
+        <div class="flex flex-wrap gap-x-6 gap-y-1">
+          <a
+            href={localizedPath("/docs/verify", lang)}
+            class="inline-flex items-center gap-2 font-medium text-zinc-300 hover:text-white"
+          >
+            {t(lang, "messenger.download.verify.link")}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a
+            href={localizedPath("/docs/features/distribution", lang) + "#app-catalog-offline-kit"}
+            class="inline-flex items-center gap-2 font-medium text-zinc-300 hover:text-white"
+          >
+            {t(lang, "messenger.download.apkSize.link")}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <p class="mt-8 max-w-3xl text-sm text-zinc-500">
+        {t(lang, "messenger.download.noPlayStore")}
+      </p>
+      <div class="mt-10 max-w-3xl">
+        <div class="text-base font-semibold">{t(lang, "messenger.download.ios.title")}</div>
+        <p class="mt-2 text-sm text-zinc-400">
+          {t(lang, "messenger.download.ios.desc")}
+        </p>
+
+        <div class="mt-3">
+          <a
+            href={localizedPath("/docs/ios", lang)}
+            class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+          >
+            {t(lang, "messenger.download.ios.link")}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+
+  <!-- Screenshot lightbox -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm"
+  >
+    <button
+      id="lightbox-close-bg"
+      class="absolute inset-0 w-full h-full cursor-default"
+      aria-label="Close lightbox"
+    ></button>
+    <button
+      id="lightbox-close-btn"
+      class="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
+      aria-label="Close"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="relative z-10 max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/10 shadow-2xl cursor-pointer"
+    />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+    let lightboxOpen = false;
+
+    function openLightbox(src: string) {
+      if (lightbox && lightboxImg) {
+        lightboxImg.src = src;
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        lightboxOpen = true;
+        history.pushState({ lightbox: true }, "");
+      }
+    }
+
+    function closeLightbox() {
+      if (lightbox && lightboxImg) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        lightboxImg.src = "";
+        if (lightboxOpen) {
+          lightboxOpen = false;
+          history.back();
+        }
+      }
+    }
+
+    function closeLightboxFromBack() {
+      if (lightbox && lightboxImg) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        lightboxImg.src = "";
+        lightboxOpen = false;
+      }
+    }
+
+    document.querySelectorAll(".screenshot-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const src = btn.getAttribute("data-full");
+        if (src) openLightbox(src);
+      });
+    });
+
+    document.getElementById("lightbox-close-bg")?.addEventListener("click", closeLightbox);
+    document.getElementById("lightbox-close-btn")?.addEventListener("click", closeLightbox);
+    lightboxImg?.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightboxOpen) closeLightbox();
+    });
+
+    window.addEventListener("popstate", () => {
+      if (lightboxOpen) closeLightboxFromBack();
+    });
+  </script>
+</Layout>

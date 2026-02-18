@@ -1,12 +1,18 @@
 ---
 import logo from "../assets/logo.png";
+import { getLangFromUrl, localizedPath, locales, localeLabels, t } from "../i18n/utils";
+import type { Locale } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
 
 const links = [
-  { label: "Messenger", href: "/messenger" },
-  { label: "Paylinks", href: "/paylinks" },
-  { label: "Maps", href: "/maps" },
-  { label: "Docs", href: "/docs/" },
+  { label: t(lang, "nav.messenger"), href: localizedPath("/messenger", lang) },
+  { label: t(lang, "nav.paylinks"), href: localizedPath("/paylinks", lang) },
+  { label: t(lang, "nav.maps"), href: localizedPath("/maps", lang) },
+  { label: t(lang, "nav.docs"), href: localizedPath("/docs/", lang) },
 ];
+
+const otherLocales = locales.filter((l) => l !== lang);
 ---
 
 <header
@@ -14,11 +20,11 @@ const links = [
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
     <!-- Brand -->
-    <a href="/" class="flex items-center">
+    <a href={localizedPath("/", lang)} class="flex items-center">
       <img src={logo.src} alt="Anonomi" class="h-8 w-auto" />
     </a>
 
-    <!-- Primary nav -->
+    <!-- Primary nav (desktop) -->
     <nav class="hidden items-center gap-6 md:flex">
       {
         links.map((l) => (
@@ -34,11 +40,41 @@ const links = [
 
     <!-- Actions -->
     <div class="flex items-center gap-3">
+      <!-- Language dropdown (desktop only) -->
+      <div class="relative hidden md:block" id="lang-dropdown-desktop">
+        <button
+          type="button"
+          class="rounded-xl px-3 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition"
+          id="lang-btn-desktop"
+          aria-expanded="false"
+        >
+          {localeLabels[lang]}
+          <svg class="ml-1 inline-block h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+        <div
+          id="lang-menu-desktop"
+          class="absolute right-0 mt-2 hidden min-w-[140px] rounded-xl border border-white/10 bg-zinc-950/95 py-1 shadow-lg backdrop-blur"
+        >
+          {
+            otherLocales.map((l) => (
+              <a
+                href={localizedPath(Astro.url.pathname, l as Locale)}
+                class="block px-4 py-2 text-sm text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+              >
+                {localeLabels[l as Locale]}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
       <a
-        href="/messenger#download"
+        href={localizedPath("/messenger#download", lang)}
         class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/10 hover:bg-white/15 transition"
       >
-        Download
+        {t(lang, "nav.download")}
       </a>
 
       <a
@@ -52,6 +88,100 @@ const links = [
       >
         Onion Repo
       </a>
+
+      <!-- Hamburger button (mobile only) -->
+      <button
+        id="menu-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-xl p-2 text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <!-- Hamburger icon -->
+        <svg id="icon-open" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <!-- Close icon (hidden by default) -->
+        <svg id="icon-close" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
   </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-white/10 bg-zinc-950/95 backdrop-blur md:hidden"
+  >
+    <nav class="mx-auto max-w-6xl space-y-1 px-6 py-4">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="block rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <div class="mt-2 border-t border-white/10 pt-3">
+        <a
+          href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi"
+          data-clearnet-href="https://github.com/anonomi-org"
+          data-clearnet-text="GitHub"
+          target="_blank"
+          rel="noreferrer noopener"
+          class="block rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+        >
+          Onion Repo
+        </a>
+      </div>
+      <div class="mt-2 border-t border-white/10 pt-3 space-y-1">
+        {
+          otherLocales.map((l) => (
+            <a
+              href={localizedPath(Astro.url.pathname, l as Locale)}
+              class="block rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+            >
+              {localeLabels[l as Locale]}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+  </div>
 </header>
+
+<script is:inline>
+  // Mobile hamburger toggle
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("icon-open");
+  const iconClose = document.getElementById("icon-close");
+
+  toggle.addEventListener("click", () => {
+    const open = menu.classList.toggle("hidden");
+    const isOpen = !open;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    iconOpen.classList.toggle("hidden", isOpen);
+    iconClose.classList.toggle("hidden", !isOpen);
+  });
+
+  // Desktop language dropdown
+  const langBtn = document.getElementById("lang-btn-desktop");
+  const langMenu = document.getElementById("lang-menu-desktop");
+
+  if (langBtn && langMenu) {
+    langBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isHidden = langMenu.classList.toggle("hidden");
+      langBtn.setAttribute("aria-expanded", String(!isHidden));
+    });
+
+    document.addEventListener("click", () => {
+      langMenu.classList.add("hidden");
+      langBtn.setAttribute("aria-expanded", "false");
+    });
+  }
+</script>
