@@ -15,5 +15,8 @@
     "search.devWarning": "搜索功能仅在正式版中可用。\n\n请尝试构建并预览网站，以便在本地进行测试。",
     "search.ctrlKey": "Ctrl",
     "search.label": "搜索",
-    "tableOfContents.onThisPage": "本页"
+    "tableOfContents.onThisPage": "本页",
+    "page.nextLink": "下一步",
+    "search.cancelLabel": "取消",
+    "page.lastUpdated": "最后更新于："
 }
