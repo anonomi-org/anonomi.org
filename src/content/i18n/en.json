@@ -1,0 +1,31 @@
+{
+  "search.label": "Search",
+  "search.ctrlKey": "Ctrl",
+  "search.cancelLabel": "Cancel",
+  "search.devWarning": "Search is only available in production builds.\nTry building and previewing the site to test it locally.",
+
+  "skipLink.label": "Skip to content",
+
+  "pageSidebar.tabLabel": "On this page",
+
+  "tableOfContents.onThisPage": "On this page",
+
+  "i18n.untranslatedContent": "This content is not yet translated.",
+
+  "page.editLink": "Edit this page",
+  "page.lastUpdated": "Last updated:",
+  "page.previousLink": "Previous",
+  "page.nextLink": "Next",
+  "page.draft": "This content is a draft and will not be published.",
+
+  "404.text": "Page not found.",
+
+  "aside.note": "Note",
+  "aside.tip": "Tip",
+  "aside.caution": "Caution",
+  "aside.danger": "Danger",
+
+  "fileTree.directory": "Directory",
+
+  "builtWithStarlight.label": "Built with Starlight"
+}
