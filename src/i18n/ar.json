@@ -589,5 +589,14 @@
     "messenger.postbox.title": "Anonomi Postbox",
     "messenger.download.messenger.button": "نزّل براير",
     "home.products.messenger.tag3": "غير متصل",
-    "maps.exporter.continue": "إستمرار"
+    "maps.exporter.continue": "إستمرار",
+    "footer.contact.pgpKey": "مفتاح PGP",
+    "messenger.download.size": "مقاس",
+    "messenger.download.version": "إصدار",
+    "messenger.download.released": "مطلق سراحه",
+    "messenger.download.checksum": "SHA256",
+    "messenger.download.downloadApk": "تنزيل ملف APK",
+    "messenger.download.previousVersions": "الإصدارات السابقة",
+    "messenger.download.allReleases": "جميع الإصدارات",
+    "messenger.download.latestVersion": "أحدث إصدار"
 }
