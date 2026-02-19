@@ -3,8 +3,12 @@ import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { fetchReleases } from "../../lib/releases";
 
 const lang = getLangFromUrl(Astro.url);
+
+const messengerReleases = await fetchReleases("anonomi-org/anonomi-android", "anonomi-official-release.apk", 4);
+const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "postbox-android-release.apk", 4);
 ---
 
 <Layout
@@ -1289,52 +1293,237 @@ const lang = getLangFromUrl(Astro.url);
       </p>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2">
-        <!-- Anonomi Messenger -->
+        {/* --- Anonomi Messenger --- */}
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">{t(lang, "messenger.download.messenger.label")}</div>
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "messenger.download.messenger.desc")}
           </p>
 
-          <div class="mt-6">
-            <a
-              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases/latest"
-              data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases/latest"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
-            >
-              <span data-clearnet-text={t(lang, "messenger.download.messenger.button")}
-                >{t(lang, "messenger.download.messenger.button")}</span
+          {messengerReleases.length > 0 ? (
+            <div class="mt-6 space-y-2">
+              <p class="text-sm font-medium">{t(lang, "messenger.download.latestVersion")}</p>
+              {/* Latest release */}
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                <span class="font-bold">{messengerReleases[0].version}</span>
+                <span class="text-zinc-500">{messengerReleases[0].date}</span>
+                {messengerReleases[0].sha256 && (
+                  <button type="button" class="copy-hash inline-flex items-center gap-1 text-fuchsia-400 hover:text-fuchsia-300" data-hash={messengerReleases[0].sha256} title={messengerReleases[0].sha256}>
+                    <code class="font-mono text-xs">sha256:{messengerReleases[0].sha256.slice(0, 12)}…</code>
+                    <svg class="h-3 w-3 copy-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z" /><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z" /></svg>
+                    <svg class="h-3 w-3 check-icon hidden" viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" /></svg>
+                  </button>
+                )}
+                <span class="text-zinc-500">{messengerReleases[0].sizeMB}</span>
+                <a
+                  href={`http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases/download/${messengerReleases[0].version}/anonomi-official-release.apk`}
+                  data-clearnet-href={messengerReleases[0].downloadUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
+                  title={t(lang, "messenger.download.downloadApk")}
+                >
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                </a>
+              </div>
+
+              {/* Previous versions */}
+              {messengerReleases.length > 1 && (
+                <div>
+                  <button
+                    type="button"
+                    class="toggle-prev-versions mt-2 flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-200"
+                    data-target="messenger-prev"
+                  >
+                    {t(lang, "messenger.download.previousVersions")}
+                    <svg class="toggle-arrow h-3 w-3 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
+                  </button>
+                  <div id="messenger-prev" class="hidden mt-3 space-y-3 border-t border-white/5 pt-3">
+                    {messengerReleases.slice(1).map((r) => (
+                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                        <span class="font-bold">{r.version}</span>
+                        <span class="text-zinc-500">{r.date}</span>
+                        {r.sha256 && (
+                          <button type="button" class="copy-hash inline-flex items-center gap-1 text-fuchsia-400 hover:text-fuchsia-300" data-hash={r.sha256} title={r.sha256}>
+                            <code class="font-mono text-xs">sha256:{r.sha256.slice(0, 12)}…</code>
+                            <svg class="h-3 w-3 copy-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z" /><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z" /></svg>
+                            <svg class="h-3 w-3 check-icon hidden" viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" /></svg>
+                          </button>
+                        )}
+                        <span class="text-zinc-500">{r.sizeMB}</span>
+                        <a
+                          href={`http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases/download/${r.version}/anonomi-official-release.apk`}
+                          data-clearnet-href={r.downloadUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
+                          title={t(lang, "messenger.download.downloadApk")}
+                        >
+                          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                        </a>
+                      </div>
+                    ))}
+                    <a
+                      href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases"
+                      data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+                    >
+                      {t(lang, "messenger.download.allReleases")}
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div class="mt-6">
+              <a
+                href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-android/releases/latest"
+                data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases/latest"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
               >
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+                <span data-clearnet-text={t(lang, "messenger.download.messenger.button")}
+                  >{t(lang, "messenger.download.messenger.button")}</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          )}
         </div>
 
-        <!-- Anonomi Postbox -->
+        {/* --- Anonomi Postbox --- */}
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div class="text-base font-semibold">{t(lang, "messenger.download.postbox.label")}</div>
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "messenger.download.postbox.desc")}
           </p>
 
-          <div class="mt-6">
-            <a
-              href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/latest"
-              data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases/latest"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
-            >
-              <span data-clearnet-text={t(lang, "messenger.download.postbox.button")}
-                >{t(lang, "messenger.download.postbox.button")}</span
+          {postboxReleases.length > 0 ? (
+            <div class="mt-6 space-y-2">
+              <p class="text-sm font-medium">{t(lang, "messenger.download.latestVersion")}</p>
+              {/* Latest release */}
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                <span class="font-bold">{postboxReleases[0].version}</span>
+                <span class="text-zinc-500">{postboxReleases[0].date}</span>
+                {postboxReleases[0].sha256 && (
+                  <button type="button" class="copy-hash inline-flex items-center gap-1 text-fuchsia-400 hover:text-fuchsia-300" data-hash={postboxReleases[0].sha256} title={postboxReleases[0].sha256}>
+                    <code class="font-mono text-xs">sha256:{postboxReleases[0].sha256.slice(0, 12)}…</code>
+                    <svg class="h-3 w-3 copy-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z" /><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z" /></svg>
+                    <svg class="h-3 w-3 check-icon hidden" viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" /></svg>
+                  </button>
+                )}
+                <span class="text-zinc-500">{postboxReleases[0].sizeMB}</span>
+                <a
+                  href={`http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/download/${postboxReleases[0].version}/postbox-android-release.apk`}
+                  data-clearnet-href={postboxReleases[0].downloadUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
+                  title={t(lang, "messenger.download.downloadApk")}
+                >
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                </a>
+              </div>
+
+              {/* Previous versions */}
+              {postboxReleases.length > 1 && (
+                <div>
+                  <button
+                    type="button"
+                    class="toggle-prev-versions mt-2 flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-200"
+                    data-target="postbox-prev"
+                  >
+                    {t(lang, "messenger.download.previousVersions")}
+                    <svg class="toggle-arrow h-3 w-3 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
+                  </button>
+                  <div id="postbox-prev" class="hidden mt-3 space-y-3 border-t border-white/5 pt-3">
+                    {postboxReleases.slice(1).map((r) => (
+                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                        <span class="font-bold">{r.version}</span>
+                        <span class="text-zinc-500">{r.date}</span>
+                        {r.sha256 && (
+                          <button type="button" class="copy-hash inline-flex items-center gap-1 text-fuchsia-400 hover:text-fuchsia-300" data-hash={r.sha256} title={r.sha256}>
+                            <code class="font-mono text-xs">sha256:{r.sha256.slice(0, 12)}…</code>
+                            <svg class="h-3 w-3 copy-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z" /><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z" /></svg>
+                            <svg class="h-3 w-3 check-icon hidden" viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" /></svg>
+                          </button>
+                        )}
+                        <span class="text-zinc-500">{r.sizeMB}</span>
+                        <a
+                          href={`http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/download/${r.version}/postbox-android-release.apk`}
+                          data-clearnet-href={r.downloadUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
+                          title={t(lang, "messenger.download.downloadApk")}
+                        >
+                          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                        </a>
+                      </div>
+                    ))}
+                    <a
+                      href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases"
+                      data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
+                    >
+                      {t(lang, "messenger.download.allReleases")}
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div class="mt-6">
+              <a
+                href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi-postbox/releases/latest"
+                data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases/latest"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
               >
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+                <span data-clearnet-text={t(lang, "messenger.download.postbox.button")}
+                  >{t(lang, "messenger.download.postbox.button")}</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
+
+      <script>
+        document.querySelectorAll('.toggle-prev-versions').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const target = document.getElementById(btn.getAttribute('data-target')!);
+            if (!target) return;
+            const isHidden = target.classList.toggle('hidden');
+            const arrow = btn.querySelector('.toggle-arrow');
+            if (arrow) (arrow as HTMLElement).style.transform = isHidden ? '' : 'rotate(180deg)';
+          });
+        });
+
+        document.querySelectorAll('.copy-hash').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const hash = btn.getAttribute('data-hash');
+            if (!hash) return;
+            navigator.clipboard.writeText(hash).then(() => {
+              const copyIcon = btn.querySelector('.copy-icon') as HTMLElement;
+              const checkIcon = btn.querySelector('.check-icon') as HTMLElement;
+              if (copyIcon) copyIcon.classList.add('hidden');
+              if (checkIcon) checkIcon.classList.remove('hidden');
+              setTimeout(() => {
+                if (copyIcon) copyIcon.classList.remove('hidden');
+                if (checkIcon) checkIcon.classList.add('hidden');
+              }, 2000);
+            });
+          });
+        });
+      </script>
 
       <!-- Verification -->
       <div class="mt-6 flex flex-col gap-2 text-sm">
