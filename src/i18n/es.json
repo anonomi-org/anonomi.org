@@ -589,5 +589,13 @@
     "paylinks.delete.back": "Atrás",
     "paylinks.d.error.heading": "Error",
     "paylinks.d.donate.info.privacy.learnMore": "Aprende más",
-    "paylinks.d.result.copied": "Copiado"
+    "paylinks.d.result.copied": "Copiado",
+    "messenger.download.version": "Versión",
+    "messenger.download.released": "Liberado",
+    "messenger.download.checksum": "SHA256",
+    "messenger.download.size": "Tamaño",
+    "messenger.download.downloadApk": "Descargar APK",
+    "messenger.download.previousVersions": "Versiones anteriores",
+    "messenger.download.allReleases": "Todos los lanzamientos",
+    "messenger.download.latestVersion": "Última versión"
 }
