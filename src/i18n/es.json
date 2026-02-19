@@ -597,5 +597,6 @@
     "messenger.download.downloadApk": "Descargar APK",
     "messenger.download.previousVersions": "Versiones anteriores",
     "messenger.download.allReleases": "Todos los lanzamientos",
-    "messenger.download.latestVersion": "Última versión"
+    "messenger.download.latestVersion": "Última versión",
+    "footer.contact.pgpKey": "Clave PGP"
 }
