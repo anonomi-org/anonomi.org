@@ -589,5 +589,14 @@
     "paylinks.delete.back": "返回",
     "paylinks.d.error.heading": "错误",
     "paylinks.d.donate.info.privacy.learnMore": "了解更多",
-    "paylinks.d.result.copied": "已复制"
+    "paylinks.d.result.copied": "已复制",
+    "footer.contact.pgpKey": "PGP密钥",
+    "messenger.download.latestVersion": "最新版本",
+    "messenger.download.version": "版本",
+    "messenger.download.released": "已发布",
+    "messenger.download.checksum": "SHA256",
+    "messenger.download.size": "尺寸",
+    "messenger.download.downloadApk": "下载 APK",
+    "messenger.download.previousVersions": "先前版本",
+    "messenger.download.allReleases": "所有版本"
 }
