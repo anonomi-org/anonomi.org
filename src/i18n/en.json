@@ -12,6 +12,7 @@
   "footer.privacy": "No trackers • No analytics • No cookies",
   "footer.bluesky": "Anonomi on Bluesky",
   "footer.github": "Anonomi on GitHub",
+  "footer.contact.pgpKey": "PGP key",
   "maps.meta.title": "Anonomi • Maps Exporter",
   "maps.meta.description": "Generate offline tile packs locally in your browser.",
   "maps.hero.tagline": "OFFLINE MAPS • LOCAL EXPORT • NO SERVER WORK",
