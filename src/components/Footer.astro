@@ -62,6 +62,19 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
         © {new Date().getFullYear()} Anonomi • {t(lang, "footer.privacy")}
       </div>
       <div class="flex items-center gap-5">
+        <!-- Contact -->
+        <div class="font-mono text-[11px]">
+          <div class="flex items-baseline gap-2">
+            <a href="mailto:anonomi.contact@proton.me" class="text-zinc-400 hover:text-white">anonomi.contact@proton.me</a>
+            <a
+              href="/publickey.anonomi.contact@proton.me-a4da2fca1381d0557d393e7cb08cc0b89781bc75.asc"
+              class="text-zinc-500 hover:text-white"
+              download
+            >{t(lang, "footer.contact.pgpKey")}</a>
+          </div>
+          <div class="text-zinc-600 break-all">A4DA 2FCA 1381 D055 7D39 3E7C B08C C0B8 9781 BC75</div>
+        </div>
+
         <!-- Bluesky -->
         <a
           href="https://bsky.app/profile/anonomi.org"
