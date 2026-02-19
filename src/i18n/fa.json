@@ -589,5 +589,13 @@
     "paylinks.create.noSpendKey.learnMore": "اطلاعات بیشتر",
     "paylinks.delete.result.heading": "حذف",
     "paylinks.d.error.heading": "خطا",
-    "paylinks.d.donate.info.privacy.learnMore": "اطلاعات بیشتر"
+    "paylinks.d.donate.info.privacy.learnMore": "اطلاعات بیشتر",
+    "messenger.download.version": "نسخه",
+    "messenger.download.released": "منتشر شد",
+    "messenger.download.checksum": "SHA256",
+    "messenger.download.size": "اندازه",
+    "messenger.download.downloadApk": "دانلود APK",
+    "messenger.download.previousVersions": "نسخه‌های قبلی",
+    "messenger.download.allReleases": "همه نسخه‌ها",
+    "messenger.download.latestVersion": "آخرین نسخه"
 }
