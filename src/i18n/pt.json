@@ -591,5 +591,13 @@
     "maps.exporter.completed": "Concluído",
     "maps.exporter.cancelled": "Cancelado.",
     "maps.exporter.exportCancelled": "Exportação cancelada",
-    "maps.exporter.exportFailed": "A exportação falhou"
+    "maps.exporter.exportFailed": "A exportação falhou",
+    "messenger.download.version": "Versão",
+    "messenger.download.released": "Lançado",
+    "messenger.download.checksum": "SHA256",
+    "messenger.download.size": "Tamanho",
+    "messenger.download.downloadApk": "Baixar APK",
+    "messenger.download.previousVersions": "Versões anteriores",
+    "messenger.download.allReleases": "Todos os lançamentos",
+    "messenger.download.latestVersion": "Última versão"
 }
