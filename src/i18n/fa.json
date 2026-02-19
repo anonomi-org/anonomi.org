@@ -597,5 +597,6 @@
     "messenger.download.downloadApk": "دانلود APK",
     "messenger.download.previousVersions": "نسخه‌های قبلی",
     "messenger.download.allReleases": "همه نسخه‌ها",
-    "messenger.download.latestVersion": "آخرین نسخه"
+    "messenger.download.latestVersion": "آخرین نسخه",
+    "footer.contact.pgpKey": "کلید PGP"
 }
