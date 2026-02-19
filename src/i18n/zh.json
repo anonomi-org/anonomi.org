@@ -597,5 +597,6 @@
     "messenger.download.downloadApk": "下载 APK",
     "messenger.download.previousVersions": "先前版本",
     "messenger.download.allReleases": "所有版本",
-    "messenger.download.latestVersion": "最新版本"
+    "messenger.download.latestVersion": "最新版本",
+    "footer.contact.pgpKey": "PGP密钥"
 }
