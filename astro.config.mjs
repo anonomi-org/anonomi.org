@@ -8,6 +8,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      "process.env.GITHUB_TOKEN": JSON.stringify(process.env.GITHUB_TOKEN || ""),
+    },
   },
 
   integrations: [
