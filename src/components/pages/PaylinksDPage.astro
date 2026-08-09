@@ -1,13 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
+import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { PAYLINKS_ENABLED } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.org";
+const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
 const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
@@ -23,6 +25,8 @@ const scriptStrings = {
   invalidText: t(lang, "paylinks.d.invalidLink.text"),
   donateHeading: t(lang, "paylinks.d.donate.heading"),
   amountLabel: t(lang, "paylinks.d.donate.amountLabel"),
+  amountHelp: t(lang, "paylinks.d.donate.amountHelp"),
+  rateLimited: t(lang, "paylinks.d.script.rateLimited"),
   whatIs: t(lang, "paylinks.d.donate.whatIs"),
   descLabel: t(lang, "paylinks.d.donate.descLabel"),
   submit: t(lang, "paylinks.d.donate.submit"),
@@ -57,12 +61,18 @@ const scriptStrings = {
 
   <main class="mx-auto max-w-xl px-6 py-16">
     <div class="relative">
+      {PAYLINKS_ENABLED ? (
       <section
         id="paylink"
         class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center">
         <h1 class="text-2xl font-semibold">{t(lang, "paylinks.d.loading.heading")}</h1>
         <p class="mt-3 text-sm text-zinc-400" id="status">{t(lang, "paylinks.d.loading.status")}</p>
       </section>
+      ) : (
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-8">
+        <PaylinksOnionNotice path="/paylinks" />
+      </div>
+      )}
 
       <!-- Footer stays OUTSIDE #paylink so it doesn't get wiped by innerHTML -->
       <div
@@ -83,6 +93,8 @@ const scriptStrings = {
     </div>
   </main>
 
+  {PAYLINKS_ENABLED && (
+  <Fragment>
   <script is:inline define:vars={{ API_BASE, scriptStrings }}>
     window.__PAYLINKS_API_BASE__ = API_BASE;
     window.__PAYLINKS_STRINGS__ = scriptStrings;
@@ -158,6 +170,7 @@ const scriptStrings = {
             inputmode="decimal"
             autocomplete="off"
           />
+          <p class="mt-2 text-xs text-zinc-500">${esc(S.amountHelp)}</p>
 
           <label class="mt-4 block text-sm text-zinc-300">${esc(S.descLabel)}</label>
           <input
@@ -276,9 +289,13 @@ const scriptStrings = {
 
           if (!res.ok) {
             const msg =
-              data?.error === "paylink_unavailable"
-                ? S.unavailable
-                : data?.error || S.requestFailed;
+              res.status === 429
+                ? S.rateLimited
+                : data?.error === "paylink_unavailable"
+                  ? S.unavailable
+                  : data?.details?.amount?.[0] ||
+                    data?.error ||
+                    S.requestFailed;
             throw new Error(msg);
           }
 
@@ -364,4 +381,6 @@ const scriptStrings = {
       `;
     });
   </script>
+  </Fragment>
+  )}
 </Layout>

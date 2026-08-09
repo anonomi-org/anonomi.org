@@ -1,13 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
+import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { PAYLINKS_ENABLED } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.org";
+const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
 const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
@@ -27,6 +29,8 @@ const scriptStrings = {
   optionalHelp: t(lang, "paylinks.create.script.optionalHelp"),
   randomHelp: t(lang, "paylinks.create.script.randomHelp"),
   minMaxError: t(lang, "paylinks.create.script.minMaxError"),
+  spanError: t(lang, "paylinks.create.script.spanError"),
+  rateLimited: t(lang, "paylinks.create.script.rateLimited"),
   copied: t(lang, "paylinks.create.script.copied"),
   copyFailed: t(lang, "paylinks.create.script.copyFailed"),
   networkError: t(lang, "paylinks.create.script.networkError"),
@@ -35,7 +39,6 @@ const scriptStrings = {
 };
 
 const privacyDocsPath = localizedPath("/docs/paylinks/privacy", lang);
-const torSeparationDocsPath = localizedPath("/docs/paylinks/tor-separation", lang);
 const paylinksPath = localizedPath("/paylinks", lang);
 ---
 
@@ -55,6 +58,14 @@ const paylinksPath = localizedPath("/paylinks", lang);
           {t(lang, "paylinks.create.heading")}
         </h1>
 
+        {!PAYLINKS_ENABLED && (
+          <div class="mt-6">
+            <PaylinksOnionNotice path="/paylinks/create" />
+          </div>
+        )}
+
+        {PAYLINKS_ENABLED && (
+        <Fragment>
         <p class="mt-3 text-zinc-300">
           {t(lang, "paylinks.create.description")}
         </p>
@@ -83,43 +94,6 @@ const paylinksPath = localizedPath("/paylinks", lang);
             </a>
           </span>
         </p>
-
-        <p id="torNotice" class="mt-3 flex items-start gap-2 text-xs text-zinc-500">
-          <span
-            aria-hidden="true"
-            class="mt-[1px] font-medium"
-            style="color:#ce27e6"
-          >
-            &#9432;
-          </span>
-          <span>
-            <span class="font-medium text-zinc-400">{t(lang, "paylinks.create.torNotice.label")}</span>
-            {" "}{t(lang, "paylinks.create.torNotice.text")}{" "}
-            <a
-              href="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/create"
-              class="underline underline-offset-2 hover:text-zinc-300"
-            >
-              {t(lang, "paylinks.create.torNotice.onionLink")}
-            </a>
-            {" "}{t(lang, "paylinks.create.torNotice.text2")}
-            <a
-              href={torSeparationDocsPath}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="ml-1 underline underline-offset-2 hover:text-zinc-300"
-            >
-              {t(lang, "paylinks.create.torNotice.why")}
-            </a>
-          </span>
-        </p>
-
-        <script is:inline>
-          // Hide Tor notice if already on .onion
-          if (window.location.hostname.endsWith('.onion')) {
-            const notice = document.getElementById('torNotice');
-            if (notice) notice.style.display = 'none';
-          }
-        </script>
 
         <form id="form" class="mt-8 space-y-6">
           <div class="space-y-4">
@@ -346,6 +320,9 @@ const paylinksPath = localizedPath("/paylinks", lang);
             </p>
           </div>
         </div>
+        </Fragment>
+        )}
+
         <!-- Back button -->
         <div class="pt-2 flex items-center gap-3">
           <a
@@ -355,6 +332,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
             {t(lang, "paylinks.create.back")}
           </a>
 
+          {PAYLINKS_ENABLED && (
           <button
             id="resetBtn"
             type="button"
@@ -362,6 +340,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
           >
             {t(lang, "paylinks.create.createNew")}
           </button>
+          )}
         </div>
       </section>
 
@@ -379,6 +358,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
     </div>
   </main>
 
+  {PAYLINKS_ENABLED && (
   <script define:vars={{ API_BASE, SITE_BASE, scriptStrings }}>
     const form = document.getElementById("form");
     const statusEl = document.getElementById("status");
@@ -480,13 +460,22 @@ const paylinksPath = localizedPath("/paylinks", lang);
       }
     }
 
+    // Subaddresses are precomputed at creation, so the API caps how many a
+    // single paylink may span. It is the width of the range that is limited,
+    // not how large the indices are: 999000-999999 is fine, 1-5000 is not.
+    // That cannot be expressed as a max attribute on the inputs, so it is
+    // checked here as well as server-side.
+    const MAX_INDEX_SPAN = 1000;
+
     function validateIndexRange(minIndex, maxIndex) {
-      if (
-        minIndex !== undefined &&
-        maxIndex !== undefined &&
-        minIndex > maxIndex
-      ) {
+      if (minIndex === undefined || maxIndex === undefined) {
+        return null;
+      }
+      if (minIndex > maxIndex) {
         return scriptStrings.minMaxError;
+      }
+      if (maxIndex - minIndex + 1 > MAX_INDEX_SPAN) {
+        return scriptStrings.spanError;
       }
       return null;
     }
@@ -635,7 +624,21 @@ const paylinksPath = localizedPath("/paylinks", lang);
         if (copyStatusEl) copyStatusEl.textContent = "";
 
         if (!res.ok) {
+          // Rate limiting is reported as a plain Fastify error body with no
+          // details, so it is handled before the field-level messages.
+          if (res.status === 429) {
+            setStatus(scriptStrings.rateLimited);
+            console.error("create paylink failed:", data);
+            return;
+          }
+
+          // Top-level field errors come back beside `options`, not inside it.
+          // publicAddress is the most common failure: the API verifies that
+          // the private view key actually belongs to the submitted address,
+          // and rejects the pair when it does not.
           const detailMsg =
+            data?.details?.publicAddress?.[0] ||
+            data?.details?.privateViewKey?.[0] ||
             data?.details?.options?.genMode?.[0] ||
             data?.details?.options?.minIndex?.[0] ||
             data?.details?.options?.maxIndex?.[0] ||
@@ -738,4 +741,5 @@ const paylinksPath = localizedPath("/paylinks", lang);
     // initial help text
     syncIndexHelp();
   </script>
+  )}
 </Layout>
