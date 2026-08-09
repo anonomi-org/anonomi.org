@@ -1,7 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
+import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { PAYLINKS_ENABLED } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -44,6 +46,14 @@ const createPath = localizedPath("/paylinks/create", lang);
           {t(lang, "paylinks.delete.heading")}
         </h1>
 
+        {!PAYLINKS_ENABLED && (
+          <div class="mt-6">
+            <PaylinksOnionNotice path="/paylinks/delete" />
+          </div>
+        )}
+
+        {PAYLINKS_ENABLED && (
+        <Fragment>
         <p class="mt-3 text-zinc-300">
           {t(lang, "paylinks.delete.description.before")}
           {" "}<span class="font-medium text-zinc-200">{t(lang, "paylinks.delete.description.highlight")}</span>{" "}
@@ -161,6 +171,8 @@ const createPath = localizedPath("/paylinks/create", lang);
             <div id="resultText" class="mt-2 text-xs text-zinc-400"></div>
           </div>
         </div>
+        </Fragment>
+        )}
 
         <div class="mt-8 pt-2 flex items-center gap-3">
           <a
@@ -193,6 +205,7 @@ const createPath = localizedPath("/paylinks/create", lang);
     </div>
   </main>
 
+  {PAYLINKS_ENABLED && (
   <script define:vars={{ API_BASE, scriptStrings }}>
     const form = document.getElementById("form");
     const statusEl = document.getElementById("status");
@@ -338,4 +351,5 @@ const createPath = localizedPath("/paylinks/create", lang);
 
     showBulkConfirmIfNeeded();
   </script>
+  )}
 </Layout>
