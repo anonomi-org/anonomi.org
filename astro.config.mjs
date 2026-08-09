@@ -120,7 +120,7 @@ export default defineConfig({
             { label: "What is Paylinks?", slug: "paylinks/what-is", translations: { pt: "O que é o Paylinks?" } },
             { label: "Privacy", slug: "paylinks/privacy", translations: { pt: "Privacidade" } },
             { label: "Infrastructure & Data Security", slug: "paylinks/infrastructure", translations: { pt: "Infraestrutura e segurança de dados" } },
-            { label: "Clearnet and Tor separation", slug: "paylinks/tor-separation", translations: { pt: "Separação entre Clearnet e Tor" } },
+            { label: "Why Paylinks runs only on Tor", slug: "paylinks/tor-separation", translations: { pt: "Por que o Paylinks só funciona no Tor" } },
           ],
         },
         {
