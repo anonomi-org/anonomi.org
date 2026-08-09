@@ -603,16 +603,14 @@ const lang = getLangFromUrl(Astro.url);
                 <!--
                   Tor button (hidden on clearnet).
 
-                  TODO: restore the direct donation link once a replacement
-                  paylink exists. The previous id (bf268351-…) lived in the
-                  database that was destroyed with the old onion stack, so it
-                  resolves to nothing on the rebuilt API. Point this at
-                  /paylinks/d#<new-id> once that paylink has been created on
-                  the onion site.
+                  The paylink id is carried in the URL fragment so it is never
+                  sent to a server or written to a log. The trailing slash on
+                  /d/ is deliberate: without it nginx answers with a redirect,
+                  costing an extra Tor round trip before the page loads.
                 -->
                 <a
                   id="donate-xmr-tor"
-                  href="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/paylinks"
+                  href="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/paylinks/d/#62df277a-21d7-4447-a007-6b5856d6d3ea"
                   target="_blank"
                   rel="nofollow noopener"
                   style="display:none"
