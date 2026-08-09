@@ -29,6 +29,8 @@ const scriptStrings = {
   optionalHelp: t(lang, "paylinks.create.script.optionalHelp"),
   randomHelp: t(lang, "paylinks.create.script.randomHelp"),
   minMaxError: t(lang, "paylinks.create.script.minMaxError"),
+  spanError: t(lang, "paylinks.create.script.spanError"),
+  rateLimited: t(lang, "paylinks.create.script.rateLimited"),
   copied: t(lang, "paylinks.create.script.copied"),
   copyFailed: t(lang, "paylinks.create.script.copyFailed"),
   networkError: t(lang, "paylinks.create.script.networkError"),
@@ -37,7 +39,6 @@ const scriptStrings = {
 };
 
 const privacyDocsPath = localizedPath("/docs/paylinks/privacy", lang);
-const torSeparationDocsPath = localizedPath("/docs/paylinks/tor-separation", lang);
 const paylinksPath = localizedPath("/paylinks", lang);
 ---
 
@@ -459,13 +460,22 @@ const paylinksPath = localizedPath("/paylinks", lang);
       }
     }
 
+    // Subaddresses are precomputed at creation, so the API caps how many a
+    // single paylink may span. It is the width of the range that is limited,
+    // not how large the indices are: 999000-999999 is fine, 1-5000 is not.
+    // That cannot be expressed as a max attribute on the inputs, so it is
+    // checked here as well as server-side.
+    const MAX_INDEX_SPAN = 1000;
+
     function validateIndexRange(minIndex, maxIndex) {
-      if (
-        minIndex !== undefined &&
-        maxIndex !== undefined &&
-        minIndex > maxIndex
-      ) {
+      if (minIndex === undefined || maxIndex === undefined) {
+        return null;
+      }
+      if (minIndex > maxIndex) {
         return scriptStrings.minMaxError;
+      }
+      if (maxIndex - minIndex + 1 > MAX_INDEX_SPAN) {
+        return scriptStrings.spanError;
       }
       return null;
     }
@@ -614,7 +624,21 @@ const paylinksPath = localizedPath("/paylinks", lang);
         if (copyStatusEl) copyStatusEl.textContent = "";
 
         if (!res.ok) {
+          // Rate limiting is reported as a plain Fastify error body with no
+          // details, so it is handled before the field-level messages.
+          if (res.status === 429) {
+            setStatus(scriptStrings.rateLimited);
+            console.error("create paylink failed:", data);
+            return;
+          }
+
+          // Top-level field errors come back beside `options`, not inside it.
+          // publicAddress is the most common failure: the API verifies that
+          // the private view key actually belongs to the submitted address,
+          // and rejects the pair when it does not.
           const detailMsg =
+            data?.details?.publicAddress?.[0] ||
+            data?.details?.privateViewKey?.[0] ||
             data?.details?.options?.genMode?.[0] ||
             data?.details?.options?.minIndex?.[0] ||
             data?.details?.options?.maxIndex?.[0] ||
