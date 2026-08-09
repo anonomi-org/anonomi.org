@@ -48,13 +48,11 @@ The payment details exist only in the donor's browser during the session.
 
 ### Network considerations
 
-Donors should be aware:
-- **Clearnet**: Requests go through standard HTTPS. Your ISP can see you visited anonomi.org (but not the content).
-- **Tor**: Use the onion service for stronger anonymity. Exit nodes don't apply since it's a hidden service.
+Donating happens over Tor only, so donation requests never traverse an exit node — the onion service is reached end-to-end inside the network. Your ISP can see that you are using Tor, but not that you visited Anonomi or that you donated.
 
-For maximum privacy, donors should:
+Donors should:
 - Use Tor Browser
-- Access the onion version of Paylinks
+- Verify the onion address against one published in this documentation
 - Use a privacy-respecting Monero wallet
 
 ---
@@ -115,9 +113,11 @@ If a publisher exposes their own identity through other means (blog content, soc
 
 ### API endpoints
 
-The Paylinks API is available at:
-- **Clearnet**: `https://paylinksd.anonomi.org`
-- **Onion**: `http://[onion-address].onion`
+The Paylinks API is reachable only as an onion service:
+
+- **Onion**: `http://b7o4bzmc5ylx3ynbg4pvxs4vwifviuzkonle66uzdrv5ff7vj5pln7yd.onion`
+
+It accepts requests only from the onion website's origin. There is no clearnet endpoint — the previous one has been decommissioned. See [Why Paylinks runs only on Tor](/docs/paylinks/tor-separation).
 
 ### Data retention
 
