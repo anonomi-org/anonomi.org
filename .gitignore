@@ -2,3 +2,5 @@ node_modules
 # Astro build output
 .astro/
 dist/
+# macOS
+.DS_Store
