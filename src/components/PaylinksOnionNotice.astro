@@ -1,0 +1,80 @@
+---
+import { getLangFromUrl, localizedPath, t } from "../i18n/utils";
+import { PAYLINKS_ONION_BASE } from "../lib/paylinks";
+
+interface Props {
+  /** Path under the onion site to point at, e.g. "/paylinks/create". */
+  path?: string;
+}
+
+const { path = "/paylinks" } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const onionUrl = `${PAYLINKS_ONION_BASE}${path}`;
+const torDocsPath = localizedPath("/docs/tor", lang);
+const torSeparationDocsPath = localizedPath("/docs/paylinks/tor-separation", lang);
+---
+
+<!--
+  Content only, no card chrome — callers wrap this in whatever container
+  suits the page, so it never renders as a card nested inside a card.
+-->
+<section aria-labelledby="paylinks-onion-only-heading">
+  <div class="flex items-start gap-3">
+    <span aria-hidden="true" class="mt-[2px] text-lg leading-none" style="color:#ce27e6">
+      &#9432;
+    </span>
+
+    <div class="min-w-0">
+      <h2
+        id="paylinks-onion-only-heading"
+        class="text-xl font-semibold tracking-tight sm:text-2xl"
+      >
+        {t(lang, "paylinks.onionOnly.heading")}
+      </h2>
+
+      <p class="mt-3 text-sm text-zinc-300">
+        {t(lang, "paylinks.onionOnly.description")}
+      </p>
+
+      <p class="mt-3 text-sm text-zinc-400">
+        {t(lang, "paylinks.onionOnly.reason")}
+      </p>
+
+      <div class="mt-6">
+        <div class="text-xs font-semibold tracking-widest text-zinc-400">
+          {t(lang, "paylinks.onionOnly.addressLabel")}
+        </div>
+        <div
+          class="mt-2 rounded-xl border border-white/10 bg-black/30 px-3 py-2 font-mono text-[12px] break-all text-zinc-200"
+        >
+          {onionUrl}
+        </div>
+        <p class="mt-2 text-xs text-zinc-500">
+          {t(lang, "paylinks.onionOnly.torRequired")}
+        </p>
+      </div>
+
+      <p class="mt-6 text-xs text-zinc-500">
+        {t(lang, "paylinks.onionOnly.oldLinks")}
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-6">
+        <a
+          href={torSeparationDocsPath}
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          {t(lang, "paylinks.onionOnly.whyLink")}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a
+          href={torDocsPath}
+          class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
+        >
+          {t(lang, "paylinks.onionOnly.torLink")}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

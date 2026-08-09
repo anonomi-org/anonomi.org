@@ -35,7 +35,11 @@ jobs:
         env:
           PUBLIC_BUILD_SHA: ${{ github.sha }}
           PUBLIC_SITE_BASE_URL: https://anonomi.org
-          PUBLIC_PAYLINKS_API_BASE: https://paylinksd.anonomi.org
+          # No PUBLIC_PAYLINKS_API_BASE: Paylinks is an onion-only service and
+          # the clearnet build must not bake in an API hostname. The previous
+          # value (paylinksd.anonomi.org) points at a decommissioned host, so
+          # baking it in would have the public site calling a name the project
+          # no longer controls. See src/lib/paylinks.ts.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact

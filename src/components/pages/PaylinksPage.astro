@@ -2,7 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
+import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { PAYLINKS_ENABLED } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 ---
@@ -32,12 +34,14 @@ const lang = getLangFromUrl(Astro.url);
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
+          {PAYLINKS_ENABLED && (
           <a
             href={localizedPath("/paylinks/create", lang)}
             class="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
           >
             {t(lang, "paylinks.hero.create")}
           </a>
+          )}
           <a
             href="#how-it-works"
             class="rounded-xl px-4 py-2 text-sm font-medium text-zinc-100 ring-1 ring-white/15 hover:bg-white/5"
@@ -57,6 +61,12 @@ const lang = getLangFromUrl(Astro.url);
         </p>
       </div>
     </section>
+
+    {!PAYLINKS_ENABLED && (
+      <div class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+        <PaylinksOnionNotice path="/paylinks" />
+      </div>
+    )}
 
     <!-- WHO IS IT FOR -->
     <section id="who" class="mt-24 scroll-mt-24">
@@ -143,6 +153,7 @@ const lang = getLangFromUrl(Astro.url);
           </div>
         </div>
 
+        {PAYLINKS_ENABLED && (
         <div class="mt-6">
           <a
             href={localizedPath("/paylinks/create", lang)}
@@ -151,6 +162,7 @@ const lang = getLangFromUrl(Astro.url);
             {t(lang, "paylinks.how.publishers.cta")}
           </a>
         </div>
+        )}
       </div>
 
       <!-- Donors -->
@@ -367,6 +379,7 @@ const lang = getLangFromUrl(Astro.url);
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "paylinks.getStarted.create.desc")}
           </p>
+          {PAYLINKS_ENABLED && (
           <div class="mt-4">
             <a
               href={localizedPath("/paylinks/create", lang)}
@@ -375,6 +388,7 @@ const lang = getLangFromUrl(Astro.url);
               {t(lang, "paylinks.getStarted.create.button")}
             </a>
           </div>
+          )}
         </div>
 
         <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
@@ -382,6 +396,7 @@ const lang = getLangFromUrl(Astro.url);
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "paylinks.getStarted.delete.desc")}
           </p>
+          {PAYLINKS_ENABLED && (
           <div class="mt-4">
             <a
               href={localizedPath("/paylinks/delete", lang)}
@@ -390,6 +405,7 @@ const lang = getLangFromUrl(Astro.url);
               {t(lang, "paylinks.getStarted.delete.button")}
             </a>
           </div>
+          )}
         </div>
       </div>
 

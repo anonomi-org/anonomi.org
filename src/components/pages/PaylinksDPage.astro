@@ -1,7 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
+import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { PAYLINKS_ENABLED } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -57,12 +59,18 @@ const scriptStrings = {
 
   <main class="mx-auto max-w-xl px-6 py-16">
     <div class="relative">
+      {PAYLINKS_ENABLED ? (
       <section
         id="paylink"
         class="rounded-3xl border border-white/10 bg-white/5 p-8 text-center">
         <h1 class="text-2xl font-semibold">{t(lang, "paylinks.d.loading.heading")}</h1>
         <p class="mt-3 text-sm text-zinc-400" id="status">{t(lang, "paylinks.d.loading.status")}</p>
       </section>
+      ) : (
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-8">
+        <PaylinksOnionNotice path="/paylinks" />
+      </div>
+      )}
 
       <!-- Footer stays OUTSIDE #paylink so it doesn't get wiped by innerHTML -->
       <div
@@ -83,6 +91,8 @@ const scriptStrings = {
     </div>
   </main>
 
+  {PAYLINKS_ENABLED && (
+  <Fragment>
   <script is:inline define:vars={{ API_BASE, scriptStrings }}>
     window.__PAYLINKS_API_BASE__ = API_BASE;
     window.__PAYLINKS_STRINGS__ = scriptStrings;
@@ -364,4 +374,6 @@ const scriptStrings = {
       `;
     });
   </script>
+  </Fragment>
+  )}
 </Layout>
