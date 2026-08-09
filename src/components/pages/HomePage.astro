@@ -340,7 +340,7 @@ const lang = getLangFromUrl(Astro.url);
       <div class="mt-8 space-y-3">
         <!-- Onion repo (always onion) -->
         <a
-          href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi"
+          href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
           target="_blank"
           rel="noreferrer"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
@@ -581,11 +581,16 @@ const lang = getLangFromUrl(Astro.url);
               </p>
 
               <div class="mt-4">
-                <!-- Clearnet button (hidden on .onion) -->
+                <!--
+                  Clearnet button (hidden on .onion).
+
+                  Paylinks is onion-only, so this can no longer be a donation
+                  link. It points at the Paylinks page, which on the clearnet
+                  build explains the move and shows the onion address.
+                -->
                 <a
                   id="donate-xmr-clearnet"
-                  href="https://anonomi.org/paylinks/d#5ece7ffb-fcea-4a8f-9de9-73d1ec8a5ce7"
-                  target="_blank"
+                  href={localizedPath("/paylinks", lang)}
                   rel="nofollow noopener"
                   class="inline-flex items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
                 >
@@ -595,10 +600,19 @@ const lang = getLangFromUrl(Astro.url);
                   {t(lang, "home.support.donate.xmr.button")}
                 </a>
 
-                <!-- Tor button (hidden on clearnet) -->
+                <!--
+                  Tor button (hidden on clearnet).
+
+                  TODO: restore the direct donation link once a replacement
+                  paylink exists. The previous id (bf268351-…) lived in the
+                  database that was destroyed with the old onion stack, so it
+                  resolves to nothing on the rebuilt API. Point this at
+                  /paylinks/d#<new-id> once that paylink has been created on
+                  the onion site.
+                -->
                 <a
                   id="donate-xmr-tor"
-                  href="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/d#bf268351-beb4-4399-9a1e-151abd210bf0"
+                  href="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/paylinks"
                   target="_blank"
                   rel="nofollow noopener"
                   style="display:none"
@@ -755,7 +769,7 @@ const lang = getLangFromUrl(Astro.url);
 
       <div class="mt-8 flex flex-wrap items-center gap-6">
         <a
-          href="http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi"
+          href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
           data-clearnet-href="https://github.com/anonomi-org"
           target="_blank"
           rel="noreferrer"

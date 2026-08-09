@@ -13,7 +13,7 @@ The official website for [Anonomi](https://anonomi.org) — a privacy suite for 
 | Network | URL |
 |---------|-----|
 | Clearnet | https://anonomi.org |
-| Onion | http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion |
+| Onion | http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion |
 
 ## Tech Stack
 
