@@ -580,6 +580,56 @@ const paylinksPath = localizedPath("/paylinks", lang);
       embedPreviewEl.innerHTML = aHtml;
     }
 
+    // The API reports validation failures in three different shapes, depending
+    // on which layer rejected the request. All three were confirmed against the
+    // live service:
+    //
+    //   base schema (type/length/enum)  details.fieldErrors.<field>[]
+    //                                   details.formErrors[]
+    //   semantic (address vs view key)  details.<field>[]
+    //   options refinement (span cap)   details.options.<subfield>[]
+    //
+    // Reading only one of them is how a real message gets swallowed and
+    // surfaces as the bare "invalid_request". This walks whatever arrived.
+    const DETAIL_FIELDS = [
+      "publicAddress",
+      "privateViewKey",
+      "options",
+      "label",
+      "amount",
+    ];
+
+    function firstString(value) {
+      if (typeof value === "string") return value.trim() || null;
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = firstString(item);
+          if (found) return found;
+        }
+        return null;
+      }
+      if (value && typeof value === "object") {
+        for (const key of Object.keys(value)) {
+          const found = firstString(value[key]);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+
+    function firstDetailMessage(details) {
+      if (!details || typeof details !== "object") return null;
+      for (const bucket of [details.fieldErrors, details]) {
+        if (!bucket || typeof bucket !== "object") continue;
+        for (const field of DETAIL_FIELDS) {
+          const found = firstString(bucket[field]);
+          if (found) return found;
+        }
+      }
+      // Form-level errors, and anything the API adds that is not listed above.
+      return firstString(details.formErrors) || firstString(details.fieldErrors);
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (paylinkCreated) return;
@@ -632,17 +682,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
             return;
           }
 
-          // Top-level field errors come back beside `options`, not inside it.
-          // publicAddress is the most common failure: the API verifies that
-          // the private view key actually belongs to the submitted address,
-          // and rejects the pair when it does not.
-          const detailMsg =
-            data?.details?.publicAddress?.[0] ||
-            data?.details?.privateViewKey?.[0] ||
-            data?.details?.options?.genMode?.[0] ||
-            data?.details?.options?.minIndex?.[0] ||
-            data?.details?.options?.maxIndex?.[0] ||
-            null;
+          const detailMsg = firstDetailMessage(data?.details);
 
           setStatus(
             detailMsg
