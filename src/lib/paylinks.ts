@@ -34,9 +34,39 @@ function hostnameOf(url: string): string {
 
 const host = hostnameOf(SITE_BASE);
 
+/** The onion deploy: the only build that ships working Paylinks forms. */
+const IS_ONION_BUILD = host.endsWith(".onion");
+
+/** A developer's machine, running `astro dev` or a local production build. */
+const IS_LOCAL_BUILD = host === "localhost" || host === "127.0.0.1";
+
 /**
  * True only for builds whose origin can actually reach the Paylinks API:
  * the onion site, or a local development server.
  */
-export const PAYLINKS_ENABLED =
-  host.endsWith(".onion") || host === "localhost" || host === "127.0.0.1";
+export const PAYLINKS_ENABLED = IS_ONION_BUILD || IS_LOCAL_BUILD;
+
+/**
+ * Base URL of the Paylinks API for this build.
+ *
+ * Pages must use this rather than their own `?? "http://localhost:8787"`. That
+ * default is how a deploy ends up pointing donors at their own machine — the
+ * page renders fine, the fetch just goes somewhere we don't control.
+ */
+export function paylinksApiBase(): string {
+  const base = import.meta.env.PUBLIC_PAYLINKS_API_BASE;
+  if (base) return base;
+
+  // Clearnet has no API base on purpose (see above, and deploy.yml). It shows
+  // the onion notice instead of the forms, so there is nothing to point at.
+  if (!IS_ONION_BUILD) {
+    if (IS_LOCAL_BUILD) return "http://localhost:8787";
+    return "";
+  }
+
+  // Frontmatter runs at build time, so this fails `astro build` rather than
+  // shipping a donate page aimed at each visitor's localhost.
+  throw new Error(
+    "PUBLIC_PAYLINKS_API_BASE must be set for the onion build; deploy-onion.sh exports it.",
+  );
+}

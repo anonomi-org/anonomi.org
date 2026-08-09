@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
-import { PAYLINKS_ENABLED } from "../../lib/paylinks";
+import { PAYLINKS_ENABLED, paylinksApiBase } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -14,8 +14,7 @@ const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 
-const API_BASE =
-  import.meta.env.PUBLIC_PAYLINKS_API_BASE ?? "http://localhost:8787";
+const API_BASE = paylinksApiBase();
 
 const docsWhatIsPath = localizedPath("/docs/paylinks/what-is", lang);
 const docsPrivacyPath = localizedPath("/docs/paylinks/privacy", lang);
@@ -103,7 +102,11 @@ const scriptStrings = {
   <script>
     import QRCode from "qrcode";
 
-    const API_BASE = window.__PAYLINKS_API_BASE__ || "http://localhost:8787";
+    // No localhost default here. Astro bundles this script into a public asset
+    // even when the page doesn't render it, and if it ever ran it would aim a
+    // donor's browser at their own port 8787. The inline script above always
+    // sets this; an empty base just fails visibly instead.
+    const API_BASE = window.__PAYLINKS_API_BASE__ || "";
     const S = window.__PAYLINKS_STRINGS__ || {};
 
     // Kept byte-identical to the copy in PaylinksCreatePage.astro. It cannot be

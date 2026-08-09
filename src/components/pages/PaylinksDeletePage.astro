@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
-import { PAYLINKS_ENABLED } from "../../lib/paylinks";
+import { PAYLINKS_ENABLED, paylinksApiBase } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -14,8 +14,7 @@ const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 
-const API_BASE =
-  import.meta.env.PUBLIC_PAYLINKS_API_BASE ?? "http://localhost:8787";
+const API_BASE = paylinksApiBase();
 
 const scriptStrings = {
   submit: t(lang, "paylinks.delete.submit"),
