@@ -106,6 +106,56 @@ const scriptStrings = {
     const API_BASE = window.__PAYLINKS_API_BASE__ || "http://localhost:8787";
     const S = window.__PAYLINKS_STRINGS__ || {};
 
+    // Kept byte-identical to the copy in PaylinksCreatePage.astro. It cannot be
+    // shared from src/lib: that page's script uses define:vars, which makes it
+    // a non-module inline script that cannot import.
+    //
+    // The API reports validation failures in three different shapes, depending
+    // on which layer rejected the request. All three were confirmed against the
+    // live service:
+    //
+    //   base schema (type/length/enum)  details.fieldErrors.<field>[]
+    //                                   details.formErrors[]
+    //   semantic (address vs view key)  details.<field>[]
+    //   options refinement (span cap)   details.options.<subfield>[]
+    const DETAIL_FIELDS = [
+      "publicAddress",
+      "privateViewKey",
+      "options",
+      "label",
+      "amount",
+    ];
+
+    function firstString(value) {
+      if (typeof value === "string") return value.trim() || null;
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          const found = firstString(item);
+          if (found) return found;
+        }
+        return null;
+      }
+      if (value && typeof value === "object") {
+        for (const key of Object.keys(value)) {
+          const found = firstString(value[key]);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+
+    function firstDetailMessage(details) {
+      if (!details || typeof details !== "object") return null;
+      for (const bucket of [details.fieldErrors, details]) {
+        if (!bucket || typeof bucket !== "object") continue;
+        for (const field of DETAIL_FIELDS) {
+          const found = firstString(bucket[field]);
+          if (found) return found;
+        }
+      }
+      return firstString(details.formErrors) || firstString(details.fieldErrors);
+    }
+
     const container = document.getElementById("paylink");
 
     // Read UUID from URL fragment (#...)
@@ -293,7 +343,7 @@ const scriptStrings = {
                 ? S.rateLimited
                 : data?.error === "paylink_unavailable"
                   ? S.unavailable
-                  : data?.details?.amount?.[0] ||
+                  : firstDetailMessage(data?.details) ||
                     data?.error ||
                     S.requestFailed;
             throw new Error(msg);
