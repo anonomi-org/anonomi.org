@@ -5,7 +5,7 @@ const lang = getLangFromUrl(Astro.url);
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.org";
+const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
 const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
@@ -19,7 +19,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
           {t(lang, "footer.onion.website")}
         </div>
         <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-          http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/
+          http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/
         </div>
       </div>
 
@@ -28,7 +28,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
           {t(lang, "footer.onion.repo")}
         </div>
         <div class="mt-1 font-mono text-[11px] text-zinc-400 break-all">
-          http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi
+          http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi
           ({t(lang, "footer.mirror")})
         </div>
       </div>

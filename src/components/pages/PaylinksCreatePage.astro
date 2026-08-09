@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 
 const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
 const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://yexg75vnfxe2q6yygn7csmqdx5mtwmvhrqpboopisvjqz7haras3skid.onion/anonomi/anonomi.org";
+const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
 const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
 const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
 const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
@@ -96,7 +96,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
             <span class="font-medium text-zinc-400">{t(lang, "paylinks.create.torNotice.label")}</span>
             {" "}{t(lang, "paylinks.create.torNotice.text")}{" "}
             <a
-              href="http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/paylinks/create"
+              href="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/paylinks/create"
               class="underline underline-offset-2 hover:text-zinc-300"
             >
               {t(lang, "paylinks.create.torNotice.onionLink")}
