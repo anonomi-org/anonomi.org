@@ -20,7 +20,8 @@
 # What this script does NOT do:
 # - It does not run in CI
 # - It does not publish to GitHub Pages
-# - It does not make network calls beyond dependency installation
+# - It makes no network calls beyond `npm ci` and the GitHub releases API
+#   the downloads page is built from (two requests, see step 3)
 #
 # Threat model notes:
 # - The onion website is built from the same source code as the clearnet site
@@ -55,6 +56,19 @@ export PUBLIC_BUILD_SHA="$(git rev-parse HEAD)"
 # Onion-specific URLs for Paylinks
 export PUBLIC_SITE_BASE_URL="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion"
 export PUBLIC_PAYLINKS_API_BASE="http://b7o4bzmc5ylx3ynbg4pvxs4vwifviuzkonle66uzdrv5ff7vj5pln7yd.onion"
+
+# The downloads page is built from the GitHub releases API and the build fails
+# outright if it cannot be read. Anonymous callers get 60 requests an hour per
+# IP; a token raises that to 5000. No token is stored on this box — pass one in
+# over stdin from a machine that has the password store:
+#
+#   nc-pass get infra/github/anonomi-dl-poller --field password \
+#     | ssh anon-web 'read -r T; cd /opt/anonomi.org && GITHUB_TOKEN="$T" ./deploy-onion.sh'
+#
+if [ -z "${GITHUB_TOKEN:-}" ]; then
+  echo "  ! GITHUB_TOKEN unset — building against the 60/hour anonymous limit." >&2
+fi
+
 npm run build
 
 echo "[4/5] Deploying to nginx root..."
