@@ -25,6 +25,8 @@ const scriptStrings = {
   invalidText: t(lang, "paylinks.d.invalidLink.text"),
   donateHeading: t(lang, "paylinks.d.donate.heading"),
   amountLabel: t(lang, "paylinks.d.donate.amountLabel"),
+  amountHelp: t(lang, "paylinks.d.donate.amountHelp"),
+  rateLimited: t(lang, "paylinks.d.script.rateLimited"),
   whatIs: t(lang, "paylinks.d.donate.whatIs"),
   descLabel: t(lang, "paylinks.d.donate.descLabel"),
   submit: t(lang, "paylinks.d.donate.submit"),
@@ -168,6 +170,7 @@ const scriptStrings = {
             inputmode="decimal"
             autocomplete="off"
           />
+          <p class="mt-2 text-xs text-zinc-500">${esc(S.amountHelp)}</p>
 
           <label class="mt-4 block text-sm text-zinc-300">${esc(S.descLabel)}</label>
           <input
@@ -286,9 +289,13 @@ const scriptStrings = {
 
           if (!res.ok) {
             const msg =
-              data?.error === "paylink_unavailable"
-                ? S.unavailable
-                : data?.error || S.requestFailed;
+              res.status === 429
+                ? S.rateLimited
+                : data?.error === "paylink_unavailable"
+                  ? S.unavailable
+                  : data?.details?.amount?.[0] ||
+                    data?.error ||
+                    S.requestFailed;
             throw new Error(msg);
           }
 
