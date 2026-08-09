@@ -19,11 +19,13 @@ type GitHubRelease = {
   assets: GitHubAsset[];
 };
 
-export async function fetchReleases(
-  repo: string,
-  assetName: string,
-  count: number,
-): Promise<ReleaseInfo[]> {
+// Every locale renders the same downloads page, so this module gets called once
+// per locale per repo for only two distinct URLs. A static build is a single
+// Node process, so caching the in-flight promise here collapses 12 requests into
+// 2 and keeps the rate limit far out of reach.
+const releaseLists = new Map<string, Promise<GitHubRelease[]>>();
+
+function githubHeaders(): Record<string, string> {
   const headers: Record<string, string> = {
     Accept: "application/vnd.github+json",
     "User-Agent": "anonomi-website-build",
@@ -41,24 +43,42 @@ export async function fetchReleases(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const url = `https://api.github.com/repos/${repo}/releases?per_page=${count}`;
+  return headers;
+}
+
+function fetchReleaseList(url: string): Promise<GitHubRelease[]> {
+  const cached = releaseLists.get(url);
+  if (cached) return cached;
 
   // Failures here fail the build on purpose. Returning [] instead publishes a
   // downloads page with no downloads and no error, which is worse than not
   // publishing for an app shipped as an APK plus a checksum.
-  const res = await fetch(url, { headers });
+  const pending = (async () => {
+    const res = await fetch(url, { headers: githubHeaders() });
 
-  if (!res.ok) {
-    throw new Error(
-      `[releases] ${url} → ${res.status} ${res.statusText}. ` +
-        `The downloads page cannot be built. 401 means GITHUB_TOKEN is set but ` +
-        `invalid or expired. 403 means the rate limit is gone — a build spends ` +
-        `one request per locale per repo, and unauthenticated builds only get ` +
-        `60 an hour, so set GITHUB_TOKEN to raise it to 5000.`,
-    );
-  }
+    if (!res.ok) {
+      throw new Error(
+        `[releases] ${url} → ${res.status} ${res.statusText}. ` +
+          `The downloads page cannot be built. 401 means GITHUB_TOKEN is set but ` +
+          `invalid or expired. 403 means the rate limit is gone — unauthenticated ` +
+          `builds get 60 requests an hour, so set GITHUB_TOKEN to raise it to 5000.`,
+      );
+    }
 
-  const releases: GitHubRelease[] = await res.json();
+    return (await res.json()) as GitHubRelease[];
+  })();
+
+  releaseLists.set(url, pending);
+  return pending;
+}
+
+export async function fetchReleases(
+  repo: string,
+  assetName: string,
+  count: number,
+): Promise<ReleaseInfo[]> {
+  const url = `https://api.github.com/repos/${repo}/releases?per_page=${count}`;
+  const releases = await fetchReleaseList(url);
   const results: ReleaseInfo[] = [];
 
   for (const release of releases) {
