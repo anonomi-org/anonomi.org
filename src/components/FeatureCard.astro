@@ -1,0 +1,19 @@
+---
+import { getLangFromUrl, t } from "../i18n/utils";
+
+interface Props {
+  /**
+   * Translation key for the heading. The body text is read from
+   * `<titleKey>.desc`, which is how every card on the messenger page is keyed.
+   */
+  titleKey: string;
+}
+
+const { titleKey } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+  <div class="text-base font-semibold">{t(lang, titleKey)}</div>
+  <p class="mt-2 text-sm text-zinc-400">{t(lang, `${titleKey}.desc`)}</p>
+</div>

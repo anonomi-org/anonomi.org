@@ -4,6 +4,7 @@ import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
 import { fetchReleases } from "../../lib/releases";
+import FeatureCard from "../FeatureCard.astro";
 import { ONION_REPO_BASE, net, repoUrl } from "../../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
@@ -274,22 +275,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.noServers")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.noServers.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.tor")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.tor.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.offline")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.offline.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.messaging.media")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.messaging.media.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.messaging.noServers" />
+                <FeatureCard titleKey="messenger.messaging.tor" />
+                <FeatureCard titleKey="messenger.messaging.offline" />
+                <FeatureCard titleKey="messenger.messaging.media" />
               </div>
 
               <div class="mt-6">
@@ -347,22 +336,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.groups.private")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.private.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.groups.open")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.open.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.groups.media")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.media.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.groups.threads")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.groups.threads.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.groups.private" />
+                <FeatureCard titleKey="messenger.groups.open" />
+                <FeatureCard titleKey="messenger.groups.media" />
+                <FeatureCard titleKey="messenger.groups.threads" />
               </div>
 
               <div class="mt-6">
@@ -420,22 +397,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.voice.record")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.record.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.voice.encrypted")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.encrypted.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.voice.everywhere")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.everywhere.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.voice.playback")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.voice.playback.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.voice.record" />
+                <FeatureCard titleKey="messenger.voice.encrypted" />
+                <FeatureCard titleKey="messenger.voice.everywhere" />
+                <FeatureCard titleKey="messenger.voice.playback" />
               </div>
 
               <div class="mt-6">
@@ -493,22 +458,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.trigger")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.trigger.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.autoplay")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.autoplay.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.oneConvo")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.oneConvo.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.walkie.encrypted")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.walkie.encrypted.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.walkie.trigger" />
+                <FeatureCard titleKey="messenger.walkie.autoplay" />
+                <FeatureCard titleKey="messenger.walkie.oneConvo" />
+                <FeatureCard titleKey="messenger.walkie.encrypted" />
               </div>
 
               <div class="mt-6">
@@ -566,30 +519,12 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.create")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.create.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.like")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.like.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.reblog")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.reblog.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.feed")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.feed.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.rss")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.rss.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.blogs.sharing")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.blogs.sharing.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.blogs.create" />
+                <FeatureCard titleKey="messenger.blogs.like" />
+                <FeatureCard titleKey="messenger.blogs.reblog" />
+                <FeatureCard titleKey="messenger.blogs.feed" />
+                <FeatureCard titleKey="messenger.blogs.rss" />
+                <FeatureCard titleKey="messenger.blogs.sharing" />
               </div>
 
               <div class="mt-6">
@@ -659,22 +594,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.onDevice")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.onDevice.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.dynamic")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.dynamic.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.optional")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.optional.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distorted.walkie")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distorted.walkie.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.distorted.onDevice" />
+                <FeatureCard titleKey="messenger.distorted.dynamic" />
+                <FeatureCard titleKey="messenger.distorted.optional" />
+                <FeatureCard titleKey="messenger.distorted.walkie" />
               </div>
 
               <div class="mt-6">
@@ -733,22 +656,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.panic.trigger")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.trigger.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.panic.options")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.options.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.panic.contacts")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.contacts.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.panic.stealth")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.panic.stealth.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.panic.trigger" />
+                <FeatureCard titleKey="messenger.panic.options" />
+                <FeatureCard titleKey="messenger.panic.contacts" />
+                <FeatureCard titleKey="messenger.panic.stealth" />
               </div>
 
               <div class="mt-6">
@@ -807,22 +718,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.disguise")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.disguise.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.unlock")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.unlock.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.noTraces")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.noTraces.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.stealth.persistent")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.stealth.persistent.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.stealth.disguise" />
+                <FeatureCard titleKey="messenger.stealth.unlock" />
+                <FeatureCard titleKey="messenger.stealth.noTraces" />
+                <FeatureCard titleKey="messenger.stealth.persistent" />
               </div>
 
               <div class="mt-6">
@@ -890,22 +789,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.payments.inChat")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.inChat.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.payments.subaddress")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.subaddress.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.payments.qr")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.qr.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.payments.metadata")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.payments.metadata.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.payments.inChat" />
+                <FeatureCard titleKey="messenger.payments.subaddress" />
+                <FeatureCard titleKey="messenger.payments.qr" />
+                <FeatureCard titleKey="messenger.payments.metadata" />
               </div>
 
               <div class="mt-6">
@@ -976,22 +863,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.transports.tor")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.tor.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.transports.wifi")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.wifi.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.transports.bluetooth")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.bluetooth.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.transports.storage")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.transports.storage.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.transports.tor" />
+                <FeatureCard titleKey="messenger.transports.wifi" />
+                <FeatureCard titleKey="messenger.transports.bluetooth" />
+                <FeatureCard titleKey="messenger.transports.storage" />
               </div>
 
               <div class="mt-6">
@@ -1049,22 +924,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.maps.noCalls")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.noCalls.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.maps.tileImport")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.tileImport.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.maps.secureShare")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.secureShare.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.maps.community")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.maps.community.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.maps.noCalls" />
+                <FeatureCard titleKey="messenger.maps.tileImport" />
+                <FeatureCard titleKey="messenger.maps.secureShare" />
+                <FeatureCard titleKey="messenger.maps.community" />
               </div>
 
               <!-- Maps Exporter callout -->
@@ -1156,22 +1019,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.d2d")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.d2d.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.catalog")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.catalog.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.noInternet")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.noInternet.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.distribution.verified")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.distribution.verified.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.distribution.d2d" />
+                <FeatureCard titleKey="messenger.distribution.catalog" />
+                <FeatureCard titleKey="messenger.distribution.noInternet" />
+                <FeatureCard titleKey="messenger.distribution.verified" />
               </div>
 
               <div class="mt-6">
@@ -1230,22 +1081,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
               </p>
 
               <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.storeForward")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.storeForward.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.e2ee")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.e2ee.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.qr")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.qr.desc")}</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <div class="text-base font-semibold">{t(lang, "messenger.postbox.optional")}</div>
-                  <p class="mt-2 text-sm text-zinc-400">{t(lang, "messenger.postbox.optional.desc")}</p>
-                </div>
+                <FeatureCard titleKey="messenger.postbox.storeForward" />
+                <FeatureCard titleKey="messenger.postbox.e2ee" />
+                <FeatureCard titleKey="messenger.postbox.qr" />
+                <FeatureCard titleKey="messenger.postbox.optional" />
               </div>
 
               <div class="mt-6">
