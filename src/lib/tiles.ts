@@ -2,6 +2,10 @@
 //
 // The estimate and the download loop used to carry separate copies of this
 // and had drifted apart, so both now come from here.
+//
+// Leaflet has its own L.Util.template and L.Util.wrapNum which would cover
+// some of this, but importing leaflet reaches for `window` and this module
+// has to stay runnable under `node --test`.
 
 export type Bbox = {
   south: number;
@@ -127,17 +131,41 @@ export function pickSubdomain(subdomains: string[], x: number, y: number) {
 
 // --- coordinates ------------------------------------------------------------
 
+/** Fractional column. Tile k covers [k, k+1), so the edges matter. */
+function lonToTileFrac(lon: number, z: number) {
+  return ((lon + 180) / 360) * 2 ** z;
+}
+
+/** Fractional row, north to south. */
+function latToTileFrac(lat: number, z: number) {
+  const rad = (clampLat(lat) * Math.PI) / 180;
+  const merc = Math.log(Math.tan(Math.PI / 4 + rad / 2));
+  return ((1 - merc / Math.PI) / 2) * 2 ** z;
+}
+
+function clampRow(y: number, z: number) {
+  const n = 2 ** z;
+  // The southern edge lands on n exactly, one row past the last real tile.
+  return Math.min(n - 1, Math.max(0, y));
+}
+
 export function lon2tileX(lon: number, z: number) {
-  return Math.floor(((lon + 180) / 360) * 2 ** z);
+  return Math.floor(lonToTileFrac(lon, z));
 }
 
 export function lat2tileY(lat: number, z: number) {
-  const n = 2 ** z;
-  const rad = (clampLat(lat) * Math.PI) / 180;
-  const merc = Math.log(Math.tan(Math.PI / 4 + rad / 2));
-  const y = Math.floor(((1 - merc / Math.PI) / 2) * n);
-  // The southern edge lands on n exactly, one row past the last real tile.
-  return Math.min(n - 1, Math.max(0, y));
+  return clampRow(Math.floor(latToTileFrac(lat, z)), z);
+}
+
+/**
+ * The last tile an edge actually covers.
+ *
+ * Tiles are half-open, so an edge sitting exactly on a boundary belongs to the
+ * tile before it. Without this, a bbox ending on 180 picks up the first column
+ * of the next world round.
+ */
+function lastCoveredTile(frac: number, first: number) {
+  return Math.max(first, Math.ceil(frac) - 1);
 }
 
 /**
@@ -165,15 +193,24 @@ export type TileRange = {
 export function tileRangeForBbox(bbox: Bbox, z: number): TileRange {
   const n = 2 ** z;
 
-  const xStart = lon2tileX(Math.min(bbox.west, bbox.east), z);
-  const xEnd = lon2tileX(Math.max(bbox.west, bbox.east), z);
+  const xStart = Math.floor(lonToTileFrac(Math.min(bbox.west, bbox.east), z));
+  const xEnd = lastCoveredTile(
+    lonToTileFrac(Math.max(bbox.west, bbox.east), z),
+    xStart,
+  );
   // A zoomed-out view can span more than one copy of the world; past that
   // point we would just be fetching the same columns again.
   const xCount = Math.min(n, xEnd - xStart + 1);
 
   // North is the smaller y.
-  const yStart = lat2tileY(Math.max(bbox.north, bbox.south), z);
-  const yEnd = lat2tileY(Math.min(bbox.north, bbox.south), z);
+  const yStart = clampRow(
+    Math.floor(latToTileFrac(Math.max(bbox.north, bbox.south), z)),
+    z,
+  );
+  const yEnd = clampRow(
+    lastCoveredTile(latToTileFrac(Math.min(bbox.north, bbox.south), z), yStart),
+    z,
+  );
 
   return { xStart, xCount, yStart, yCount: yEnd - yStart + 1 };
 }

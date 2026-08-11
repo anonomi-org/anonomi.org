@@ -125,6 +125,29 @@ const DATE_LINE = { south: -18.5, west: 176.0, north: -17.5, east: 183.0 };
 const WHOLE_WORLD = { south: -85, west: -180, north: 85, east: 180 };
 const MULTI_WORLD = { south: -60, west: -400, north: 60, east: 400 };
 
+test("an edge exactly on a tile boundary does not pull in the next tile", () => {
+  // Tiles are half-open, [k, k+1). The eastern hemisphere ends at exactly 180,
+  // which is the *start* of the wrapped-around first column, not part of it.
+  // The south and east edges both land on a boundary here, so this is exactly
+  // one tile: the north-east quadrant of the world.
+  const eastern = { south: 0, west: 0, north: 85, east: 180 };
+  assert.deepEqual(
+    tileJobsForBbox(eastern, [1]),
+    [{ z: 1, x: 1, y: 0 }],
+    "column 0 is the western hemisphere and has no business here",
+  );
+
+  // Same story for rows: a south edge on the equator stops at the row above.
+  const northern = { south: 0, west: -10, north: 60, east: 10 };
+  assert.equal(tileRangeForBbox(northern, 2).yCount, 1);
+});
+
+test("a bbox narrower than one tile still yields exactly one tile", () => {
+  const tiny = { south: 37.1, west: -8.51, north: 37.11, east: -8.5 };
+  assert.equal(tileRangeForBbox(tiny, 4).xCount, 1);
+  assert.equal(tileRangeForBbox(tiny, 4).yCount, 1);
+});
+
 test("tileRangeForBbox caps a view that spans more than one world", () => {
   for (const z of [0, 1, 4, 8]) {
     assert.equal(tileRangeForBbox(MULTI_WORLD, z).xCount, 2 ** z);

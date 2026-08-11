@@ -8,6 +8,7 @@ import { saveAs } from "file-saver";
 import {
   MAX_ZOOM,
   TILE_PROVIDERS,
+  type TileJob,
   type TileProviderId,
   bboxAreaKm2,
   buildTileUrl,
@@ -155,6 +156,18 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
 
   // Stable across renders on purpose - see MapInitializer.
   const handleBounds = useCallback((b: LatLngBounds) => setBounds(b), []);
+
+  // An export outlives the component otherwise: it would keep fetching tiles,
+  // keep polling for a pause that can no longer be lifted, and save a pack
+  // nobody is waiting for.
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort();
+      abortRef.current = null;
+      pauseRef.current = false;
+      packNowRef.current = false;
+    };
+  }, []);
 
   const detailLabels: Record<DetailLevel, string> = {
     Low: s.detailLow,
@@ -340,7 +353,26 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
     setEndedAt(null);
     setDownloadedBytes(0);
 
-    abortRef.current = new AbortController();
+    // Held in a local as well as the ref: if this run is cancelled and another
+    // started, the ref points at the new run's controller, and re-reading it
+    // would let this loop carry on under the new one.
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+
+    let jobs: TileJob[] = [];
+    let done = 0;
+    let fetched = 0;
+    let failed = 0;
+    let bytes = 0;
+
+    // Counters live in locals and are published on the same beat as the
+    // progress bar; one render per tile would swamp a large export. The
+    // finally block publishes the last of them, including after a cancel.
+    const publish = () => {
+      setProgress({ done, total: jobs.length });
+      setFailedTiles(failed);
+      setDownloadedBytes(bytes);
+    };
 
     try {
       const regionName = packName.trim() || `Maps z${effectiveZooms[0]}–${effectiveZooms[effectiveZooms.length - 1]}`;
@@ -359,7 +391,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
       };
 
       // Precompute all tile jobs (so we can show a real progress bar)
-      const jobs = tileJobsForBbox(bbox, effectiveZooms);
+      jobs = tileJobsForBbox(bbox, effectiveZooms);
 
       setProgress({ done: 0, total: jobs.length });
 
@@ -367,26 +399,19 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
       const RETRY_DELAY_MS = 1000;
       const PROGRESS_EVERY = 25;
 
-      let done = 0;
-      let fetched = 0;
-      let failed = 0;
-      let bytes = 0;
-
-      // Counters live in locals and are published on the same beat as the
-      // progress bar; one render per tile would swamp a large export.
-      const publish = () => {
-        setProgress({ done, total: jobs.length });
-        setFailedTiles(failed);
-        setDownloadedBytes(bytes);
-      };
+      let stoppedEarly = false;
 
       for (const job of jobs) {
         await waitWhilePaused();
 
-        if (packNowRef.current) break;
+        if (packNowRef.current) {
+          stoppedEarly = true;
+          break;
+        }
 
-        const ctrl = abortRef.current;
-        if (!ctrl) throw new Error(s.exportCancelled);
+        // A cancel that landed while we were paused or backing off leaves no
+        // fetch to reject; cancelExport has already put up the message.
+        if (ctrl.signal.aborted) return;
 
         const url = buildTileUrl(tileTemplate, {
           ...job,
@@ -429,11 +454,10 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
         }
       }
 
-      publish();
-
-      // Every single tile failed - a dead source, or one whose URL template we
-      // cannot fill. Say so instead of handing over an empty pack.
-      if (jobs.length > 0 && fetched === 0) {
+      // Nothing came back at all - a dead source, or one whose URL template we
+      // cannot fill. Say so instead of handing over an empty pack. Stopping on
+      // purpose before the first tile is not a failure.
+      if (!stoppedEarly && fetched === 0) {
         setExportError(s.exportFailed);
         return;
       }
@@ -451,9 +475,14 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
         e?.name === "AbortError" ? s.cancelled : (e?.message ?? s.exportFailed),
       );
     } finally {
+      // Final counts, including on the cancel and error paths where the loop
+      // never reached its last publish.
+      publish();
       setIsExporting(false);
       setEndedAt(new Date());
-      abortRef.current = null;
+      // Only stand down if this run still owns the controller; a later export
+      // may already have replaced it.
+      if (abortRef.current === ctrl) abortRef.current = null;
       packNowRef.current = false;
       pauseRef.current = false;
     }
@@ -683,7 +712,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                         onChange={(e) => setZoomFrom(Number(e.target.value))}
                         className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                       >
-                        {Array.from({ length: MAX_ZOOM + 1 }, (_, i) => i).map((z) => (
+                        {zoomRange(0, MAX_ZOOM).map((z) => (
                           <option key={z} value={z}>
                             {z}
                           </option>
@@ -698,7 +727,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                         onChange={(e) => setZoomTo(Number(e.target.value))}
                         className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                       >
-                        {Array.from({ length: MAX_ZOOM + 1 }, (_, i) => i).map((z) => (
+                        {zoomRange(0, MAX_ZOOM).map((z) => (
                           <option key={z} value={z}>
                             {z}
                           </option>
@@ -776,102 +805,100 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
       </div>
 
       {progress && (
-        <div>
-          <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-xs text-zinc-300">
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-zinc-400">
-                <span className="text-zinc-200">
-                  {Math.floor(
-                    (progress.done / Math.max(1, progress.total)) * 100,
-                  )}
-                  %
-                </span>{" "}
-                — {s.downloadedTiles}{" "}
-                <span className="text-zinc-200">{progress.done}</span> /{" "}
-                {progress.total}
-                {failedTiles > 0 && (
-                  <>
-                    {" "}— {s.failed}{" "}
-                    <span className="text-red-300">{failedTiles}</span>
-                  </>
+        <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-xs text-zinc-300">
+          <div className="flex items-center justify-between gap-3">
+            <div className="text-zinc-400">
+              <span className="text-zinc-200">
+                {Math.floor(
+                  (progress.done / Math.max(1, progress.total)) * 100,
                 )}
-              </div>
-
-              <div className="text-zinc-500">
-                {isPaused ? s.statusPaused : isExporting ? s.statusRunning : endedAt ? s.statusDone : s.statusIdle}
-              </div>
-            </div>
-
-            <div className="mt-2 grid grid-cols-1 gap-1 text-zinc-400">
-              <div>
-                {s.startedOn}{" "}
-                <span className="text-zinc-200">
-                  {startedAt ? fmtTime(startedAt) : "—"}
-                </span>
-              </div>
-              <div>
-                {s.duration}{" "}
-                <span className="text-zinc-200">
-                  {startedAt
-                    ? fmtDuration((endedAt ?? new Date()).getTime() - startedAt.getTime())
-                    : "—"}
-                </span>
-              </div>
-              <div>
-                {s.totalDownloaded}{" "}
-                <span className="text-zinc-200">
-                  {fmtBytes(downloadedBytes)}
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-              <button
-                type="button"
-                onClick={togglePause}
-                disabled={!isExporting}
-                className={[
-                  "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
-                  !isExporting
-                    ? "bg-white/10 text-zinc-400 opacity-60"
-                    : "bg-white/15 text-white hover:bg-white/20",
-                ].join(" ")}
-              >
-                {isPaused ? s.continue : s.pause}
-              </button>
-
-              <button
-                type="button"
-                onClick={stopAndPack}
-                disabled={!isExporting}
-                className={[
-                  "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
-                  !isExporting
-                    ? "bg-white/10 text-zinc-400 opacity-60"
-                    : "bg-white/15 text-white hover:bg-white/20",
-                ].join(" ")}
-              >
-                {s.stopAndPack}
-              </button>
-
-              {isExporting ? (
-                <button
-                  type="button"
-                  onClick={cancelExport}
-                  className="rounded-xl bg-red-500/15 px-3 py-2 text-xs font-medium text-red-100 ring-1 ring-red-500/30 hover:bg-red-500/20"
-                >
-                  {s.cancel}
-                </button>
-              ) : exportError ? (
-                <div className="flex items-center justify-center rounded-xl bg-red-500/10 px-3 py-2 text-center text-xs font-semibold text-red-200 ring-1 ring-red-500/30">
-                  {exportError}
-                </div>
-              ) : (
-                <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
-                  {s.completed}
-                </div>
+                %
+              </span>{" "}
+              — {s.downloadedTiles}{" "}
+              <span className="text-zinc-200">{progress.done}</span> /{" "}
+              {progress.total}
+              {failedTiles > 0 && (
+                <>
+                  {" "}— {s.failed}{" "}
+                  <span className="text-red-300">{failedTiles}</span>
+                </>
               )}
             </div>
+
+            <div className="text-zinc-500">
+              {isPaused ? s.statusPaused : isExporting ? s.statusRunning : endedAt ? s.statusDone : s.statusIdle}
+            </div>
+          </div>
+
+          <div className="mt-2 grid grid-cols-1 gap-1 text-zinc-400">
+            <div>
+              {s.startedOn}{" "}
+              <span className="text-zinc-200">
+                {startedAt ? fmtTime(startedAt) : "—"}
+              </span>
+            </div>
+            <div>
+              {s.duration}{" "}
+              <span className="text-zinc-200">
+                {startedAt
+                  ? fmtDuration((endedAt ?? new Date()).getTime() - startedAt.getTime())
+                  : "—"}
+              </span>
+            </div>
+            <div>
+              {s.totalDownloaded}{" "}
+              <span className="text-zinc-200">
+                {fmtBytes(downloadedBytes)}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            <button
+              type="button"
+              onClick={togglePause}
+              disabled={!isExporting}
+              className={[
+                "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
+                !isExporting
+                  ? "bg-white/10 text-zinc-400 opacity-60"
+                  : "bg-white/15 text-white hover:bg-white/20",
+              ].join(" ")}
+            >
+              {isPaused ? s.continue : s.pause}
+            </button>
+
+            <button
+              type="button"
+              onClick={stopAndPack}
+              disabled={!isExporting}
+              className={[
+                "rounded-xl px-3 py-2 text-xs font-medium ring-1 ring-white/10",
+                !isExporting
+                  ? "bg-white/10 text-zinc-400 opacity-60"
+                  : "bg-white/15 text-white hover:bg-white/20",
+              ].join(" ")}
+            >
+              {s.stopAndPack}
+            </button>
+
+            {isExporting ? (
+              <button
+                type="button"
+                onClick={cancelExport}
+                className="rounded-xl bg-red-500/15 px-3 py-2 text-xs font-medium text-red-100 ring-1 ring-red-500/30 hover:bg-red-500/20"
+              >
+                {s.cancel}
+              </button>
+            ) : exportError ? (
+              <div className="flex items-center justify-center rounded-xl bg-red-500/10 px-3 py-2 text-center text-xs font-semibold text-red-200 ring-1 ring-red-500/30">
+                {exportError}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
+                {s.completed}
+              </div>
+            )}
           </div>
         </div>
       )}
