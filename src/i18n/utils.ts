@@ -5,21 +5,13 @@ import ar from './ar.json';
 import fa from './fa.json';
 import zh from './zh.json';
 
+import { defaultLocale, locales, prefixedLocales } from './locales';
+import type { Locale } from './locales';
+
 const translations: Record<string, Record<string, string>> = { en, pt, es, ar, fa, zh };
 
-export const defaultLocale = 'en';
-export const locales = ['en', 'pt', 'es', 'ar', 'fa', 'zh'] as const;
-export type Locale = (typeof locales)[number];
-
-/** Human-readable labels for each locale. */
-export const localeLabels: Record<Locale, string> = {
-  en: 'English',
-  pt: 'Português',
-  es: 'Español',
-  ar: 'العربية',
-  fa: 'فارسی',
-  zh: '中文',
-};
+export { defaultLocale, locales, localeLabels, directionOf } from './locales';
+export type { Locale } from './locales';
 
 /**
  * Get a translated string by key. Falls back to English if the key
@@ -47,7 +39,7 @@ export function getLangFromUrl(url: URL): Locale {
 }
 
 // Regex that matches any non-default locale code as a path segment
-const localePattern = locales.filter(l => l !== defaultLocale).join('|');
+const localePattern = prefixedLocales.join('|');
 const docsLocaleRe = new RegExp(`^\\/docs\\/(${localePattern})(\\/|$)`);
 const standaloneLocaleRe = new RegExp(`^\\/(${localePattern})(\\/|$)`);
 
