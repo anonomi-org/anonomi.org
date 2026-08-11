@@ -11,34 +11,12 @@
  * clearnet build renders an explanatory notice in place of the Paylinks
  * forms rather than a UI that silently fails.
  *
- * The network is derived from `PUBLIC_SITE_BASE_URL`, which the onion deploy
- * (`deploy-onion.sh`) and the GitHub Pages workflow already set to their
- * respective origins — no additional build flag to keep in sync. Anything
- * that is neither an onion origin nor local development is treated as
- * clearnet, so an unrecognised host fails closed.
+ * Which network this build is for comes from `site.ts`, which derives it from
+ * `PUBLIC_SITE_BASE_URL` — no additional build flag to keep in sync, and
+ * anything unrecognised is treated as clearnet so it fails closed.
  */
 
-const SITE_BASE = import.meta.env.PUBLIC_SITE_BASE_URL ?? "http://localhost:4321";
-
-/** Canonical onion entry point for Paylinks, shown to clearnet visitors. */
-export const PAYLINKS_ONION_BASE =
-  "http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion";
-
-function hostnameOf(url: string): string {
-  try {
-    return new URL(url).hostname.toLowerCase();
-  } catch {
-    return "";
-  }
-}
-
-const host = hostnameOf(SITE_BASE);
-
-/** The onion deploy: the only build that ships working Paylinks forms. */
-const IS_ONION_BUILD = host.endsWith(".onion");
-
-/** A developer's machine, running `astro dev` or a local production build. */
-const IS_LOCAL_BUILD = host === "localhost" || host === "127.0.0.1";
+import { IS_LOCAL_BUILD, IS_ONION_BUILD } from "./site";
 
 /**
  * True only for builds whose origin can actually reach the Paylinks API:

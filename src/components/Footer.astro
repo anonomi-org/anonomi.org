@@ -1,14 +1,8 @@
 ---
 import { getLangFromUrl, t } from "../i18n/utils";
+import BuildStamp from "./BuildStamp.astro";
 
 const lang = getLangFromUrl(Astro.url);
-
-const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
-const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
-const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
-const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
-const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 ---
 
 <footer class="mt-16 border-t border-white/10 pt-10 text-sm text-zinc-500">
@@ -107,12 +101,7 @@ const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` :
         </a>
 
         <!-- Build -->
-        <div class="font-mono text-[11px] text-zinc-500">
-          Build:
-          <a href={COMMIT_URL} data-clearnet-href={CLEARNET_COMMIT_URL} class="text-zinc-300 hover:text-white">
-            {BUILD_SHORT}
-          </a>
-        </div>
+        <BuildStamp class="font-mono text-[11px] text-zinc-500" />
       </div>
     </div>
   </div>

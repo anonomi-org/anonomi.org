@@ -1,6 +1,6 @@
 ---
 import { getLangFromUrl, localizedPath, t } from "../i18n/utils";
-import { PAYLINKS_ONION_BASE } from "../lib/paylinks";
+import { ONION_SITE_BASE } from "../lib/site";
 
 interface Props {
   /** Path under the onion site to point at, e.g. "/paylinks/create". */
@@ -10,7 +10,7 @@ interface Props {
 const { path = "/paylinks" } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const onionUrl = `${PAYLINKS_ONION_BASE}${path}`;
+const onionUrl = `${ONION_SITE_BASE}${path}`;
 const torDocsPath = localizedPath("/docs/tor", lang);
 const torSeparationDocsPath = localizedPath("/docs/paylinks/tor-separation", lang);
 ---

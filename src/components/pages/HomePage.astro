@@ -3,8 +3,20 @@ import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import {
+  IS_ONION_BUILD,
+  ONION_REPO_BASE,
+  ONION_SITE_BASE,
+  net,
+  repoUrl,
+} from "../../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
+
+// The paylink id rides in the fragment so it is never sent to a server. The
+// trailing slash on /d/ is deliberate: without it nginx answers with a
+// redirect, costing an extra Tor round trip before the page loads.
+const TOR_DONATE_URL = `${ONION_SITE_BASE}/paylinks/d/#62df277a-21d7-4447-a007-6b5856d6d3ea`;
 ---
 
 <Layout
@@ -340,7 +352,7 @@ const lang = getLangFromUrl(Astro.url);
       <div class="mt-8 space-y-3">
         <!-- Onion repo (always onion) -->
         <a
-          href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
+          href={ONION_REPO_BASE}
           target="_blank"
           rel="noreferrer"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
@@ -581,40 +593,19 @@ const lang = getLangFromUrl(Astro.url);
               </p>
 
               <div class="mt-4">
-                <!--
-                  Clearnet button (hidden on .onion).
-
-                  Paylinks is onion-only, so this can no longer be a donation
-                  link. It points at the Paylinks page, which on the clearnet
-                  build explains the move and shows the onion address.
-                -->
+                {
+                  /*
+                    On the onion build this donates directly. On clearnet it
+                    points at the Paylinks page, which explains that Paylinks
+                    is onion-only and shows the address — the donation itself
+                    cannot happen here.
+                  */
+                }
                 <a
-                  id="donate-xmr-clearnet"
-                  href={localizedPath("/paylinks", lang)}
+                  href={IS_ONION_BUILD ? TOR_DONATE_URL : localizedPath("/paylinks", lang)}
+                  target={IS_ONION_BUILD ? "_blank" : undefined}
                   rel="nofollow noopener"
                   class="inline-flex items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
-                >
-                  <span
-                    class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"
-                  ></span>
-                  {t(lang, "home.support.donate.xmr.button")}
-                </a>
-
-                <!--
-                  Tor button (hidden on clearnet).
-
-                  The paylink id is carried in the URL fragment so it is never
-                  sent to a server or written to a log. The trailing slash on
-                  /d/ is deliberate: without it nginx answers with a redirect,
-                  costing an extra Tor round trip before the page loads.
-                -->
-                <a
-                  id="donate-xmr-tor"
-                  href="http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/paylinks/d/#62df277a-21d7-4447-a007-6b5856d6d3ea"
-                  target="_blank"
-                  rel="nofollow noopener"
-                  style="display:none"
-                  class="items-center gap-2.5 rounded-xl bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[#eaeaf0] no-underline ring-1 ring-white/[0.12] hover:bg-white/10"
                 >
                   <span
                     class="inline-block h-2.5 w-2.5 rounded-full bg-[#ce27e6]"
@@ -705,20 +696,6 @@ const lang = getLangFromUrl(Astro.url);
 
       <!-- Minimal inline JS -->
       <script is:inline>
-        // Toggle XMR donate button based on clearnet/onion
-        (function () {
-          const isOnion = window.location.hostname.endsWith(".onion");
-          const clearnetBtn = document.getElementById("donate-xmr-clearnet");
-          const torBtn = document.getElementById("donate-xmr-tor");
-          if (isOnion) {
-            if (clearnetBtn) clearnetBtn.style.display = "none";
-            if (torBtn) torBtn.style.display = "inline-flex";
-          } else {
-            if (clearnetBtn) clearnetBtn.style.display = "inline-flex";
-            if (torBtn) torBtn.style.display = "none";
-          }
-        })();
-
         function toggleQr(kind) {
           const el = document.getElementById(`qr-${kind}`);
           if (!el) return;
@@ -767,14 +744,16 @@ const lang = getLangFromUrl(Astro.url);
 
       <div class="mt-8 flex flex-wrap items-center gap-6">
         <a
-          href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
-          data-clearnet-href="https://github.com/anonomi-org"
+          href={repoUrl()}
           target="_blank"
           rel="noreferrer"
           class="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-white"
         >
-          <span data-clearnet-text={t(lang, "home.support.contribute.clearnet")}
-            >{t(lang, "home.support.contribute.onion")}</span
+          <span
+            >{net(
+              t(lang, "home.support.contribute.onion"),
+              t(lang, "home.support.contribute.clearnet"),
+            )}</span
           >
           <span aria-hidden="true">&rarr;</span>
         </a>
