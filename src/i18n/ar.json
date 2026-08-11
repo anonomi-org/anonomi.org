@@ -615,5 +615,7 @@
     "paylinks.create.script.spanError": "يمكن أن يمتد الحد الأدنى والأقصى للفهرس إلى 1000 عنوان كحد أقصى.",
     "paylinks.create.script.rateLimited": "تم إنشاء عدد كبير جدًا من الروابط في الدقيقة الأخيرة. انتظر لحظة ثم حاول مرة أخرى.",
     "paylinks.d.donate.amountHelp": "حتى 12 منزلة عشرية.",
-    "paylinks.d.script.rateLimited": "هناك عدد كبير جدًا من طلبات التبرع لهذا الرابط حاليًا. انتظر لحظة ثم حاول مرة أخرى."
+    "paylinks.d.script.rateLimited": "هناك عدد كبير جدًا من طلبات التبرع لهذا الرابط حاليًا. انتظر لحظة ثم حاول مرة أخرى.",
+    "paylinks.getStarted.onionDescription": "يتم إنشاء الروابط وحذفها على موقع onion. ستحتاج إلى عنوان مونيرو الأساسي ومفتاح العرض الخاص بك.",
+    "paylinks.getStarted.onionOnly": "متاح على موقع onion"
 }

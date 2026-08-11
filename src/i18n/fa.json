@@ -615,5 +615,7 @@
     "paylinks.create.script.spanError": "کمینه و بیشینهٔ اندیس حداکثر می‌توانند ۱۰۰۰ نشانی را در بر بگیرند.",
     "paylinks.create.script.rateLimited": "در یک دقیقهٔ گذشته paylinkهای بسیار زیادی ساخته شده است. کمی صبر کنید و دوباره تلاش کنید.",
     "paylinks.d.donate.amountHelp": "تا ۱۲ رقم اعشار.",
-    "paylinks.d.script.rateLimited": "درخواست‌های اهدای بسیار زیادی برای این paylink وجود دارد. کمی صبر کنید و دوباره تلاش کنید."
+    "paylinks.d.script.rateLimited": "درخواست‌های اهدای بسیار زیادی برای این paylink وجود دارد. کمی صبر کنید و دوباره تلاش کنید.",
+    "paylinks.getStarted.onionDescription": "ساخت و حذف paylinkها روی سایت onion انجام می‌شود. به آدرس اصلی مونرو و کلید مشاهدهٔ خصوصی خود نیاز دارید.",
+    "paylinks.getStarted.onionOnly": "در سایت onion در دسترس است"
 }

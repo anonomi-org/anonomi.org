@@ -615,5 +615,7 @@
     "paylinks.create.script.spanError": "Los índices Mín y Máx pueden abarcar como máximo 1000 direcciones.",
     "paylinks.create.script.rateLimited": "Se han creado demasiados paylinks en el último minuto. Espera un momento e inténtalo de nuevo.",
     "paylinks.d.donate.amountHelp": "Hasta 12 decimales.",
-    "paylinks.d.script.rateLimited": "Demasiadas solicitudes de donación para este paylink en este momento. Espera un momento e inténtalo de nuevo."
+    "paylinks.d.script.rateLimited": "Demasiadas solicitudes de donación para este paylink en este momento. Espera un momento e inténtalo de nuevo.",
+    "paylinks.getStarted.onionDescription": "Crear y eliminar paylinks ocurre en el sitio onion. Necesitarás tu dirección principal de Monero y tu clave de visualización privada.",
+    "paylinks.getStarted.onionOnly": "Disponible en el sitio onion"
 }

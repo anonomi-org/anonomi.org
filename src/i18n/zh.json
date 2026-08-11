@@ -615,5 +615,7 @@
     "paylinks.create.script.spanError": "最小和最大索引最多可跨越 1000 个地址。",
     "paylinks.create.script.rateLimited": "过去一分钟内创建的 paylink 过多。请稍候再试。",
     "paylinks.d.donate.amountHelp": "最多 12 位小数。",
-    "paylinks.d.script.rateLimited": "此 paylink 当前的捐赠请求过多。请稍候再试。"
+    "paylinks.d.script.rateLimited": "此 paylink 当前的捐赠请求过多。请稍候再试。",
+    "paylinks.getStarted.onionDescription": "创建和删除 paylink 在 onion 站点上进行。您需要您的门罗币主地址和私密查看密钥。",
+    "paylinks.getStarted.onionOnly": "在 onion 站点提供"
 }
