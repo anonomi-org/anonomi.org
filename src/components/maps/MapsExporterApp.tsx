@@ -1,74 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import type { LatLngBounds } from "leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
+import {
+  MAX_ZOOM,
+  TILE_PROVIDERS,
+  type TileProviderId,
+  bboxAreaKm2,
+  buildTileUrl,
+  clampZoomPair,
+  countTilesForZooms,
+  normalizeName,
+  pickSubdomain,
+  tileJobsForBbox,
+  zoomRange,
+} from "../../lib/tiles";
+
 type DetailLevel = "Low" | "Medium" | "High";
-
-type TileProviderId =
-  | "none"
-  | "carto_dark"
-  | "osm"
-  | "opentopo"
-  | "carto"
-  | "google"
-  | "custom";
-
-type TileProvider = {
-  id: TileProviderId;
-  label: string;
-  url: string; // Leaflet template: .../{z}/{x}/{y}.png (may include {s})
-  attribution: string;
-  subdomains?: string[];
-};
-
-const TILE_PROVIDERS: Record<Exclude<TileProviderId, "none">, TileProvider> = {
-  osm: {
-    id: "osm",
-    label: "OpenStreetMap (test)",
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution: "&copy; OpenStreetMap contributors",
-    subdomains: ["a", "b", "c"],
-  },
-  opentopo: {
-    id: "opentopo",
-    label: "OpenTopoMap",
-    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-    attribution:
-      "&copy; OpenTopoMap (CC-BY-SA) &copy; OpenStreetMap contributors",
-    subdomains: ["a", "b", "c"],
-  },
-  carto_dark: {
-    id: "carto_dark",
-    label: "CARTO • Dark Matter (dark)",
-    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: ["a", "b", "c", "d"],
-  },
-  carto: {
-    id: "carto",
-    label: "CARTO Positron",
-    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    subdomains: ["a", "b", "c", "d"],
-  },
-  google: {
-    id: "google",
-    label: "Google Maps",
-    url: "", // Not used - redirects to docs
-    attribution: "",
-  },
-  custom: {
-    id: "custom",
-    label: "Custom",
-    url: "",
-    attribution: "",
-  },
-};
 
 export type MapsExporterStrings = {
   howItWorks: string;
@@ -126,104 +77,6 @@ export type MapsExporterStrings = {
   exportFailed: string;
 };
 
-function buildTileUrl(
-  template: string,
-  z: number,
-  x: number,
-  y: number,
-  s?: string,
-) {
-  return template
-    .replace("{s}", s ?? "")
-    .replace("{z}", String(z))
-    .replace("{x}", String(x))
-    .replace("{y}", String(y));
-}
-
-function clampZoomPair(from: number, to: number) {
-  let a = Math.max(0, Math.min(18, from));
-  let b = Math.max(0, Math.min(18, to));
-  if (a > b) [a, b] = [b, a];
-  return [a, b] as const;
-}
-
-function range(from: number, to: number) {
-  const out: number[] = [];
-  for (let z = from; z <= to; z++) out.push(z);
-  return out;
-}
-
-// --- simple geodesic-ish area estimate (spherical)
-// bbox: [south, west] [north, east] in degrees
-function bboxAreaKm2(south: number, west: number, north: number, east: number) {
-  const R = 6371; // km
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const lat1 = toRad(south);
-  const lat2 = toRad(north);
-  const dLon = toRad(east - west);
-  const area = Math.abs(R * R * dLon * (Math.sin(lat2) - Math.sin(lat1)));
-  return area;
-}
-
-function tilesForBbox(
-  south: number,
-  west: number,
-  north: number,
-  east: number,
-  z: number,
-) {
-  const n = 2 ** z;
-  const lon2x = (lon: number) => ((lon + 180) / 360) * n;
-
-  const lat2y = (lat: number) => {
-    const rad = (lat * Math.PI) / 180;
-    const merc = Math.log(Math.tan(Math.PI / 4 + rad / 2));
-    return ((1 - merc / Math.PI) / 2) * n;
-  };
-
-  const clampLatLocal = (lat: number) =>
-    Math.max(-85.05112878, Math.min(85.05112878, lat));
-
-  const y1 = lat2y(clampLatLocal(north));
-  const y2 = lat2y(clampLatLocal(south));
-  const x1 = lon2x(west);
-  const x2 = lon2x(east);
-
-  const xmin = Math.floor(Math.min(x1, x2));
-  const xmax = Math.floor(Math.max(x1, x2));
-  const ymin = Math.floor(Math.min(y1, y2));
-  const ymax = Math.floor(Math.max(y1, y2));
-
-  const w = Math.max(0, xmax - xmin + 1);
-  const h = Math.max(0, ymax - ymin + 1);
-  return w * h;
-}
-
-function lon2tileX(lon: number, z: number) {
-  const n = 2 ** z;
-  return Math.floor(((lon + 180) / 360) * n);
-}
-
-function lat2tileY(lat: number, z: number) {
-  const n = 2 ** z;
-  const rad = (lat * Math.PI) / 180;
-  const merc = Math.log(Math.tan(Math.PI / 4 + rad / 2));
-  return Math.floor(((1 - merc / Math.PI) / 2) * n);
-}
-
-function clampLat(lat: number) {
-  return Math.max(-85.05112878, Math.min(85.05112878, lat));
-}
-
-function normalizeName(name: string) {
-  return name
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "")
-    .replace(/_+/g, "_");
-}
-
 function BboxTracker({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
   const raf = useRef<number | null>(null);
 
@@ -238,23 +91,27 @@ function BboxTracker({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
     },
   });
 
+  useEffect(() => {
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
   return null;
 }
 
-function MapInitializer({
-  mapRef,
-  onBounds,
-}: {
-  mapRef: React.MutableRefObject<L.Map | null>;
-  onBounds: (b: LatLngBounds) => void;
-}) {
+// Reports the opening viewport once the map is up.
+//
+// onBounds has to keep a stable identity. getBounds() returns a fresh object
+// every call, so a callback that changed each render would re-run this effect,
+// set new state, and re-render for as long as the map stayed open.
+function MapInitializer({ onBounds }: { onBounds: (b: LatLngBounds) => void }) {
   const map = useMap();
 
   useEffect(() => {
-    mapRef.current = map;
     map.invalidateSize();
     onBounds(map.getBounds());
-  }, [map, mapRef, onBounds]);
+  }, [map, onBounds]);
 
   return null;
 }
@@ -270,7 +127,6 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
 
   // Map bbox state
   const [bounds, setBounds] = useState<LatLngBounds | null>(null);
-  const mapRef = useRef<L.Map | null>(null);
 
   const [tileProviderId, setTileProviderId] = useState<TileProviderId>("none");
   const [customTileUrl, setCustomTileUrl] = useState("");
@@ -296,6 +152,9 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
   const pauseRef = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
   const packNowRef = useRef(false);
+
+  // Stable across renders on purpose - see MapInitializer.
+  const handleBounds = useCallback((b: LatLngBounds) => setBounds(b), []);
 
   const detailLabels: Record<DetailLevel, string> = {
     Low: s.detailLow,
@@ -342,41 +201,49 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
   const effectiveZooms = useMemo(() => {
     if (showAdvanced) {
       const [a, b] = clampZoomPair(zoomFrom, zoomTo);
-      return range(a, b);
+      return zoomRange(a, b);
     }
 
-    if (detailLevel === "Low") return range(0, 8);
-    if (detailLevel === "Medium") return range(0, 12);
-    return range(0, 16); // High
+    if (detailLevel === "Low") return zoomRange(0, 8);
+    if (detailLevel === "Medium") return zoomRange(0, 12);
+    return zoomRange(0, 16); // High
   }, [detailLevel, showAdvanced, zoomFrom, zoomTo]);
 
+  const bbox = useMemo(
+    () =>
+      bounds
+        ? {
+            south: bounds.getSouth(),
+            west: bounds.getWest(),
+            north: bounds.getNorth(),
+            east: bounds.getEast(),
+          }
+        : null,
+    [bounds],
+  );
+
   const estimate = useMemo(() => {
-    if (!bounds)
+    if (!bbox)
       return {
         areaKm2: null as number | null,
         tiles: null as number | null,
         sizeMB: null as number | null,
       };
 
-    const south = bounds.getSouth();
-    const west = bounds.getWest();
-    const north = bounds.getNorth();
-    const east = bounds.getEast();
-
-    const areaKm2 = bboxAreaKm2(south, west, north, east);
-
-    // tiles across all chosen zooms
-    let tiles = 0;
-    for (const z of effectiveZooms)
-      tiles += tilesForBbox(south, west, north, east, z);
+    // Same maths the download loop uses, so the progress bar cannot disagree
+    // with the estimate the user agreed to.
+    const tiles = countTilesForZooms(bbox, effectiveZooms);
 
     // Rough average ~8.5 KB/tile based on real-world exports
     // (low-zoom tiles are tiny, vector-style providers like CARTO average 5-15 KB)
     const avgKBPerTile = 8.5;
-    const sizeMB = (tiles * avgKBPerTile) / 1024;
 
-    return { areaKm2, tiles, sizeMB };
-  }, [bounds, effectiveZooms]);
+    return {
+      areaKm2: bboxAreaKm2(bbox),
+      tiles,
+      sizeMB: (tiles * avgKBPerTile) / 1024,
+    };
+  }, [bbox, effectiveZooms]);
 
   const estimatedAreaText =
     estimate.areaKm2 == null
@@ -455,11 +322,13 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
   }
 
   async function exportZip() {
-    if (!bounds) return;
+    if (!bbox) return;
 
     setExportError(null);
     setIsExporting(true);
-    setProgress(null);
+    // Show the panel straight away, so a failure before the first tile still
+    // has somewhere to appear.
+    setProgress({ done: 0, total: 0 });
     setFailedTiles(0);
 
     setIsPaused(false);
@@ -474,55 +343,44 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
     abortRef.current = new AbortController();
 
     try {
-      const south = bounds.getSouth();
-      const west = bounds.getWest();
-      const north = bounds.getNorth();
-      const east = bounds.getEast();
-
       const regionName = packName.trim() || `Maps z${effectiveZooms[0]}–${effectiveZooms[effectiveZooms.length - 1]}`;
-      const placeName = normalizeName(regionName);
+      // A name of nothing but emoji normalises away to "", which would save
+      // the pack as ".zip".
+      const placeName = normalizeName(regionName) || "AnonMapsCache";
 
       const zip = new JSZip();
       const root = zip.folder("AnonMapsCache")!;
       const meta = {
         region: regionName,
-        bbox: { south, west, north, east },
+        bbox,
         zooms: effectiveZooms,
         createdAt: new Date().toISOString(),
         tileSource: tileTemplate,
       };
 
       // Precompute all tile jobs (so we can show a real progress bar)
-      const jobs: Array<{ z: number; x: number; y: number }> = [];
-      for (const z of effectiveZooms) {
-        const nLat = clampLat(north);
-        const sLat = clampLat(south);
-
-        const xMin = Math.min(lon2tileX(west, z), lon2tileX(east, z));
-        const xMax = Math.max(lon2tileX(west, z), lon2tileX(east, z));
-        const yMin = Math.min(lat2tileY(nLat, z), lat2tileY(sLat, z));
-        const yMax = Math.max(lat2tileY(nLat, z), lat2tileY(sLat, z));
-
-        for (let x = xMin; x <= xMax; x++) {
-          for (let y = yMin; y <= yMax; y++) {
-            jobs.push({ z, x, y });
-          }
-        }
-      }
+      const jobs = tileJobsForBbox(bbox, effectiveZooms);
 
       setProgress({ done: 0, total: jobs.length });
 
       const MAX_RETRIES = 3;
       const RETRY_DELAY_MS = 1000;
+      const PROGRESS_EVERY = 25;
 
       let done = 0;
-      for (const job of jobs) {
-        const subs =
-          tileSubdomains ??
-          (tileTemplate.includes("{s}") ? ["a", "b", "c"] : [""]);
-        const sub = subs[(job.x + job.y) % subs.length];
-        const url = buildTileUrl(tileTemplate, job.z, job.x, job.y, sub);
+      let fetched = 0;
+      let failed = 0;
+      let bytes = 0;
 
+      // Counters live in locals and are published on the same beat as the
+      // progress bar; one render per tile would swamp a large export.
+      const publish = () => {
+        setProgress({ done, total: jobs.length });
+        setFailedTiles(failed);
+        setDownloadedBytes(bytes);
+      };
+
+      for (const job of jobs) {
         await waitWhilePaused();
 
         if (packNowRef.current) break;
@@ -530,37 +388,54 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
         const ctrl = abortRef.current;
         if (!ctrl) throw new Error(s.exportCancelled);
 
-        let fetched = false;
+        const url = buildTileUrl(tileTemplate, {
+          ...job,
+          s: pickSubdomain(tileSubdomains, job.x, job.y),
+        });
+
+        let ok = false;
         for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
           try {
+            // No referrerPolicy override here: OSM's tile policy rejects
+            // requests without a Referer, and the browser default already
+            // keeps cross-origin referrers down to the bare origin.
             const res = await fetch(url, { signal: ctrl.signal });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-            const blob = await res.blob();
-            const arr = await blob.arrayBuffer();
+            const arr = await res.arrayBuffer();
 
-            setDownloadedBytes((b) => b + arr.byteLength);
+            bytes += arr.byteLength;
             root.file(`${job.z}/${job.x}/${job.y}.png`, arr);
-            fetched = true;
+            ok = true;
             break;
           } catch (err: any) {
             // Abort signal means user cancelled — propagate immediately
             if (err?.name === "AbortError") throw err;
+            // Stopping to pack should not sit out the remaining backoff.
+            if (packNowRef.current) break;
             if (attempt < MAX_RETRIES - 1) {
               await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
             }
           }
         }
 
-        if (!fetched) {
-          setFailedTiles((n) => n + 1);
-        }
+        if (ok) fetched++;
+        else failed++;
 
         done++;
-        if (done % 25 === 0 || done === jobs.length) {
-          setProgress({ done, total: jobs.length });
+        if (done % PROGRESS_EVERY === 0 || done === jobs.length) {
+          publish();
           await new Promise((r) => setTimeout(r, 0)); // yield to UI
         }
+      }
+
+      publish();
+
+      // Every single tile failed - a dead source, or one whose URL template we
+      // cannot fill. Say so instead of handing over an empty pack.
+      if (jobs.length > 0 && fetched === 0) {
+        setExportError(s.exportFailed);
+        return;
       }
 
       // metadata file beside tile folders
@@ -570,7 +445,11 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
 
       saveAs(outBlob, `${placeName}.zip`);
     } catch (e: any) {
-      setExportError(e?.message ?? s.exportFailed);
+      // Cancelling aborts the in-flight fetch, and the browser's own wording
+      // for that is not something to show the user.
+      setExportError(
+        e?.name === "AbortError" ? s.cancelled : (e?.message ?? s.exportFailed),
+      );
     } finally {
       setIsExporting(false);
       setEndedAt(new Date());
@@ -632,13 +511,10 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                 <TileLayer
                   url={tileTemplate}
                   attribution={tileAttribution}
-                  subdomains={tileSubdomains as any}
+                  subdomains={tileSubdomains}
                 />
-                <BboxTracker onBounds={(b) => setBounds(b)} />
-                <MapInitializer
-                  mapRef={mapRef}
-                  onBounds={(b) => setBounds(b)}
-                />
+                <BboxTracker onBounds={handleBounds} />
+                <MapInitializer onBounds={handleBounds} />
               </MapContainer>
             )}
           </div>
@@ -678,7 +554,6 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                     // switching sources should reset map-derived state
                     setTileProviderId(id);
                     setBounds(null);
-                    mapRef.current = null;
                     setCustomUrlApplied(false);
                   }}
                   className={[
@@ -808,7 +683,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                         onChange={(e) => setZoomFrom(Number(e.target.value))}
                         className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                       >
-                        {Array.from({ length: 19 }, (_, i) => i).map((z) => (
+                        {Array.from({ length: MAX_ZOOM + 1 }, (_, i) => i).map((z) => (
                           <option key={z} value={z}>
                             {z}
                           </option>
@@ -823,7 +698,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                         onChange={(e) => setZoomTo(Number(e.target.value))}
                         className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-zinc-200 outline-none"
                       >
-                        {Array.from({ length: 19 }, (_, i) => i).map((z) => (
+                        {Array.from({ length: MAX_ZOOM + 1 }, (_, i) => i).map((z) => (
                           <option key={z} value={z}>
                             {z}
                           </option>
@@ -890,7 +765,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
             onClick={exportZip}
             className={[
               "mt-4 w-full rounded-xl px-4 py-2 text-sm font-medium ring-1 ring-white/10",
-              !bounds || isExporting
+              !bounds || !isTileSourceSelected || isExporting
                 ? "bg-white/10 text-zinc-300 opacity-60"
                 : "bg-white/15 text-white hover:bg-white/20",
             ].join(" ")}
@@ -901,7 +776,7 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
       </div>
 
       {progress && (
-        <div className="order-3 lg:order-none lg:col-start-3 lg:row-start-2">
+        <div>
           <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-xs text-zinc-300">
             <div className="flex items-center justify-between gap-3">
               <div className="text-zinc-400">
@@ -987,6 +862,10 @@ export default function MapsExporterApp({ strings: s }: { strings: MapsExporterS
                 >
                   {s.cancel}
                 </button>
+              ) : exportError ? (
+                <div className="flex items-center justify-center rounded-xl bg-red-500/10 px-3 py-2 text-center text-xs font-semibold text-red-200 ring-1 ring-red-500/30">
+                  {exportError}
+                </div>
               ) : (
                 <div className="flex items-center justify-center rounded-xl bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-500/30">
                   {s.completed}
