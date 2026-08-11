@@ -23,6 +23,7 @@ const scriptStrings = {
   confirmBulk: t(lang, "paylinks.delete.script.confirmBulk"),
   viewKeyError: t(lang, "paylinks.delete.script.viewKeyError"),
   networkError: t(lang, "paylinks.delete.script.networkError"),
+  insecureContext: t(lang, "paylinks.delete.script.insecureContext"),
 };
 
 const paylinksPath = localizedPath("/paylinks", lang);
@@ -85,6 +86,10 @@ const createPath = localizedPath("/paylinks/create", lang);
                 name="publicAddress"
                 required
                 placeholder="4..."
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
             </div>
@@ -93,10 +98,18 @@ const createPath = localizedPath("/paylinks/create", lang);
               <label class="block text-sm font-medium text-zinc-200">
                 {t(lang, "paylinks.delete.label.viewKey")}
               </label>
+              {/* Deliberately not type="password": some browsers treat a
+                  password field beside an address field as a credential pair
+                  and offer to save it, which is not somewhere a view key
+                  should end up. autocomplete stays off either way. */}
               <input
                 name="privateViewKey"
                 required
                 placeholder="64-hex chars"
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
             </div>
@@ -109,6 +122,10 @@ const createPath = localizedPath("/paylinks/create", lang);
                 id="paylinkId"
                 name="paylinkId"
                 placeholder="e.g., 2f4c1a0e-..."
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
               <p class="mt-2 text-xs text-zinc-500">
@@ -205,7 +222,25 @@ const createPath = localizedPath("/paylinks/create", lang);
   </main>
 
   {PAYLINKS_ENABLED && (
-  <script define:vars={{ API_BASE, scriptStrings }}>
+  <script is:inline define:vars={{ API_BASE, scriptStrings }}>
+    window.__PAYLINKS_API_BASE__ = API_BASE;
+    window.__PAYLINKS_STRINGS__ = scriptStrings;
+  </script>
+
+  <script>
+    import {
+      InsecureContextError,
+      computeOwnerKey,
+      isViewKeyShape,
+      wipeInput,
+    } from "../../lib/paylinksClient";
+
+    // Set by the inline script above. No localhost default: Astro bundles this
+    // even on builds that never render the page, and a default would aim it at
+    // whatever is on the visitor's own port.
+    const API_BASE = window.__PAYLINKS_API_BASE__ || "";
+    const scriptStrings = window.__PAYLINKS_STRINGS__ || {};
+
     const form = document.getElementById("form");
     const statusEl = document.getElementById("status");
     const resultEl = document.getElementById("result");
@@ -216,6 +251,8 @@ const createPath = localizedPath("/paylinks/create", lang);
     const paylinkIdEl = document.getElementById("paylinkId");
     const bulkConfirmWrap = document.getElementById("bulkConfirmWrap");
     const bulkConfirm = document.getElementById("bulkConfirm");
+
+    const viewKeyEl = form?.querySelector('[name="privateViewKey"]');
 
     function setStatus(msg) {
       statusEl.textContent = msg || "";
@@ -253,25 +290,6 @@ const createPath = localizedPath("/paylinks/create", lang);
 
     resetBtn?.addEventListener("click", resetUI);
 
-    function toHex(buffer) {
-      return Array.from(new Uint8Array(buffer))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    }
-
-    async function sha256Hex(str) {
-      // Requires secure context (https or localhost)
-      const data = new TextEncoder().encode(str);
-      const digest = await crypto.subtle.digest("SHA-256", data);
-      return toHex(digest);
-    }
-
-    async function computeOwnerKey(publicAddress, privateViewKey) {
-      return sha256Hex(
-        `paylinks:ownerkey:v1:${publicAddress}:${privateViewKey}`,
-      );
-    }
-
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       setStatus("");
@@ -293,7 +311,7 @@ const createPath = localizedPath("/paylinks/create", lang);
       submitBtn.textContent = scriptStrings.working;
 
       try {
-        if (!/^[0-9a-fA-F]{64}$/.test(privateViewKey)) {
+        if (!isViewKeyShape(privateViewKey)) {
           setStatus(scriptStrings.viewKeyError);
           submitBtn.disabled = false;
           submitBtn.textContent = scriptStrings.submit;
@@ -340,9 +358,22 @@ const createPath = localizedPath("/paylinks/create", lang);
         submitBtn.classList.add("opacity-60", "cursor-not-allowed");
 
         resetBtn?.classList.remove("hidden");
+
+        // Done with the key, so stop holding it.
+        wipeInput(viewKeyEl);
       } catch (err) {
-        console.error(err);
-        setStatus(scriptStrings.networkError);
+        // No Web Crypto means no owner key, and retrying won't change that.
+        // Say so instead of blaming the network, and drop the key.
+        if (err instanceof InsecureContextError) {
+          setStatus(scriptStrings.insecureContext);
+          wipeInput(viewKeyEl);
+        } else {
+          // Kept on purpose: this is retryable, and clearing it would mean
+          // retyping the key after a dropped connection.
+          console.error(err);
+          setStatus(scriptStrings.networkError);
+        }
+
         submitBtn.disabled = false;
         submitBtn.textContent = scriptStrings.submit;
       }
