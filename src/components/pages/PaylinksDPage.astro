@@ -2,17 +2,12 @@
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../NavBar.astro";
 import PaylinksOnionNotice from "../PaylinksOnionNotice.astro";
+import BuildStamp from "../BuildStamp.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
 import { PAYLINKS_ENABLED, paylinksApiBase } from "../../lib/paylinks";
 
 const lang = getLangFromUrl(Astro.url);
 
-const BUILD_SHA = import.meta.env.PUBLIC_BUILD_SHA ?? "";
-const BUILD_SHORT = BUILD_SHA ? BUILD_SHA.slice(0, 7) : "dev";
-const ONION_REPO = "http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi.org";
-const CLEARNET_REPO = "https://github.com/anonomi-org/anonomi.org";
-const COMMIT_URL = BUILD_SHA ? `${ONION_REPO}/commit/${BUILD_SHA}` : ONION_REPO;
-const CLEARNET_COMMIT_URL = BUILD_SHA ? `${CLEARNET_REPO}/commit/${BUILD_SHA}` : CLEARNET_REPO;
 
 const API_BASE = paylinksApiBase();
 
@@ -82,12 +77,7 @@ const scriptStrings = {
           <span id="footerFingerprintValue" class="text-zinc-300"></span>
         </div>
 
-        <div>
-          Build:
-          <a href={COMMIT_URL} data-clearnet-href={CLEARNET_COMMIT_URL} class="text-zinc-300 hover:text-white">
-            {BUILD_SHORT}
-          </a>
-        </div>
+        <BuildStamp />
       </div>
     </div>
   </main>

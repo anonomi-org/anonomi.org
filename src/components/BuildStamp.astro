@@ -1,0 +1,18 @@
+---
+import { BUILD_SHORT, buildCommitUrl } from "../lib/site";
+
+interface Props {
+  /** Classes for the wrapper, for callers that do not supply their own. */
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const commitUrl = buildCommitUrl();
+---
+
+<div class={className}>
+  Build:
+  <a href={commitUrl} class="text-zinc-300 hover:text-white">
+    {BUILD_SHORT}
+  </a>
+</div>
