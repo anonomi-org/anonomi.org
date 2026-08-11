@@ -236,10 +236,9 @@ export function ownerKeyInput(
 /**
  * No Web Crypto to hash with.
  *
- * `crypto.subtle` only exists in a secure context. Tor Browser treats onion
- * origins as secure; a stock browser pointed at the same address through a
- * SOCKS proxy doesn't, and there the delete page can't compute an owner key at
- * all. That used to show up as a network error, which sends people off
+ * `crypto.subtle` only exists in a secure context, and not every browser treats
+ * an onion origin as one. Where it is missing the owner key cannot be computed
+ * at all, which used to surface as a network error and send people off
  * debugging their connection.
  */
 export class InsecureContextError extends Error {

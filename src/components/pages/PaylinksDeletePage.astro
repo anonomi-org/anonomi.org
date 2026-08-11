@@ -98,12 +98,10 @@ const createPath = localizedPath("/paylinks/create", lang);
               <label class="block text-sm font-medium text-zinc-200">
                 {t(lang, "paylinks.delete.label.viewKey")}
               </label>
-              {/* Deliberately not type="password". A password field next to an
-                  address field reads as a credential pair, and Chromium
-                  ignores autocomplete="off" for its save prompt, so the
-                  browser can offer to store a private view key and sync it
-                  off-device. autocomplete="off" is respected for ordinary
-                  text fields, which is the exposure worth closing here. */}
+              {/* Deliberately not type="password": some browsers treat a
+                  password field beside an address field as a credential pair
+                  and offer to save it, which is not somewhere a view key
+                  should end up. autocomplete stays off either way. */}
               <input
                 name="privateViewKey"
                 required
