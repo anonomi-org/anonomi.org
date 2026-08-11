@@ -119,11 +119,14 @@ const paylinksPath = localizedPath("/paylinks", lang);
               <label class="block text-sm font-medium text-zinc-200"
                 >{t(lang, "paylinks.create.label.viewKey")}</label
               >
-              {/* Password field to keep the key off the screen and out of
-                  form history in browsers that aren't Tor Browser. */}
+              {/* Deliberately not type="password". A password field next to an
+                  address field reads as a credential pair, and Chromium
+                  ignores autocomplete="off" for its save prompt, so the
+                  browser can offer to store a private view key and sync it
+                  off-device. autocomplete="off" is respected for ordinary
+                  text fields, which is the exposure worth closing here. */}
               <input
                 name="privateViewKey"
-                type="password"
                 required
                 placeholder="64-hex chars"
                 autocomplete="off"
