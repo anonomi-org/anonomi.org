@@ -36,6 +36,12 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run the unit tests
+npm test
+
+# Audit a build before deploying it
+PUBLIC_SITE_BASE_URL=https://anonomi.org npm run audit:dist
 ```
 
 The dev server runs at `http://localhost:4321`.
@@ -65,6 +71,14 @@ Environment variables:
 - `PUBLIC_BUILD_SHA` — Git commit hash
 - `PUBLIC_SITE_BASE_URL` — Base URL (clearnet or onion)
 - `PUBLIC_PAYLINKS_API_BASE` — Paylinks API endpoint
+
+### Build audit
+
+Both deploys run `npm run audit:dist` on the finished build and stop if it
+fails. It reads `PUBLIC_SITE_BASE_URL` to pick the rules for that network, then
+checks the output: no off-origin subresources, no `localhost` left over, every
+outbound link going to a host listed in `src/lib/allowedHosts.ts`, and the
+Paylinks forms on the right network. Rules are in `src/lib/distAudit.ts`.
 
 ## Contributing
 
