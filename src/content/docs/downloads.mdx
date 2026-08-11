@@ -4,42 +4,100 @@ description: Where to download Anonomi Messenger safely and how to verify it.
 ---
 
 ⚠️ **Important**  
-Anonomi Messenger should only be downloaded from **official sources** listed on this page.  
-Do **not** trust third-party mirrors, re-packaged APKs, or links shared in chats.
+Anonomi Messenger has **two** official Android channels, both listed on this page.  
+Do **not** trust re-packaged APKs, re-hosted binaries, or links shared in chats.
 
 ---
 
 ## Android
 
-### GitHub Releases (recommended)
-The primary distribution channel for Anonomi Messenger is GitHub Releases.
+Both official channels ship APKs signed with the **same key**. You can install from
+one and update from the other without uninstalling or losing your account.
+
+Signing certificate SHA-256:
+
+`0c42c2a2e9be889eef2e7da10e8cd9cc71e6e6bc0e676fc994a8066d1766cb8d`
+
+The certificate name reads `CN=anonchat`, an earlier name for the project. This is expected.
+
+### F-Droid
+
+F-Droid rebuilds Anonomi Messenger from source, compares the result against the binary
+we publish, and ships **our** APK with **our** signature — not one signed by F-Droid.
+You do not have to trust F-Droid as a third party: the signature you install is ours.
+
+- Listing: https://f-droid.org/packages/org.anonomi.android/
+- Download size: about 67 MB
+
+The F-Droid client also notifies you when a new version is available. The direct
+download does not.
+
+**Over Tor.** F-Droid mirrors its repository as an onion service:
+
+`http://fdroidorg6cooksyluodepej4erfctzk7rrjpjbbr6wx24jh3lqyfwyd.onion/fdroid/repo`
+
+Add it as a mirror in the F-Droid client with Orbot running, or fetch the APK from it
+directly. No clearnet access is required.
+
+### GitHub Releases
+
+The direct-download build, published by us.
 
 - Official repository: https://github.com/anonomi-org/anonomi-android
 - Releases page: https://github.com/anonomi-org/anonomi-android/releases
+- Onion (Gitea): `http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-android/releases`
+- Download size: about 144 MB
 
 Each release includes:
+
 - APK file
 - Version number
 - Changelog
-- Cryptographic fingerprints or signatures (when applicable)
+- SHA-256 checksum
 
-This is the **authoritative source**.
+### Which one to choose
+
+The app code is identical. The difference is the offline kit.
+
+The direct-download build bundles companion apps — Anonomi Postbox, Monerujo, Tor
+Browser and Orbot — as assets, so one device can hand the whole toolkit to others over
+the offline hotspot with no internet at all. That bundle is why it is roughly twice
+the size.
+
+The F-Droid build ships no third-party APKs, because F-Droid builds everything from
+source and does not accept prebuilt binaries. Offline sharing still works and still
+hands out Anonomi Messenger itself, but not the companion apps.
+
+Choose the direct download if you need to prepare other devices offline.
+Otherwise F-Droid is the simpler option.
+
+See [Offline app distribution](/docs/features/distribution) for how the offline kit works.
 
 ---
 
 ## Verifying authenticity
 
-Before installing Anonomi Messenger, you should verify that the file is authentic.
+Before installing, verify that the file is authentic.
+
+The strongest check is the **signature**, not the file hash. Both channels use the
+certificate above, and it stays the same from one release to the next.
+
+If you compare **checksums**, compare against the right channel. The two builds are
+different files, so their SHA-256 checksums differ. A checksum from a GitHub release
+will not match an APK installed from F-Droid. That mismatch is expected and does not
+mean either build has been tampered with.
 
 Recommended steps:
-1. Download the APK from an official source
-2. Compare the published fingerprint or signature
-3. Ensure it matches the one documented in the release notes
+
+1. Download the APK from one of the official channels above
+2. Compare the published checksum for **that** channel
+3. Or check the signing certificate, which is the same for both
 
 See:
-- [Security & verification](/docs/security)
+- [Verify downloads](/docs/verify)
 
 Verification is especially important if you:
+
 - Operate in a hostile network
 - Are targeted by surveillance or malware
 - Received the download link from a third party
@@ -50,8 +108,11 @@ Verification is especially important if you:
 
 Anonomi Messenger does **not** use automatic background updates from centralized servers.
 
-Updates are released deliberately and announced through official channels.  
-You are responsible for checking and installing updates.
+If you installed from GitHub Releases, you are responsible for checking and installing
+updates. Releases are published deliberately and announced through official channels.
+
+If you installed from F-Droid, the client notifies you when a new version is available.
+It does not install updates by itself unless you have turned that on in F-Droid.
 
 ---
 

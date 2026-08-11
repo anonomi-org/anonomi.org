@@ -5,8 +5,10 @@ description: How to verify Anonomi Messenger releases before installing, especia
 
 In high-risk environments, **how you install software matters as much as what software you install**.
 
-Anonomi Messenger is distributed outside centralized app stores by design.  
-That means **verification is your responsibility**.
+Anonomi Messenger is distributed through F-Droid and direct download, never through Google Play.
+
+If you install from F-Droid, the client verifies each download against F-Droid's signed index
+before installing. If you download an APK directly, **verification is your responsibility**.
 
 This page explains *when verification is critical*, *what to verify*, and *how to do it safely* — including **step-by-step instructions on Android**.
 
@@ -46,12 +48,20 @@ Verification does **not**:
 
 ## Official release sources
 
-Only trust releases from **official Anonomi Messenger channels**.
+Only trust releases from **official Anonomi Messenger channels**:
+
+- **F-Droid** — https://f-droid.org/packages/org.anonomi.android/
+- **GitHub Releases** — https://github.com/anonomi-org/anonomi-android/releases
+
+Both channels ship APKs signed with the same key. See [Downloads](/docs/downloads) for details.
 
 Official releases are published with:
 - Versioned APKs
 - Cryptographic checksums (hashes)
 - Optional signature information
+
+The two channels build different APKs, so **their checksums differ**. Always compare against
+the checksum for the channel you downloaded from. A mismatch across channels is expected.
 
 Never trust:
 - Random APK mirrors
