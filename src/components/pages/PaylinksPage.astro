@@ -369,8 +369,19 @@ const lang = getLangFromUrl(Astro.url);
         {t(lang, "paylinks.getStarted.heading")}
       </h2>
 
+      <!--
+        The buttons below only exist on the onion build, so clearnet gets copy
+        that says where the work happens instead of promising a quick create.
+        The section itself stays: the documentation links under it are useful
+        on both networks.
+      -->
       <p class="mt-4 max-w-3xl text-base text-zinc-400 sm:text-lg">
-        {t(lang, "paylinks.getStarted.description")}
+        {t(
+          lang,
+          PAYLINKS_ENABLED
+            ? "paylinks.getStarted.description"
+            : "paylinks.getStarted.onionDescription",
+        )}
       </p>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2">
@@ -379,7 +390,7 @@ const lang = getLangFromUrl(Astro.url);
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "paylinks.getStarted.create.desc")}
           </p>
-          {PAYLINKS_ENABLED && (
+          {PAYLINKS_ENABLED ? (
           <div class="mt-4">
             <a
               href={localizedPath("/paylinks/create", lang)}
@@ -388,6 +399,10 @@ const lang = getLangFromUrl(Astro.url);
               {t(lang, "paylinks.getStarted.create.button")}
             </a>
           </div>
+          ) : (
+          <p class="mt-4 text-sm text-zinc-500">
+            {t(lang, "paylinks.getStarted.onionOnly")}
+          </p>
           )}
         </div>
 
@@ -396,7 +411,7 @@ const lang = getLangFromUrl(Astro.url);
           <p class="mt-2 text-sm text-zinc-400">
             {t(lang, "paylinks.getStarted.delete.desc")}
           </p>
-          {PAYLINKS_ENABLED && (
+          {PAYLINKS_ENABLED ? (
           <div class="mt-4">
             <a
               href={localizedPath("/paylinks/delete", lang)}
@@ -405,6 +420,10 @@ const lang = getLangFromUrl(Astro.url);
               {t(lang, "paylinks.getStarted.delete.button")}
             </a>
           </div>
+          ) : (
+          <p class="mt-4 text-sm text-zinc-500">
+            {t(lang, "paylinks.getStarted.onionOnly")}
+          </p>
           )}
         </div>
       </div>

@@ -615,5 +615,7 @@
   "paylinks.d.result.invalidUri": "Invalid payment URI received.",
   "paylinks.d.result.requestFailed": "Failed to create payment request.",
   "paylinks.d.script.generating": "Generating…",
-  "paylinks.d.script.generated": "Payment request generated"
+  "paylinks.d.script.generated": "Payment request generated",
+  "paylinks.getStarted.onionDescription": "Creating and deleting paylinks happens on the onion site. You’ll need your Monero primary address and private view key.",
+  "paylinks.getStarted.onionOnly": "Available on the onion site"
 }

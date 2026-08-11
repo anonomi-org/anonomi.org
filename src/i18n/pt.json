@@ -603,5 +603,19 @@
     "messenger.download.previousVersions": "Versões anteriores",
     "messenger.download.allReleases": "Todos os lançamentos",
     "messenger.download.latestVersion": "Última versão",
-    "footer.contact.pgpKey": "Chave PGP"
+    "footer.contact.pgpKey": "Chave PGP",
+    "paylinks.onionOnly.heading": "O Paylinks está disponível apenas no site onion",
+    "paylinks.onionOnly.description": "O Paylinks mudou-se para o Tor. Criar, gerir e doar através de um paylink acontece agora exclusivamente no website onion do Anonomi — esta página clearnet não consegue executar essas ações.",
+    "paylinks.onionOnly.reason": "O serviço Paylinks só é acessível como serviço onion do Tor e apenas aceita pedidos vindos do site onion. Mantê-lo só no Tor conserva o tráfego de doações dentro da rede para a qual foi concebido, e dispensa o alojamento clearnet e o DNS de que um serviço de doações não deveria depender.",
+    "paylinks.onionOnly.addressLabel": "ABRA ESTE ENDEREÇO NO TOR BROWSER",
+    "paylinks.onionOnly.torRequired": "Os endereços onion abrem apenas no Tor Browser. Copie o endereço acima em vez de seguir uma ligação a partir de uma página clearnet, e verifique-o carácter a carácter com um endereço publicado na nossa documentação.",
+    "paylinks.onionOnly.oldLinks": "Os paylinks criados no anterior serviço clearnet deixaram de ser válidos, tal como as ligações de doação que apontam para ele. Quem publica deve criar uma substituição no site onion.",
+    "paylinks.onionOnly.whyLink": "Porque é que o Paylinks funciona no Tor",
+    "paylinks.onionOnly.torLink": "Novo no Tor?",
+    "paylinks.create.script.spanError": "Os índices Min e Max podem abranger no máximo 1000 endereços.",
+    "paylinks.create.script.rateLimited": "Foram criados demasiados paylinks no último minuto. Aguarde um momento e tente novamente.",
+    "paylinks.d.donate.amountHelp": "Até 12 casas decimais.",
+    "paylinks.d.script.rateLimited": "Demasiados pedidos de doação para este paylink neste momento. Aguarde um momento e tente novamente.",
+    "paylinks.getStarted.onionDescription": "Criar e eliminar paylinks acontece no site onion. Vai precisar do seu endereço principal Monero e da chave de visualização privada.",
+    "paylinks.getStarted.onionOnly": "Disponível no site onion"
 }
