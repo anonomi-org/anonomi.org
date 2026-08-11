@@ -4,8 +4,24 @@ import NavBar from "../NavBar.astro";
 import Footer from "../Footer.astro";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
 import { fetchReleases } from "../../lib/releases";
+import { ONION_REPO_BASE, net, repoUrl } from "../../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
+
+const MESSENGER_APK = "anonomi-official-release.apk";
+const POSTBOX_APK = "postbox-android-release.apk";
+
+/** A release asset on the onion mirror. The releases API gives us the clearnet URL. */
+function onionAsset(repo: string, version: string, asset: string): string {
+  return `${ONION_REPO_BASE}/${repo}/releases/download/${version}/${asset}`;
+}
+
+// On the onion build the badge points at our downloads page, which carries
+// F-Droid's own onion address; f-droid.org itself is not reachable there.
+const FDROID_URL = net(
+  localizedPath("/docs/downloads", lang) + "#f-droid",
+  "https://f-droid.org/packages/org.anonomi.android/",
+);
 
 const messengerReleases = await fetchReleases("anonomi-org/anonomi-android", "anonomi-official-release.apk", 4);
 const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "postbox-android-release.apk", 4);
@@ -68,8 +84,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
 
           <div class="mt-6">
             <a
-              href={localizedPath("/docs/downloads", lang) + "#f-droid"}
-              data-clearnet-href="https://f-droid.org/packages/org.anonomi.android/"
+              href={FDROID_URL}
               class="inline-block rounded-lg transition hover:opacity-80"
             >
               <img
@@ -1332,8 +1347,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                 )}
                 <span class="text-zinc-500">{messengerReleases[0].sizeMB}</span>
                 <a
-                  href={`http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-android/releases/download/${messengerReleases[0].version}/anonomi-official-release.apk`}
-                  data-clearnet-href={messengerReleases[0].downloadUrl}
+                  href={net(
+                    onionAsset("anonomi-android", messengerReleases[0].version, MESSENGER_APK),
+                    messengerReleases[0].downloadUrl,
+                  )}
                   target="_blank"
                   rel="noreferrer"
                   class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
@@ -1368,8 +1385,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                         )}
                         <span class="text-zinc-500">{r.sizeMB}</span>
                         <a
-                          href={`http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-android/releases/download/${r.version}/anonomi-official-release.apk`}
-                          data-clearnet-href={r.downloadUrl}
+                          href={net(
+                            onionAsset("anonomi-android", r.version, MESSENGER_APK),
+                            r.downloadUrl,
+                          )}
                           target="_blank"
                           rel="noreferrer"
                           class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
@@ -1380,8 +1399,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                       </div>
                     ))}
                     <a
-                      href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-android/releases"
-                      data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases"
+                      href={repoUrl("anonomi-android/releases")}
                       target="_blank"
                       rel="noreferrer"
                       class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
@@ -1396,14 +1414,12 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
           ) : (
             <div class="mt-6">
               <a
-                href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-android/releases/latest"
-                data-clearnet-href="https://github.com/anonomi-org/anonomi-android/releases/latest"
+                href={repoUrl("anonomi-android/releases/latest")}
                 target="_blank"
                 rel="noreferrer"
                 class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
               >
-                <span data-clearnet-text={t(lang, "messenger.download.messenger.button")}
-                  >{t(lang, "messenger.download.messenger.button")}</span>
+                <span>{t(lang, "messenger.download.messenger.button")}</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
@@ -1411,8 +1427,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
 
           <div class="mt-6 border-t border-white/5 pt-4">
             <a
-              href={localizedPath("/docs/downloads", lang) + "#f-droid"}
-              data-clearnet-href="https://f-droid.org/packages/org.anonomi.android/"
+              href={FDROID_URL}
               class="inline-block rounded-lg transition hover:opacity-80"
             >
               <img
@@ -1453,8 +1468,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                 )}
                 <span class="text-zinc-500">{postboxReleases[0].sizeMB}</span>
                 <a
-                  href={`http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-postbox/releases/download/${postboxReleases[0].version}/postbox-android-release.apk`}
-                  data-clearnet-href={postboxReleases[0].downloadUrl}
+                  href={net(
+                    onionAsset("anonomi-postbox", postboxReleases[0].version, POSTBOX_APK),
+                    postboxReleases[0].downloadUrl,
+                  )}
                   target="_blank"
                   rel="noreferrer"
                   class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
@@ -1489,8 +1506,10 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                         )}
                         <span class="text-zinc-500">{r.sizeMB}</span>
                         <a
-                          href={`http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-postbox/releases/download/${r.version}/postbox-android-release.apk`}
-                          data-clearnet-href={r.downloadUrl}
+                          href={net(
+                            onionAsset("anonomi-postbox", r.version, POSTBOX_APK),
+                            r.downloadUrl,
+                          )}
                           target="_blank"
                           rel="noreferrer"
                           class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white"
@@ -1501,8 +1520,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                       </div>
                     ))}
                     <a
-                      href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-postbox/releases"
-                      data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases"
+                      href={repoUrl("anonomi-postbox/releases")}
                       target="_blank"
                       rel="noreferrer"
                       class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
@@ -1517,14 +1535,12 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
           ) : (
             <div class="mt-6">
               <a
-                href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi/anonomi-postbox/releases/latest"
-                data-clearnet-href="https://github.com/anonomi-org/anonomi-postbox/releases/latest"
+                href={repoUrl("anonomi-postbox/releases/latest")}
                 target="_blank"
                 rel="noreferrer"
                 class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium ring-1 ring-white/10 hover:bg-white/15"
               >
-                <span data-clearnet-text={t(lang, "messenger.download.postbox.button")}
-                  >{t(lang, "messenger.download.postbox.button")}</span>
+                <span>{t(lang, "messenger.download.postbox.button")}</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
             </div>

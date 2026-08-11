@@ -2,8 +2,12 @@
 import logo from "../assets/logo.png";
 import { getLangFromUrl, localizedPath, locales, localeLabels, t } from "../i18n/utils";
 import type { Locale } from "../i18n/utils";
+import { net, repoUrl } from "../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
+
+const repoHref = repoUrl();
+const repoLabel = net("Onion Repo", "GitHub");
 
 const links = [
   { label: t(lang, "nav.messenger"), href: localizedPath("/messenger", lang) },
@@ -79,14 +83,12 @@ const otherLocales = locales.filter((l) => l !== lang);
 
       <a
         id="code-repo-link"
-        href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
-        data-clearnet-href="https://github.com/anonomi-org"
-        data-clearnet-text="GitHub"
+        href={repoHref}
         target="_blank"
         rel="noreferrer noopener"
         class="hidden rounded-xl px-4 py-2 text-sm font-medium text-zinc-300 ring-1 ring-white/10 hover:bg-white/5 transition sm:inline-flex"
       >
-        Onion Repo
+        {repoLabel}
       </a>
 
       <!-- Hamburger button (mobile only) -->
@@ -127,14 +129,12 @@ const otherLocales = locales.filter((l) => l !== lang);
       }
       <div class="mt-2 border-t border-white/10 pt-3">
         <a
-          href="http://ll7nb2gloylmzcnb4q6apax6zt4c5gbdvx73cvf7fj4frep7zsgdeoqd.onion/anonomi"
-          data-clearnet-href="https://github.com/anonomi-org"
-          data-clearnet-text="GitHub"
+          href={repoHref}
           target="_blank"
           rel="noreferrer noopener"
           class="block rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
         >
-          Onion Repo
+          {repoLabel}
         </a>
       </div>
       <div class="mt-2 border-t border-white/10 pt-3 space-y-1">
