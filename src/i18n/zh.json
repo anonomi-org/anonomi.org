@@ -601,5 +601,19 @@
     "messenger.download.previousVersions": "先前版本",
     "messenger.download.allReleases": "所有版本",
     "messenger.download.latestVersion": "最新版本",
-    "footer.contact.pgpKey": "PGP密钥"
+    "footer.contact.pgpKey": "PGP密钥",
+    "home.hero.description.before": "",
+    "home.open.onionrepo.p1.before": "",
+    "paylinks.onionOnly.heading": "Paylinks 仅在 onion 站点提供",
+    "paylinks.onionOnly.description": "Paylinks 已迁移至 Tor。创建、管理以及通过 paylink 捐赠现在仅在 Anonomi 的 onion 网站上进行——此 ClearNet 页面无法执行这些操作。",
+    "paylinks.onionOnly.reason": "Paylinks 服务仅作为 Tor onion 服务提供，并且只接受来自 onion 站点的请求。仅在 Tor 上运行可以让捐赠流量留在其设计所针对的网络内，并去掉捐赠服务本不应依赖的 ClearNet 托管和 DNS。",
+    "paylinks.onionOnly.addressLabel": "在 TOR 浏览器中打开此地址",
+    "paylinks.onionOnly.torRequired": "onion 地址只能在 Tor 浏览器中打开。请复制上面的地址，而不要从 ClearNet 页面点击链接，并逐字符核对我们文档中公布的地址。",
+    "paylinks.onionOnly.oldLinks": "在此前 ClearNet 服务上创建的 paylink 已失效，指向它的捐赠链接同样失效。发布者应在 onion 站点上重新创建。",
+    "paylinks.onionOnly.whyLink": "为什么 Paylinks 只在 Tor 上运行",
+    "paylinks.onionOnly.torLink": "初次使用 Tor？",
+    "paylinks.create.script.spanError": "最小和最大索引最多可跨越 1000 个地址。",
+    "paylinks.create.script.rateLimited": "过去一分钟内创建的 paylink 过多。请稍候再试。",
+    "paylinks.d.donate.amountHelp": "最多 12 位小数。",
+    "paylinks.d.script.rateLimited": "此 paylink 当前的捐赠请求过多。请稍候再试。"
 }

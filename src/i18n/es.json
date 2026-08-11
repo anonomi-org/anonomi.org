@@ -601,5 +601,19 @@
     "messenger.download.previousVersions": "Versiones anteriores",
     "messenger.download.allReleases": "Todos los lanzamientos",
     "messenger.download.latestVersion": "Última versión",
-    "footer.contact.pgpKey": "Clave PGP"
+    "footer.contact.pgpKey": "Clave PGP",
+    "home.hero.description.before": "",
+    "home.open.onionrepo.p1.before": "",
+    "paylinks.onionOnly.heading": "Paylinks solo está disponible en el sitio onion",
+    "paylinks.onionOnly.description": "Paylinks se ha trasladado a Tor. Crear, gestionar y donar a través de un paylink ocurre ahora exclusivamente en el sitio web onion de Anonomi: esta página clearnet no puede realizar esas acciones.",
+    "paylinks.onionOnly.reason": "El servicio Paylinks solo es accesible como servicio onion de Tor y únicamente acepta solicitudes del sitio onion. Ejecutarlo solo en Tor mantiene el tráfico de donaciones dentro de la red para la que fue diseñado, y elimina el alojamiento clearnet y el DNS de los que un servicio de donaciones no debería depender.",
+    "paylinks.onionOnly.addressLabel": "ABRE ESTA DIRECCIÓN EN EL NAVEGADOR TOR",
+    "paylinks.onionOnly.torRequired": "Las direcciones onion solo se abren en el navegador Tor. Copia la dirección de arriba en lugar de seguir un enlace desde una página clearnet, y compruébala carácter por carácter con una dirección publicada en nuestra documentación.",
+    "paylinks.onionOnly.oldLinks": "Los paylinks creados en el anterior servicio clearnet ya no son válidos, ni tampoco los enlaces de donación que apuntan a él. Quienes publiquen deben crear un reemplazo en el sitio onion.",
+    "paylinks.onionOnly.whyLink": "Por qué Paylinks funciona en Tor",
+    "paylinks.onionOnly.torLink": "¿Nuevo en Tor?",
+    "paylinks.create.script.spanError": "Los índices Mín y Máx pueden abarcar como máximo 1000 direcciones.",
+    "paylinks.create.script.rateLimited": "Se han creado demasiados paylinks en el último minuto. Espera un momento e inténtalo de nuevo.",
+    "paylinks.d.donate.amountHelp": "Hasta 12 decimales.",
+    "paylinks.d.script.rateLimited": "Demasiadas solicitudes de donación para este paylink en este momento. Espera un momento e inténtalo de nuevo."
 }

@@ -601,5 +601,19 @@
     "messenger.download.previousVersions": "الإصدارات السابقة",
     "messenger.download.allReleases": "جميع الإصدارات",
     "messenger.download.latestVersion": "أحدث إصدار",
-    "footer.contact.pgpKey": "مفتاح PGP"
+    "footer.contact.pgpKey": "مفتاح PGP",
+    "home.hero.description.before": "",
+    "home.open.onionrepo.p1.before": "",
+    "paylinks.onionOnly.heading": "Paylinks متاح فقط على موقع onion",
+    "paylinks.onionOnly.description": "انتقل Paylinks إلى Tor. أصبح إنشاء الروابط وإدارتها والتبرع من خلالها يتم حصريًا على موقع Anonomi على onion — هذه الصفحة على الإنترنت العادي لا يمكنها تنفيذ هذه الإجراءات.",
+    "paylinks.onionOnly.reason": "خدمة Paylinks متاحة فقط كخدمة onion على Tor، ولا تقبل الطلبات إلا من موقع onion. تشغيلها على Tor وحده يُبقي حركة التبرعات داخل الشبكة التي صُممت لها، ويزيل الاستضافة على الإنترنت العادي ونظام أسماء النطاقات اللذين لا ينبغي لخدمة تبرعات أن تعتمد عليهما.",
+    "paylinks.onionOnly.addressLabel": "افتح هذا العنوان في متصفح Tor",
+    "paylinks.onionOnly.torRequired": "لا تُفتح عناوين onion إلا في متصفح Tor. انسخ العنوان أعلاه بدلًا من اتباع رابط من صفحة على الإنترنت العادي، وتحقق منه حرفًا بحرف مقابل عنوان منشور في وثائقنا.",
+    "paylinks.onionOnly.oldLinks": "لم تعد الروابط التي أُنشئت على الخدمة السابقة على الإنترنت العادي صالحة، وكذلك روابط التبرع التي تشير إليها. على الناشرين إنشاء بديل على موقع onion.",
+    "paylinks.onionOnly.whyLink": "لماذا يعمل Paylinks على Tor",
+    "paylinks.onionOnly.torLink": "جديد على Tor؟",
+    "paylinks.create.script.spanError": "يمكن أن يمتد الحد الأدنى والأقصى للفهرس إلى 1000 عنوان كحد أقصى.",
+    "paylinks.create.script.rateLimited": "تم إنشاء عدد كبير جدًا من الروابط في الدقيقة الأخيرة. انتظر لحظة ثم حاول مرة أخرى.",
+    "paylinks.d.donate.amountHelp": "حتى 12 منزلة عشرية.",
+    "paylinks.d.script.rateLimited": "هناك عدد كبير جدًا من طلبات التبرع لهذا الرابط حاليًا. انتظر لحظة ثم حاول مرة أخرى."
 }

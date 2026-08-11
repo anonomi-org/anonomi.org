@@ -601,5 +601,19 @@
     "messenger.download.previousVersions": "نسخه‌های قبلی",
     "messenger.download.allReleases": "همه نسخه‌ها",
     "messenger.download.latestVersion": "آخرین نسخه",
-    "footer.contact.pgpKey": "کلید PGP"
+    "footer.contact.pgpKey": "کلید PGP",
+    "home.hero.description.before": "",
+    "home.open.onionrepo.p1.before": "",
+    "paylinks.onionOnly.heading": "Paylinks فقط در سایت onion در دسترس است",
+    "paylinks.onionOnly.description": "Paylinks به Tor منتقل شده است. ساخت، مدیریت و اهدا از طریق یک paylink اکنون منحصراً در وب‌سایت onion انونومی انجام می‌شود — این صفحهٔ clearnet نمی‌تواند این کارها را انجام دهد.",
+    "paylinks.onionOnly.reason": "سرویس Paylinks تنها به‌صورت یک سرویس onion روی Tor در دسترس است و فقط درخواست‌های سایت onion را می‌پذیرد. اجرای آن تنها روی Tor ترافیک اهدا را درون شبکه‌ای که برای آن طراحی شده نگه می‌دارد، و وابستگی به میزبانی clearnet و DNS را که یک سرویس اهدا نباید به آن نیاز داشته باشد از بین می‌برد.",
+    "paylinks.onionOnly.addressLabel": "این نشانی را در مرورگر Tor باز کنید",
+    "paylinks.onionOnly.torRequired": "نشانی‌های onion فقط در مرورگر Tor باز می‌شوند. به‌جای دنبال‌کردن پیوند از یک صفحهٔ clearnet، نشانی بالا را کپی کنید و آن را حرف‌به‌حرف با نشانی منتشرشده در مستندات ما بررسی کنید.",
+    "paylinks.onionOnly.oldLinks": "paylinkهایی که روی سرویس clearnet پیشین ساخته شده‌اند دیگر معتبر نیستند، و پیوندهای اهدا که به آن اشاره می‌کنند نیز همین‌طور. ناشران باید جایگزینی روی سایت onion بسازند.",
+    "paylinks.onionOnly.whyLink": "چرا Paylinks روی Tor اجرا می‌شود",
+    "paylinks.onionOnly.torLink": "تازه‌وارد Tor هستید؟",
+    "paylinks.create.script.spanError": "کمینه و بیشینهٔ اندیس حداکثر می‌توانند ۱۰۰۰ نشانی را در بر بگیرند.",
+    "paylinks.create.script.rateLimited": "در یک دقیقهٔ گذشته paylinkهای بسیار زیادی ساخته شده است. کمی صبر کنید و دوباره تلاش کنید.",
+    "paylinks.d.donate.amountHelp": "تا ۱۲ رقم اعشار.",
+    "paylinks.d.script.rateLimited": "درخواست‌های اهدای بسیار زیادی برای این paylink وجود دارد. کمی صبر کنید و دوباره تلاش کنید."
 }
