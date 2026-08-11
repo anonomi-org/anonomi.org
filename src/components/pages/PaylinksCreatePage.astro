@@ -104,6 +104,10 @@ const paylinksPath = localizedPath("/paylinks", lang);
                 name="publicAddress"
                 required
                 placeholder="4..."
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
               <p class="mt-2 text-xs text-zinc-500">
@@ -115,10 +119,17 @@ const paylinksPath = localizedPath("/paylinks", lang);
               <label class="block text-sm font-medium text-zinc-200"
                 >{t(lang, "paylinks.create.label.viewKey")}</label
               >
+              {/* Password field to keep the key off the screen and out of
+                  form history in browsers that aren't Tor Browser. */}
               <input
                 name="privateViewKey"
+                type="password"
                 required
                 placeholder="64-hex chars"
+                autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2 font-mono text-[12px] text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
               <p class="mt-2 text-xs text-zinc-500">
@@ -358,7 +369,29 @@ const paylinksPath = localizedPath("/paylinks", lang);
   </main>
 
   {PAYLINKS_ENABLED && (
-  <script define:vars={{ API_BASE, SITE_BASE, scriptStrings }}>
+  <script is:inline define:vars={{ API_BASE, SITE_BASE, scriptStrings }}>
+    window.__PAYLINKS_API_BASE__ = API_BASE;
+    window.__PAYLINKS_SITE_BASE__ = SITE_BASE;
+    window.__PAYLINKS_STRINGS__ = scriptStrings;
+  </script>
+
+  <script>
+    import {
+      buildEmbedHtml,
+      escapeHtml,
+      firstDetailMessage,
+      toIntOrUndef,
+      validateIndexRange,
+      wipeInput,
+    } from "../../lib/paylinksClient";
+
+    // Set by the inline script above. No localhost default: Astro bundles this
+    // even on builds that never render the page, and a default would aim it at
+    // whatever is on the visitor's own port.
+    const API_BASE = window.__PAYLINKS_API_BASE__ || "";
+    const SITE_BASE = window.__PAYLINKS_SITE_BASE__ || "";
+    const scriptStrings = window.__PAYLINKS_STRINGS__ || {};
+
     const form = document.getElementById("form");
     const statusEl = document.getElementById("status");
     const resultEl = document.getElementById("result");
@@ -382,19 +415,12 @@ const paylinksPath = localizedPath("/paylinks", lang);
     const verifyTextEl = document.getElementById("verifyText");
     const subaddressLineEl = document.getElementById("subaddressLine");
 
+    const viewKeyEl = form?.querySelector('[name="privateViewKey"]');
+
     let paylinkCreated = false;
 
     function setStatus(msg) {
       statusEl.textContent = msg || "";
-    }
-
-    function toIntOrUndef(v) {
-      const s = String(v ?? "").trim();
-      if (!s) return undefined;
-      const n = Number(s);
-      if (!Number.isFinite(n)) return undefined;
-      const i = Math.trunc(n);
-      return i > 0 ? i : undefined;
     }
 
     function resetUI() {
@@ -459,25 +485,12 @@ const paylinksPath = localizedPath("/paylinks", lang);
       }
     }
 
-    // Subaddresses are precomputed at creation, so the API caps how many a
-    // single paylink may span. It is the width of the range that is limited,
-    // not how large the indices are: 999000-999999 is fine, 1-5000 is not.
-    // That cannot be expressed as a max attribute on the inputs, so it is
-    // checked here as well as server-side.
-    const MAX_INDEX_SPAN = 1000;
-
-    function validateIndexRange(minIndex, maxIndex) {
-      if (minIndex === undefined || maxIndex === undefined) {
-        return null;
-      }
-      if (minIndex > maxIndex) {
-        return scriptStrings.minMaxError;
-      }
-      if (maxIndex - minIndex + 1 > MAX_INDEX_SPAN) {
-        return scriptStrings.spanError;
-      }
-      return null;
-    }
+    // validateIndexRange returns a reason; the translated text stays here
+    // rather than in the shared module.
+    const INDEX_RANGE_MESSAGES = {
+      minMax: () => scriptStrings.minMaxError,
+      span: () => scriptStrings.spanError,
+    };
 
     genModeEl?.addEventListener("change", syncIndexHelp);
 
@@ -499,74 +512,6 @@ const paylinksPath = localizedPath("/paylinks", lang);
       return Object.keys(options).length ? options : undefined;
     }
 
-    function escAttr(s) {
-      return String(s || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
-    }
-
-    function buildEmbedHtml(donateUrl, style) {
-      const href = escAttr(donateUrl);
-
-      // Keep it self-contained: only <a>, inline styles, no JS.
-      switch (style) {
-        case "pillSolid":
-          return (
-            `<!-- Anonomi Paylinks -->\n` +
-            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
-            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;` +
-            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
-            `text-decoration:none;background:#ce27e6;color:#0b0b0f;` +
-            `box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;">` +
-            `Donate XMR</a>\n`
-          );
-
-        case "pillOutline":
-          return (
-            `<!-- Anonomi Paylinks -->\n` +
-            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
-            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;` +
-            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
-            `text-decoration:none;background:transparent;color:#eaeaf0;` +
-            `border:1px solid rgba(255,255,255,.18);">` +
-            `Donate XMR</a>\n`
-          );
-
-        case "icon":
-          return (
-            `<!-- Anonomi Paylinks -->\n` +
-            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
-            `  style="display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;` +
-            `font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
-            `text-decoration:none;background:rgba(255,255,255,.06);color:#eaeaf0;` +
-            `border:1px solid rgba(255,255,255,.12);">\n` +
-            `  <span style="width:10px;height:10px;border-radius:999px;background:#ce27e6;display:inline-block;"></span>\n` +
-            `  Donate XMR\n` +
-            `</a>\n`
-          );
-
-        case "badge":
-          return (
-            `<!-- Anonomi Paylinks -->\n` +
-            `<a href="${href}" target="_blank" rel="nofollow noopener"\n` +
-            `  style="display:inline-block;padding:6px 10px;border-radius:10px;` +
-            `font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;` +
-            `text-decoration:none;background:rgba(255,255,255,.06);color:#eaeaf0;` +
-            `border:1px solid rgba(255,255,255,.12);letter-spacing:.2px;">` +
-            `Donate • XMR</a>\n`
-          );
-
-        case "link":
-        default:
-          return (
-            `<!-- Anonomi Paylinks -->\n` +
-            `<a href="${href}" rel="nofollow noopener" target="_blank">Donate XMR</a>\n`
-          );
-      }
-    }
-
     function renderEmbedPreview(donateUrl, style) {
       if (!embedPreviewEl) return;
       const html = buildEmbedHtml(donateUrl, style);
@@ -577,56 +522,6 @@ const paylinksPath = localizedPath("/paylinks", lang);
         : html;
 
       embedPreviewEl.innerHTML = aHtml;
-    }
-
-    // The API reports validation failures in three different shapes, depending
-    // on which layer rejected the request. All three were confirmed against the
-    // live service:
-    //
-    //   base schema (type/length/enum)  details.fieldErrors.<field>[]
-    //                                   details.formErrors[]
-    //   semantic (address vs view key)  details.<field>[]
-    //   options refinement (span cap)   details.options.<subfield>[]
-    //
-    // Reading only one of them is how a real message gets swallowed and
-    // surfaces as the bare "invalid_request". This walks whatever arrived.
-    const DETAIL_FIELDS = [
-      "publicAddress",
-      "privateViewKey",
-      "options",
-      "label",
-      "amount",
-    ];
-
-    function firstString(value) {
-      if (typeof value === "string") return value.trim() || null;
-      if (Array.isArray(value)) {
-        for (const item of value) {
-          const found = firstString(item);
-          if (found) return found;
-        }
-        return null;
-      }
-      if (value && typeof value === "object") {
-        for (const key of Object.keys(value)) {
-          const found = firstString(value[key]);
-          if (found) return found;
-        }
-      }
-      return null;
-    }
-
-    function firstDetailMessage(details) {
-      if (!details || typeof details !== "object") return null;
-      for (const bucket of [details.fieldErrors, details]) {
-        if (!bucket || typeof bucket !== "object") continue;
-        for (const field of DETAIL_FIELDS) {
-          const found = firstString(bucket[field]);
-          if (found) return found;
-        }
-      }
-      // Form-level errors, and anything the API adds that is not listed above.
-      return firstString(details.formErrors) || firstString(details.fieldErrors);
     }
 
     form.addEventListener("submit", async (e) => {
@@ -646,13 +541,13 @@ const paylinksPath = localizedPath("/paylinks", lang);
       const submittedOptions = buildOptions(fd);
 
       if (submittedOptions) {
-        const err = validateIndexRange(
+        const reason = validateIndexRange(
           submittedOptions.minIndex,
           submittedOptions.maxIndex,
         );
 
-        if (err) {
-          setStatus(`Error: ${err}`);
+        if (reason) {
+          setStatus(`Error: ${INDEX_RANGE_MESSAGES[reason]()}`);
           submitBtn.disabled = false;
           submitBtn.textContent = scriptStrings.submit;
           return;
@@ -712,17 +607,8 @@ const paylinksPath = localizedPath("/paylinks", lang);
           verifyTextEl.textContent = `${scriptStrings.verifySubaddress}${minIndex}`;
         }
 
-        function esc(s) {
-          return String(s || "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-        }
-
         if (subaddressLineEl && Number.isInteger(minIndex) && addressPreview) {
-          subaddressLineEl.innerHTML = `${scriptStrings.subaddressPrefix}${minIndex}: <span class="font-mono text-zinc-200">${esc(
+          subaddressLineEl.innerHTML = `${scriptStrings.subaddressPrefix}${minIndex}: <span class="font-mono text-zinc-200">${escapeHtml(
             addressPreview,
           )}</span>`;
           subaddressLineEl.classList.remove("hidden");
@@ -737,6 +623,11 @@ const paylinksPath = localizedPath("/paylinks", lang);
           resetBtn.classList.remove("hidden");
           resetBtn.classList.add("inline-flex");
         }
+
+        // The paylink exists and the key is spent, so stop holding it. The
+        // address stays — it's public, and it's what the result is checked
+        // against.
+        wipeInput(viewKeyEl);
       } catch (err) {
         console.error(err);
         setStatus(scriptStrings.networkError);
