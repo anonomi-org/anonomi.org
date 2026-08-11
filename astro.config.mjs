@@ -27,6 +27,9 @@ export default defineConfig({
     starlight({
       defaultLocale: 'root',
       locales: starlightLocales,
+
+      // Puts the docs on the same palette as the marketing pages.
+      customCss: ['./src/styles/docs-theme.css'],
       routeMiddleware: ['./src/starlightRouteMiddleware.ts'],
       title: "Anonomi Docs",
       logo: {
