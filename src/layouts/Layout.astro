@@ -1,11 +1,12 @@
 ---
 import "../styles/global.css";
+import { defaultLocale, directionOf } from "../i18n/locales";
 
 const { title = "Anonomi", description = "Private chat over Tor." } =
   Astro.props;
 
-const locale = Astro.currentLocale || 'en';
-const dir = locale === 'ar' || locale === 'fa' ? 'rtl' : 'ltr';
+const locale = Astro.currentLocale || defaultLocale;
+const dir = directionOf(locale);
 ---
 
 <!doctype html>

@@ -3,6 +3,18 @@ import tailwindcss from "@tailwindcss/vite";
 import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 
+import { LOCALES, defaultLocale } from "./src/i18n/locales.ts";
+
+// Starlight serves the default locale from the root, and keys every other
+// locale by its path segment. Built from src/i18n/locales.ts so the language
+// menu, the docs and the standalone pages cannot drift apart.
+const starlightLocales = Object.fromEntries(
+  LOCALES.map(({ code, label, dir }) => [
+    code === defaultLocale ? "root" : code,
+    { label, lang: code, ...(dir === "rtl" ? { dir } : {}) },
+  ]),
+);
+
 export default defineConfig({
   site: "https://anonomi.org",
 
@@ -14,14 +26,10 @@ export default defineConfig({
     react(),
     starlight({
       defaultLocale: 'root',
-      locales: {
-        root: { label: 'English', lang: 'en' },
-        pt: { label: 'Português', lang: 'pt' },
-        es: { label: 'Español', lang: 'es' },
-        ar: { label: 'العربية', lang: 'ar', dir: 'rtl' },
-        fa: { label: 'فارسی', lang: 'fa', dir: 'rtl' },
-        zh: { label: '中文', lang: 'zh' },
-      },
+      locales: starlightLocales,
+
+      // Puts the docs on the same palette as the marketing pages.
+      customCss: ['./src/styles/docs-theme.css'],
       routeMiddleware: ['./src/starlightRouteMiddleware.ts'],
       title: "Anonomi Docs",
       logo: {

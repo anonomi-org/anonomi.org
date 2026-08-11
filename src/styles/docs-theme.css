@@ -1,0 +1,73 @@
+/*
+ * Starlight theme, matched to the marketing pages.
+ *
+ * The pages are built with Tailwind on zinc, dark only: zinc-950 behind
+ * everything, surfaces as white/5 over it, hairlines as white/10. Starlight
+ * ships its own palette on a blue-tinted grey (background #17181c) with a
+ * blue accent, so the docs read as a different product. These variables put
+ * both halves on the same colours.
+ *
+ * Starlight's whole theme is CSS custom properties, so this file only
+ * reassigns them — no rules are overridden and nothing depends on its markup.
+ */
+
+/* Dark: the site has no light mode, so this is the pair that must match. */
+:root,
+:root[data-theme="dark"] {
+  /* zinc, lightest to darkest. Starlight reads gray-6 as its nav, sidebar and
+     hairline colour, and black as the page background. */
+  --sl-color-white: #fafafa; /* zinc-50   headings */
+  --sl-color-gray-1: #e4e4e7; /* zinc-200 */
+  --sl-color-gray-2: #d4d4d8; /* zinc-300  body text */
+  --sl-color-gray-3: #a1a1aa; /* zinc-400  muted text */
+  --sl-color-gray-4: #52525b; /* zinc-600 */
+  --sl-color-gray-5: #27272a; /* zinc-800  inline code */
+  --sl-color-gray-6: #18181b; /* zinc-900  nav, sidebar, hairline */
+  --sl-color-black: #09090b; /* zinc-950  page background */
+
+  /* The brand magenta is only 4.79:1 on zinc-950 — enough for a button or a
+     mark, too tight for a paragraph of link text. Links get the lighter tint
+     at 8.09:1; the magenta stays for accent surfaces. */
+  --sl-color-accent-low: #4a0d52;
+  --sl-color-accent: #ce27e6;
+  --sl-color-accent-high: #e879f9;
+
+  --sl-color-backdrop-overlay: hsla(240, 6%, 4%, 0.66);
+
+  /* Selected sidebar item, see the rule at the end of this file. */
+  --anonomi-sidebar-current-bg: rgb(255 255 255 / 0.1);
+  --anonomi-sidebar-current-ring: rgb(255 255 255 / 0.1);
+}
+
+/* Light: left as Starlight designed it, with the accent moved onto the brand
+   so the toggle changes brightness and not identity. */
+:root[data-theme="light"] {
+  --sl-color-accent-low: #f5d0fe;
+  --sl-color-accent: #a21caf;
+  --sl-color-accent-high: #4a0d52;
+
+  /* A white wash would be invisible here, so the fill darkens instead. */
+  --anonomi-sidebar-current-bg: rgb(0 0 0 / 0.06);
+  --anonomi-sidebar-current-ring: rgb(0 0 0 / 0.1);
+}
+
+/*
+ * Selected sidebar item.
+ *
+ * Starlight fills it with --sl-color-text-accent, which is a solid block of
+ * the accent colour. That variable also drives links, the table of contents
+ * and search, so this rule changes the block on its own and leaves those
+ * alone. The treatment is the one NavBar.astro uses on the marketing pages:
+ * a faint wash with a hairline ring.
+ *
+ * `.sidebar-content` is Starlight's own class and is not build-hashed. The
+ * astro-scoped selector this overrides carries no specificity of its own
+ * (it is wrapped in :where()), so a class plus an attribute is enough.
+ */
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover,
+.sidebar-content a[aria-current="page"]:focus {
+  color: var(--sl-color-white);
+  background-color: var(--anonomi-sidebar-current-bg);
+  box-shadow: inset 0 0 0 1px var(--anonomi-sidebar-current-ring);
+}

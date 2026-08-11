@@ -1,5 +1,8 @@
 ---
+import { localeStaticPaths } from "../../../i18n/locales";
 import PaylinksCreatePage from "../../../components/pages/PaylinksCreatePage.astro";
+
+export const getStaticPaths = localeStaticPaths;
 ---
 
 <PaylinksCreatePage />
