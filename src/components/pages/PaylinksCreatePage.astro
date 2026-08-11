@@ -380,6 +380,7 @@ const paylinksPath = localizedPath("/paylinks", lang);
       buildEmbedHtml,
       escapeHtml,
       firstDetailMessage,
+      isValidPaylinkId,
       toIntOrUndef,
       validateIndexRange,
       wipeInput,
@@ -586,6 +587,14 @@ const paylinksPath = localizedPath("/paylinks", lang);
                 : `Error: ${res.status}`,
           );
           console.error("create paylink failed:", data);
+          return;
+        }
+
+        // The id goes into a link the user publishes on their own site, so
+        // check it is actually an id before building one out of it.
+        if (!isValidPaylinkId(data.id)) {
+          setStatus(scriptStrings.networkError);
+          console.error("create paylink returned a malformed id:", data);
           return;
         }
 

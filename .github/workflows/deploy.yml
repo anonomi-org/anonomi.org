@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Before the build, so a change that breaks the pinned owner-key format
+      # stops here rather than shipping. That contract is shared with
+      # paylinks-api; breaking it orphans every paylink that already exists.
+      - name: Test
+        run: npm test
+
       - name: Build
         run: npm run build
         env:

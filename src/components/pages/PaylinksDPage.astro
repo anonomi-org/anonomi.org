@@ -364,7 +364,17 @@ const scriptStrings = {
         e.preventDefault();
         const amount = document.getElementById("amount").value.trim();
         const description = document.getElementById("desc").value.trim();
-        requestPayment(amount, description);
+        // Without this the rejection is unhandled and the donor just sees the
+        // button reset - the message firstDetailMessage worked out is thrown
+        // into nothing. Pre-existing; the initial-load catch never covered it.
+        requestPayment(amount, description).catch((err) => {
+          console.error(err);
+          result.innerHTML = `
+            <p class="text-sm text-red-400">${escapeHtml(
+              err?.message || S.errorDefault,
+            )}</p>
+          `;
+        });
       });
     }
 

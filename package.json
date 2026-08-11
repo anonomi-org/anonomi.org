@@ -8,6 +8,9 @@
     "preview": "astro preview",
     "test": "node --test \"src/**/*.test.ts\""
   },
+  "engines": {
+    "node": ">=22.18"
+  },
   "devDependencies": {
     "astro": "^5.16.7",
     "typescript": "^5"
