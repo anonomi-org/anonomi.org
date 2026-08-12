@@ -30,6 +30,21 @@ const dir = directionOf(locale);
       )
     }
     <title>{title}</title>
+    <noscript>
+      <style>
+        /* Tor Browser's Safest level turns JavaScript off, and the menu and
+           language picker are opened by script. Show the menu instead, and
+           hide the buttons that would have opened it. The ids outrank the
+           utility classes that hide these, so no media query is involved. */
+        #menu-toggle,
+        #lang-dropdown-desktop {
+          display: none;
+        }
+        #mobile-menu {
+          display: block;
+        }
+      </style>
+    </noscript>
   </head>
   <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
     <slot />
