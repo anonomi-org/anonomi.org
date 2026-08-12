@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Builds and audits a pull request without publishing it, so a change that
+  # fails the gate is caught before merging rather than on the way to live.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +15,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  # Keyed by ref: a pull request check must not cancel a running deploy.
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -57,6 +62,7 @@ jobs:
         run: npm run audit:dist
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
@@ -69,6 +75,8 @@ jobs:
 
   deploy:
     needs: build
+    # A pull request is built and audited, never published.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -79,6 +87,9 @@ jobs:
         uses: actions/deploy-pages@v5
 
   mirror:
+    # `git push --mirror` from a pull request ref would rewrite the mirror's
+    # branches to match the pull request. Only main is ever mirrored.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
