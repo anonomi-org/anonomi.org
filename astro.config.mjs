@@ -21,7 +21,10 @@ const starlightLocales = Object.fromEntries(
 );
 
 export default defineConfig({
-  site: "https://anonomi.org",
+  // Whichever site this build is. Astro puts it in the canonical link, the
+  // hreflang alternates, og:url and the sitemap, so a hardcoded clearnet value
+  // had the onion build handing every crawler the address of its twin.
+  site: process.env.PUBLIC_SITE_BASE_URL || "https://anonomi.org",
 
   vite: {
     plugins: [tailwindcss()],
