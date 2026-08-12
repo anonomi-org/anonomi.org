@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, t } from "../i18n/utils";
 import BuildStamp from "./BuildStamp.astro";
+import { repoUrl } from "../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
 ---
@@ -86,9 +87,9 @@ const lang = getLangFromUrl(Astro.url);
           </svg>
         </a>
 
-        <!-- GitHub -->
+        <!-- Code repository, on whichever network this build is for -->
         <a
-          href="https://github.com/anonomi-org"
+          href={repoUrl()}
           target="_blank"
           rel="noreferrer"
           title={t(lang, "footer.github")}

@@ -75,7 +75,7 @@ export const RULES: Record<RuleId, { severity: Severity; summary: string }> = {
     summary: "Script names a host not in allowedHosts.ts",
   },
   "clearnet-metadata": {
-    severity: "warn",
+    severity: "fail",
     summary: "Clearnet canonical, og:url or sitemap in the onion build",
   },
   "missing-onion-link": {

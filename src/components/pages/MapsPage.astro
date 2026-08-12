@@ -5,6 +5,7 @@ import Footer from "../Footer.astro";
 import MapsExporterApp from "../maps/MapsExporterApp.tsx";
 import type { MapsExporterStrings } from "../maps/MapsExporterApp.tsx";
 import { getLangFromUrl, localizedPath, t } from "../../i18n/utils";
+import { repoUrl } from "../../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -148,7 +149,7 @@ const exporterStrings: MapsExporterStrings = {
         </a>
 
         <a
-          href="https://github.com/anonomi-org/anonomi.github.io"
+          href={repoUrl("anonomi.org")}
           class="font-semibold text-zinc-200 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
