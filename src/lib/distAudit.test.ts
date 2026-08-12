@@ -8,6 +8,7 @@ import {
   auditScript,
   auditXml,
   hasOnionLocation,
+  hasSafeReferrerPolicy,
   parseAttrs,
   remoteHost,
   RULES,
@@ -162,6 +163,32 @@ test("a listed host with noreferrer passes", () => {
 test("an outbound link without noreferrer is reported", () => {
   const html = `<a href="https://www.eff.org/">EFF</a>`;
   assert.deepEqual(rules(auditHtml("p.html", html, options("clearnet"))), ["missing-noreferrer"]);
+});
+
+test("a page-wide referrer policy covers links that carry no rel of their own", () => {
+  const html = `<meta name="referrer" content="no-referrer"><a href="https://www.eff.org/">EFF</a>`;
+  assert.deepEqual(auditHtml("p.html", html, options("clearnet")), []);
+});
+
+test("a per-link referrerpolicy attribute counts too", () => {
+  const html = `<a href="https://www.eff.org/" referrerpolicy="no-referrer">EFF</a>`;
+  assert.deepEqual(auditHtml("p.html", html, options("clearnet")), []);
+});
+
+test("a policy that still sends the origin does not count", () => {
+  const opts = options("clearnet");
+  for (const policy of ["strict-origin-when-cross-origin", "origin", "unsafe-url"]) {
+    const html = `<meta name="referrer" content="${policy}"><a href="https://www.eff.org/">EFF</a>`;
+    assert.deepEqual(rules(auditHtml("p.html", html, opts)), ["missing-noreferrer"], policy);
+  }
+});
+
+test("a fallback list is only safe when every value in it is", () => {
+  // The last value the browser understands wins, so one weak entry decides it.
+  assert.equal(hasSafeReferrerPolicy(`<meta name="referrer" content="no-referrer, same-origin">`), true);
+  assert.equal(hasSafeReferrerPolicy(`<meta name="referrer" content="no-referrer, origin">`), false);
+  assert.equal(hasSafeReferrerPolicy(`<meta name="referrer" content="">`), false);
+  assert.equal(hasSafeReferrerPolicy(`<meta name="description" content="no-referrer">`), false);
 });
 
 test("the onion build is told when a link has an onion equivalent", () => {
@@ -339,6 +366,7 @@ test("the rules the build already keeps are the ones that block a deploy", () =>
     "unlisted-link-host",
     "paylinks-gating",
     "onion-location",
+    "missing-noreferrer",
   ];
   for (const rule of blocking) {
     assert.equal(RULES[rule].severity, "fail", `${rule} should block a deploy`);

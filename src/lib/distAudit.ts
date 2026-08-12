@@ -83,8 +83,8 @@ export const RULES: Record<RuleId, { severity: Severity; summary: string }> = {
     summary: "Link to a host with a known onion address",
   },
   "missing-noreferrer": {
-    severity: "warn",
-    summary: "Outbound link without rel=noreferrer",
+    severity: "fail",
+    summary: "Outbound link that would send a referrer",
   },
   "onion-location": {
     severity: "fail",
@@ -275,13 +275,43 @@ export function auditHtml(file: string, html: string, opts: AuditOptions): Findi
     }
   }
 
-  findings.push(...auditAnchors(file, html, opts));
+  findings.push(...auditAnchors(file, html, opts, hasSafeReferrerPolicy(html)));
   findings.push(...auditInlineStyles(file, html, opts));
   findings.push(...auditDevOrigins(file, html));
   return findings;
 }
 
-function auditAnchors(file: string, html: string, opts: AuditOptions): Finding[] {
+/**
+ * Policies under which a page sends no referrer off-origin, making the
+ * per-link check moot. Anything weaker still hands over the origin, which on
+ * the onion is the part worth withholding.
+ */
+const SAFE_REFERRER_POLICIES = new Set(["no-referrer", "same-origin"]);
+
+export function hasSafeReferrerPolicy(html: string): boolean {
+  for (const tag of tags(html)) {
+    if (tag.name !== "meta") continue;
+    if ((tag.attrs.name ?? "").toLowerCase() !== "referrer") continue;
+
+    // The attribute is a fallback list and the last value a browser knows
+    // wins, so every entry has to be safe for the page to be safe.
+    const tokens = (tag.attrs.content ?? "")
+      .toLowerCase()
+      .split(/[\s,]+/)
+      .filter(Boolean);
+    if (tokens.length > 0 && tokens.every((token) => SAFE_REFERRER_POLICIES.has(token))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function auditAnchors(
+  file: string,
+  html: string,
+  opts: AuditOptions,
+  pageSendsNoReferrer: boolean,
+): Finding[] {
   const findings: Finding[] = [];
 
   for (const match of html.matchAll(ANCHOR_RE)) {
@@ -313,7 +343,12 @@ function auditAnchors(file: string, html: string, opts: AuditOptions): Finding[]
       });
     }
 
-    if (!host.endsWith(".onion") && !/\bnoreferrer\b/i.test(attrs.rel ?? "")) {
+    const linkSendsNoReferrer =
+      pageSendsNoReferrer ||
+      /\bnoreferrer\b/i.test(attrs.rel ?? "") ||
+      SAFE_REFERRER_POLICIES.has((attrs.referrerpolicy ?? "").toLowerCase());
+
+    if (!host.endsWith(".onion") && !linkSendsNoReferrer) {
       findings.push({ rule: "missing-noreferrer", file, detail: `${host} (${href})` });
     }
   }
