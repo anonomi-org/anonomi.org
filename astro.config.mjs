@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 
 import { LOCALES, defaultLocale } from "./src/i18n/locales.ts";
-import { ONION_SITE_BASE, networkOf } from "./src/lib/site.ts";
+import { CLEARNET_REPO_BASE, ONION_SITE_BASE, networkOf } from "./src/lib/site.ts";
 
 // The config runs in Node, where import.meta.env has no PUBLIC_ values yet, so
 // the network is read from the process environment the deploy exports.
@@ -60,10 +60,15 @@ export default defineConfig({
         },
       ],
 
-      editLink: {
-        baseUrl:
-          "https://github.com/anonomi-org/anonomi.github.io/edit/main/src/content/docs/",
-      },
+      // Starlight appends the file's path from the project root, so the base
+      // stops at the branch — including src/content/docs/ here doubled it.
+      //
+      // Left off on the onion: the mirror there is Gitea, whose edit route is
+      // /_edit/ rather than /edit/, and a mirror is not somewhere a change can
+      // be submitted. A dead button is worse than no button.
+      editLink: isOnionBuild
+        ? {}
+        : { baseUrl: `${CLEARNET_REPO_BASE}/anonomi.org/edit/main/` },
 
       sidebar: [
         {
