@@ -4,7 +4,12 @@ import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 
 import { LOCALES, defaultLocale } from "./src/i18n/locales.ts";
-import { CLEARNET_REPO_BASE, ONION_SITE_BASE, networkOf } from "./src/lib/site.ts";
+import {
+  CLEARNET_REPO_BASE,
+  ONION_REPO_BASE,
+  ONION_SITE_BASE,
+  networkOf,
+} from "./src/lib/site.ts";
 
 // The config runs in Node, where import.meta.env has no PUBLIC_ values yet, so
 // the network is read from the process environment the deploy exports.
@@ -59,13 +64,11 @@ export default defineConfig({
         alt: "Anonomi",
         replacesTitle: true,
       },
-      social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/anonomi-org",
-        },
-      ],
+      // The onion gets the onion mirror. Deliberately not the GitHub mark
+      // there: it is a different forge, and the mark would say otherwise.
+      social: isOnionBuild
+        ? [{ icon: "external", label: "Onion repository", href: ONION_REPO_BASE }]
+        : [{ icon: "github", label: "GitHub", href: CLEARNET_REPO_BASE }],
 
       // Starlight appends the file's path from the project root, so the base
       // stops at the branch — including src/content/docs/ here doubled it.
