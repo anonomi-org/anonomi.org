@@ -338,6 +338,7 @@ test("the rules the build already keeps are the ones that block a deploy", () =>
     "dev-origin",
     "unlisted-link-host",
     "paylinks-gating",
+    "onion-location",
   ];
   for (const rule of blocking) {
     assert.equal(RULES[rule].severity, "fail", `${rule} should block a deploy`);

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { defaultLocale, directionOf } from "../i18n/locales";
+import { IS_ONION_BUILD, ONION_SITE_BASE } from "../lib/site";
 
 const { title = "Anonomi", description = "Private chat over Tor." } =
   Astro.props;
@@ -15,6 +16,15 @@ const dir = directionOf(locale);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {
+      /* Tor Browser offers the onion when it sees this. It only honours it on
+         an HTTPS page that is not already an onion, so the onion build leaves
+         it out. It always points at the front page — the tag cannot carry the
+         path the visitor is on. */
+      !IS_ONION_BUILD && (
+        <meta http-equiv="onion-location" content={ONION_SITE_BASE} />
+      )
+    }
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">

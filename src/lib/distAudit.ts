@@ -87,7 +87,7 @@ export const RULES: Record<RuleId, { severity: Severity; summary: string }> = {
     summary: "Outbound link without rel=noreferrer",
   },
   "onion-location": {
-    severity: "warn",
+    severity: "fail",
     summary: "onion-location meta tag on the wrong network",
   },
 };

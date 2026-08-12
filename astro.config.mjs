@@ -4,6 +4,11 @@ import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 
 import { LOCALES, defaultLocale } from "./src/i18n/locales.ts";
+import { CLEARNET_REPO_BASE, ONION_SITE_BASE, networkOf } from "./src/lib/site.ts";
+
+// The config runs in Node, where import.meta.env has no PUBLIC_ values yet, so
+// the network is read from the process environment the deploy exports.
+const isOnionBuild = networkOf(process.env.PUBLIC_SITE_BASE_URL ?? "") === "onion";
 
 // Starlight serves the default locale from the root, and keys every other
 // locale by its path segment. Built from src/i18n/locales.ts so the language
@@ -28,6 +33,16 @@ export default defineConfig({
       defaultLocale: 'root',
       locales: starlightLocales,
 
+      // Same tag the marketing pages carry, see src/layouts/Layout.astro.
+      head: isOnionBuild
+        ? []
+        : [
+            {
+              tag: "meta",
+              attrs: { "http-equiv": "onion-location", content: ONION_SITE_BASE },
+            },
+          ],
+
       // Puts the docs on the same palette as the marketing pages.
       customCss: ['./src/styles/docs-theme.css'],
       routeMiddleware: ['./src/starlightRouteMiddleware.ts'],
@@ -45,10 +60,15 @@ export default defineConfig({
         },
       ],
 
-      editLink: {
-        baseUrl:
-          "https://github.com/anonomi-org/anonomi.github.io/edit/main/src/content/docs/",
-      },
+      // Starlight appends the file's path from the project root, so the base
+      // stops at the branch — including src/content/docs/ here doubled it.
+      //
+      // Left off on the onion: the mirror there is Gitea, whose edit route is
+      // /_edit/ rather than /edit/, and a mirror is not somewhere a change can
+      // be submitted. A dead button is worse than no button.
+      editLink: isOnionBuild
+        ? {}
+        : { baseUrl: `${CLEARNET_REPO_BASE}/anonomi.org/edit/main/` },
 
       sidebar: [
         {
