@@ -16,6 +16,10 @@ const dir = directionOf(locale);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {/* Send no Referer at all. Following a link off the onion would otherwise
+        tell the other site which onion the visitor came from. Nothing here
+        needs a referrer, and CORS uses Origin, which this does not touch. */}
+    <meta name="referrer" content="no-referrer" />
     {
       /* Tor Browser offers the onion when it sees this. It only honours it on
          an HTTPS page that is not already an onion, so the onion build leaves

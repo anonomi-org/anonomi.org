@@ -33,15 +33,19 @@ export default defineConfig({
       defaultLocale: 'root',
       locales: starlightLocales,
 
-      // Same tag the marketing pages carry, see src/layouts/Layout.astro.
-      head: isOnionBuild
-        ? []
-        : [
-            {
-              tag: "meta",
-              attrs: { "http-equiv": "onion-location", content: ONION_SITE_BASE },
-            },
-          ],
+      // The same two tags the marketing pages carry, see
+      // src/layouts/Layout.astro.
+      head: [
+        { tag: "meta", attrs: { name: "referrer", content: "no-referrer" } },
+        ...(isOnionBuild
+          ? []
+          : [
+              {
+                tag: "meta",
+                attrs: { "http-equiv": "onion-location", content: ONION_SITE_BASE },
+              },
+            ]),
+      ],
 
       // Puts the docs on the same palette as the marketing pages.
       customCss: ['./src/styles/docs-theme.css'],
