@@ -13,6 +13,7 @@
 # - Updates the local repository (fast-forward only)
 # - Installs dependencies locally
 # - Builds the static site
+# - Audits the build before it reaches the web root
 # - Syncs the generated files to the nginx web root
 # - Copies onion-specific server assets
 # - Fixes ownership and permissions
@@ -44,13 +45,13 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-echo "[1/5] Updating repo..."
+echo "[1/6] Updating repo..."
 git pull --ff-only
 
-echo "[2/5] Installing dependencies..."
+echo "[2/6] Installing dependencies..."
 npm ci
 
-echo "[3/5] Building site..."
+echo "[3/6] Building site..."
 # Bake the exact git commit into the static build (used by import.meta.env.PUBLIC_BUILD_SHA)
 export PUBLIC_BUILD_SHA="$(git rev-parse HEAD)"
 # Onion-specific URLs for Paylinks
@@ -71,15 +72,20 @@ fi
 
 npm run build
 
-echo "[4/5] Deploying to nginx root..."
+# Before the rsync on purpose: a build that fails the checks has to stop here
+# rather than once it is live. PUBLIC_SITE_BASE_URL above picks the onion rules.
+echo "[4/6] Auditing build output..."
+npm run audit:dist
+
+echo "[5/6] Deploying to nginx root..."
 
 WEB_ROOT="${WEB_ROOT:-/var/www/anonomi}"
 sudo rsync -a --delete ./dist/ "$WEB_ROOT/"
 
-echo "[4.1/5] Copying server extras..."
+echo "[5.1/6] Copying server extras..."
 sudo cp -f ./server-extras/onion.html "$WEB_ROOT/onion.html"
 
-echo "[5/5] Fixing permissions..."
+echo "[6/6] Fixing permissions..."
 sudo chown -R www-data:www-data "$WEB_ROOT"
 sudo find "$WEB_ROOT" -type d -exec chmod 755 {} \;
 sudo find "$WEB_ROOT" -type f -exec chmod 644 {} \;
