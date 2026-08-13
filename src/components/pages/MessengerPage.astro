@@ -9,8 +9,10 @@ import { ONION_REPO_BASE, net, repoUrl } from "../../lib/site";
 
 const lang = getLangFromUrl(Astro.url);
 
-const MESSENGER_APK = "anonomi-official-release.apk";
-const POSTBOX_APK = "postbox-android-release.apk";
+// Newest naming first. The postbox APK was renamed at v1.0.5, so both names are
+// listed to keep the older releases on the page alongside the new ones.
+const MESSENGER_APK = ["anonomi-official-release.apk"];
+const POSTBOX_APK = ["anonomi-postbox-release.apk", "postbox-android-release.apk"];
 
 /** A release asset on the onion mirror. The releases API gives us the clearnet URL. */
 function onionAsset(repo: string, version: string, asset: string): string {
@@ -24,8 +26,8 @@ const FDROID_URL = net(
   "https://f-droid.org/packages/org.anonomi.android/",
 );
 
-const messengerReleases = await fetchReleases("anonomi-org/anonomi-android", "anonomi-official-release.apk", 4);
-const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "postbox-android-release.apk", 4);
+const messengerReleases = await fetchReleases("anonomi-org/anonomi-android", MESSENGER_APK, 4);
+const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", POSTBOX_APK, 4);
 ---
 
 <Layout
@@ -1187,7 +1189,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                 <span class="text-zinc-500">{messengerReleases[0].sizeMB}</span>
                 <a
                   href={net(
-                    onionAsset("anonomi-android", messengerReleases[0].version, MESSENGER_APK),
+                    onionAsset("anonomi-android", messengerReleases[0].version, messengerReleases[0].assetName),
                     messengerReleases[0].downloadUrl,
                   )}
                   target="_blank"
@@ -1225,7 +1227,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                         <span class="text-zinc-500">{r.sizeMB}</span>
                         <a
                           href={net(
-                            onionAsset("anonomi-android", r.version, MESSENGER_APK),
+                            onionAsset("anonomi-android", r.version, r.assetName),
                             r.downloadUrl,
                           )}
                           target="_blank"
@@ -1308,7 +1310,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                 <span class="text-zinc-500">{postboxReleases[0].sizeMB}</span>
                 <a
                   href={net(
-                    onionAsset("anonomi-postbox", postboxReleases[0].version, POSTBOX_APK),
+                    onionAsset("anonomi-postbox", postboxReleases[0].version, postboxReleases[0].assetName),
                     postboxReleases[0].downloadUrl,
                   )}
                   target="_blank"
@@ -1346,7 +1348,7 @@ const postboxReleases = await fetchReleases("anonomi-org/anonomi-postbox", "post
                         <span class="text-zinc-500">{r.sizeMB}</span>
                         <a
                           href={net(
-                            onionAsset("anonomi-postbox", r.version, POSTBOX_APK),
+                            onionAsset("anonomi-postbox", r.version, r.assetName),
                             r.downloadUrl,
                           )}
                           target="_blank"
