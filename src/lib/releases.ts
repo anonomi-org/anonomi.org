@@ -4,6 +4,10 @@ export type ReleaseInfo = {
   downloadUrl: string;
   sha256: string;
   sizeMB: string;
+  /** The APK's filename on this specific release. Repos rename their asset
+   *  between versions, so the onion mirror URL has to be built from the name
+   *  the release actually carries, not from one hardcoded per repo. */
+  assetName: string;
 };
 
 type GitHubAsset = {
@@ -72,18 +76,37 @@ function fetchReleaseList(url: string): Promise<GitHubRelease[]> {
   return pending;
 }
 
+/**
+ * @param assetNames Every filename the APK is published under, newest naming
+ *   first. A release is matched by the first of these it carries, so a repo that
+ *   renames its asset keeps listing both its new and its older releases.
+ */
 export async function fetchReleases(
   repo: string,
-  assetName: string,
+  assetNames: string | string[],
   count: number,
 ): Promise<ReleaseInfo[]> {
+  const accepted = Array.isArray(assetNames) ? assetNames : [assetNames];
   const url = `https://api.github.com/repos/${repo}/releases?per_page=${count}`;
   const releases = await fetchReleaseList(url);
   const results: ReleaseInfo[] = [];
 
   for (const release of releases) {
-    const asset = release.assets.find((a) => a.name === assetName);
-    if (!asset) continue;
+    let asset: GitHubAsset | undefined;
+    for (const name of accepted) {
+      asset = release.assets.find((a) => a.name === name);
+      if (asset) break;
+    }
+    if (!asset) {
+      // A renamed asset drops the release from the page without failing the
+      // build, so name it in the log rather than losing it silently.
+      console.warn(
+        `[releases] ${repo} ${release.tag_name} carries none of ` +
+          `${accepted.join(", ")} — skipped. Its assets: ` +
+          `${release.assets.map((a) => a.name).join(", ") || "(none)"}`,
+      );
+      continue;
+    }
 
     const sizeMB = (asset.size / (1000 * 1000)).toFixed(0) + " MB";
 
@@ -104,12 +127,14 @@ export async function fetchReleases(
       downloadUrl: asset.browser_download_url,
       sha256,
       sizeMB,
+      assetName: asset.name,
     });
   }
 
   if (results.length === 0) {
     throw new Error(
-      `[releases] no release in ${repo} carries an asset named "${assetName}". ` +
+      `[releases] no release in ${repo} carries an asset named ` +
+        `${accepted.map((n) => `"${n}"`).join(" or ")}. ` +
         `Either the asset was renamed or the latest releases are missing it.`,
     );
   }
