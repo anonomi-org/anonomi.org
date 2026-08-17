@@ -1,0 +1,140 @@
+---
+title: Backup and restore
+description: Save an encrypted copy of your Anonomi account and put it back on another phone.
+---
+
+Anonomi Messenger 1.5.0 adds account backup and restore.
+
+A backup is a single encrypted file holding your whole account. You can move it to another phone and carry on from where the backup was made.
+
+There is no server involved. Nothing is uploaded, nothing is held for you, and nobody can open the file for you if you lose what protects it.
+
+---
+
+## What you need
+
+Two things, and both are required:
+
+- **The backup file** — written wherever you choose
+- **The recovery code** — 30 digits, shown once when the backup is made
+
+Either one alone is useless. Together they *are* the account: anyone holding both has it, permanently.
+
+> Keep the file and the code apart. A backup file next to its recovery code is the same as no encryption at all.
+
+---
+
+## What is in a backup
+
+Included:
+- Your display name and identity keys
+- Your contacts
+- Every message you still have
+- The keys that unlock them
+
+**Not** included:
+- Panic button setup
+- Stealth mode / calculator passcode
+- App lock and screen lock settings
+
+Those stay on the old phone. Set them up again after restoring.
+
+---
+
+## Making a backup
+
+Go to **Settings → Security → Back up account**.
+
+1. **Enter your password.** A backup outlasts an unlocked screen, so a phone found unlocked shouldn't be enough to walk away with your account.
+2. **Write down the recovery code.** 30 digits, shown in six groups of five. Write it on paper.
+3. **Type it back.** The app asks you to re-enter it, so a mistake surfaces now rather than when you need it.
+4. **Choose where to save.** The app warns you about the destination — see below.
+5. **Wait.** It copies your account, writes the file, then reads it back to check it can actually be opened. Keep the app open until it finishes.
+
+Once the backup is written, Settings shows **Last backup** with the date.
+
+### The recovery code is shown once
+
+It is not stored on the phone and it cannot be shown again. If you lose it, the backup file cannot be opened — by you or by anyone else. Make a new backup instead.
+
+Until you finish the steps you can go back and look at it again. After that it's gone.
+
+### The filename
+
+The app suggests a name like `backup-20260817.bin`. It deliberately says nothing about which app wrote it or what's inside.
+
+You can rename it. Consider whether the name you pick gives away more than the default does.
+
+---
+
+## Where to put the file
+
+The app cannot tell whether a destination syncs somewhere online, so it warns you about anything it doesn't recognise as local.
+
+- **Cloud or unknown destinations** — if the folder syncs to an online account, your backup goes there too.
+- **This phone or a removable drive** — the file stays put until you move it yourself.
+
+A memory card counts as being on the phone until you take the card out.
+
+> **The app will never delete a backup file for you — not even a panic wipe.** A backup left on the phone is taken with the phone. Move it off, then delete the copy that's left.
+
+---
+
+## Restoring onto another phone
+
+Restore happens during setup, on a fresh install.
+
+1. Install Anonomi Messenger and open it.
+2. On the screen asking for your name, tap **Restore from a backup**.
+3. **Choose the backup file.**
+4. **Type the recovery code.** Thirty digits; spaces and dashes don't matter.
+5. **Confirm.** The app shows the filename and when the backup was made.
+6. **Set a password for this phone.** It does not have to be the one the account had before.
+
+### After restoring
+
+- **Anything that arrived after the backup was made is not there.** A backup is a snapshot, not a sync.
+- **Panic, stealth and lock settings are not there.** Set them up again.
+- **This is now the phone that owns the account.**
+
+### Only one phone can use an account
+
+If the phone the backup came from still exists, **delete the account there first**.
+
+Two phones using the same account cannot both be reached. Your contacts will drop the messages.
+
+---
+
+## When restore fails
+
+| What you see | What it means |
+| --- | --- |
+| Not an Anonomi Messenger backup | Wrong file |
+| The code did not open the file | Either the code is wrong or the file was altered — there is no way to tell which |
+| The file stops before the end | Incomplete copy. Copy it again, in full |
+| Made by a newer version | Update the app, then try again |
+| Made by a version too old | Cannot be brought forward |
+| Not enough memory | Another phone may manage it. The file itself is fine |
+| Not enough space | Free some up and try again |
+
+If the account cannot be written to the phone, nothing of it is kept.
+
+---
+
+## Practical guidance
+
+- Make a backup **before** you need one. There is no way to make one from a phone you no longer have.
+- Store the file and the code in **different places**.
+- Treat the file like a key, not like chat history.
+- Make a **new** backup after anything you'd hate to lose. Old backups restore old accounts.
+- Move the file off the phone and delete the local copy.
+- If you're in a high-risk environment, think hard about whether a backup that can be found is worse than an account that can be lost. **Not backing up is a legitimate choice.**
+
+---
+
+## Related documentation
+
+- **[Creating an account](/docs/usage/creating-an-account)**
+- **[Security settings](/docs/usage/settings/security)**
+- **[Operational security basics](/docs/usage/opsec)**
+- **[Panic button + panic contacts](/docs/features/panic)**
