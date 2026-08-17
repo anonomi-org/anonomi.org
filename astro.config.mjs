@@ -113,6 +113,7 @@ export default defineConfig({
           items: [
             { label: "Installation", slug: "usage/installation", translations: { pt: "Instalação" } },
             { label: "Creating an account", slug: "usage/creating-an-account", translations: { pt: "Criar uma conta" } },
+            { label: "Backup and restore", slug: "usage/backup-and-restore", translations: { pt: "Cópia de segurança e restauro" } },
             { label: "Adding contacts", slug: "usage/adding-contacts", translations: { pt: "Adicionar contactos" } },
             { label: "Introducing contacts", slug: "usage/introducing-contacts", translations: { pt: "Apresentar contactos" } },
             { label: "Messaging", slug: "usage/messaging", translations: { pt: "Mensagens" } },

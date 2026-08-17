@@ -35,6 +35,8 @@ This is the name shown to your contacts.
 
 Choose something that makes sense for the context you’re operating in.
 
+> Already have a backup from another phone? This screen also offers **Restore from a backup**. See **[Backup and restore](/docs/usage/backup-and-restore)**.
+
 ### Step 2 — Confirm account creation
 Once confirmed:
 - Your cryptographic identity is generated
@@ -48,14 +50,9 @@ No network connection is required to create an account.
 ## Important limitations (read this carefully)
 
 ### No password recovery
-Anonomi cannot reset or recover your account.
+Anonomi cannot reset or recover your account. There is no server holding a copy and no support channel that can let you back in.
 
-If you:
-- Lose your device
-- Delete app data
-- Uninstall the app without a backup
-
-…your account and contacts are permanently lost.
+If you lose your device, delete app data, or uninstall the app, then **a backup is the only way back**. Without one, your account and contacts are permanently lost.
 
 This is not a bug — it’s a consequence of avoiding centralized control.
 
@@ -64,17 +61,23 @@ Each installation creates its own identity.
 
 Installing Anonomi on a second device creates a **new, separate account**, even if you use the same display name.
 
+Restoring a backup is the exception: it puts the *same* account on another phone. Only one phone can use an account at a time, so delete the account on the old phone first.
+
 ---
 
-## Backups (if supported on your device)
+## Backups
 
-If backup features are available on your platform version:
+Since version 1.5.0 you can save an encrypted copy of your whole account to a file, and put it back on another phone later.
 
-- Backups should be stored securely
-- Treat them like keys, not like chat history
-- Anyone with access to a backup may be able to impersonate you
+You get a 30-digit recovery code when you make the backup. It is shown once and never stored on the device. The file and the code are both needed to restore, and together they *are* your account.
+
+- Store them **separately**
+- Treat the file like a key, not like chat history
+- Anyone holding both the file and the code can impersonate you
 
 If you’re operating in a high-risk environment, **not backing up may be safer** than backing up insecurely.
+
+→ **[Backup and restore](/docs/usage/backup-and-restore)**
 
 ---
 
